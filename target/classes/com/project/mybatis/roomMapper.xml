@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.roomMapper">
+	
+	<insert id="insertData" parameterType="com.project.room.RoomDTO"
+	useGeneratedKeys="true" keyProperty="roomNum">
+		<selectKey keyProperty="roomNum" resultType="int" order="BEFORE">
+			select roomNum_SEQ.NEXTVAL from dual
+		</selectKey>
+		insert into wholeRoom(roomNum,subject,title,keyword,introduce,created,
+		totalP,currentP,manager)
+		values (#{roomNum},#{subject},#{title},#{keyword},#{introduce},sysdate,
+		1,1,#{manager})
+	</insert>
+	
+	<insert id="insertFile" parameterType="hashMap">
+		insert into roomFile (fileNum,roomNum,originalFileName,storedFileName,fileSize)
+		values (fileNum_SEQ.NEXTVAL,#{roomNum},#{originalFileName},#{storedFileName},#{fileSize})
+	</insert>
+	
+	<select id="getDataCount" resultType="int" parameterType="hashMap">
+		select nvl(count(*),0) from wholeRoom
+		where ${searchKey} like '%' || #{searchValue} || '%'
+	</select>
+	
+	<select id="getLists" resultType="com.project.room.RoomDTO" parameterType="map">
+		select * from (
+		select rownum rnum, data.* from (
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager
+		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%'
+		order by roomNum desc) data)
+		<![CDATA[
+		where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
+	
+	<select id="getReadData" resultType="com.project.room.RoomDTO" parameterType="int">
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager
+		from wholeRoom where roomNum = #{roomNum}
+	</select>
+	
+	<!-- 
+	<update id="updateData" parameterType="com.project.room.RoomDTO">
+		update board set name = #{name},pwd = #{pwd},email = #{email},
+		subject = #{subject},content = #{content} where num = #{num}
+	</update>
+	
+	<delete id="deleteData" parameterType="int">
+		delete board where num = #{num}
+	</delete>
+	 -->
+	
+</mapper>
