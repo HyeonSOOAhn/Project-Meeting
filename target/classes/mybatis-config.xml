@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <!-- Spring에서는 생략 -->
 <properties>
 	<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
-	<property name="url" value="jdbc:oracle:thin:@localhost:1521:TestDB"/>
+	<property name="url" value="jdbc:oracle:thin:@localhost:1522:orcl"/>
 	<property name="username" value="suzi"/>
 	<property name="password" value="a123"/>
 </properties>
@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 </environments>
 
 <mappers>
-	<mapper resource="com/jdbc/mybatis/boardMapper.xml"/>
+	<mapper resource="com/project/mybatis/Mapper.xml"/>
 	
 </mappers>
 
