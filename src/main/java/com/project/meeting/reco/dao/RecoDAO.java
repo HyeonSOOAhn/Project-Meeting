@@ -2,9 +2,8 @@ package com.project.meeting.reco.dao;
 
 import java.util.List;
 
-import org.mybatis.spring.SqlSessionTemplate;
 
-import com.project.meeting.reco.controller.RecoController;
+import org.mybatis.spring.SqlSessionTemplate;
 import com.project.meeting.reco.dto.RecoDTO;
 
 public class RecoDAO {
