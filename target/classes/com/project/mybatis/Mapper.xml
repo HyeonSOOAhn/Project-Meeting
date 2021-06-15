@@ -13,8 +13,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select * from Recommend where subject=#{subject}
 </select>
 
-<!-- 서브젝트별 db넣기 -->
+<update id="insertData" parameterType="com.project.meeting.reco.dto.RecoDTO">
 
+	MERGE INTO Recommend
+	USING DUAL ON (recoNum = #{recoNum})
+	WHEN MATCHED THEN
+	UPDATE SET
+	subject = #{subject},keyword = #{keyword},
+	title = #{title}, introduce = #{introduce},content = #{content},
+	location = #{location},imgUrl = #{imgUrl, jdbcType=VARCHAR}
+	WHEN NOT MATCHED THEN
+	INSERT
+	(recoNum,subject,keyword,title,
+	introduce,content,location,imgUrl)
+	VALUES
+	(#{recoNum},#{subject},#{keyword},#{title},
+	#{introduce},#{content},#{location},#{imgUrl, jdbcType=VARCHAR})
+</update>
 
 
 </mapper>
