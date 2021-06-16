@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 서브젝트별 db불러오기 -->
 <select id="getLists" parameterType="String" resultType="com.project.meeting.reco.dto.RecoDTO">
-	select * from Recommend where subject=#{subject}
+select * from Recommend where subject=#{subject}
 </select>
 
 <update id="insertData" parameterType="com.project.meeting.reco.dto.RecoDTO">

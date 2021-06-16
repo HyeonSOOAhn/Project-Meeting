@@ -353,8 +353,15 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					
-					
+					<c:set var="subject" value="${subject }" />
+					<c:if test="${subject ne null}">
+						<a href="reco?subject=${subject }&mode=update"
+							class="btn btn-secondary btn-icon-split"> <span
+							class="icon text-white-50"> <i class="fas fa-arrow-right"></i>
+						</span> <span class="text">자료 업데이트</span>
+						</a>
+					</c:if>
+
 					<div>${dto.subject }</div>
 					
 					<div
@@ -363,7 +370,7 @@
 					</div>
 
 					<div class="row">
-						<div class="col-lg-6">
+						<div class="col-lg-3">
 
 							<!-- Dropdown Card Example -->
 							<c:forEach var="dto" items="${lists }">
@@ -390,10 +397,19 @@
 									</div>
 								</div>
 								<!-- Card Body -->
-								<div class="card-body">${dto.introduce}</div>
+								<div class="card-body" align="center">
+								<c:set var="imgUrl" value="${dto.imgUrl }" />
+									<c:if test="${imgUrl eq null}">
+									   <img src="img/nullimg.bmp" alt="null" width="200" height="200"><br/>
+									</c:if>
+									<c:if test="${imgUrl ne null}">
+									   <img src="${dto.imgUrl }" alt="${dto.title }" width="200" height="200"><br/>
+									</c:if>
+								${dto.introduce}
+								</div>
 							</div>
 						</div>
-						<div class="col-lg-6">
+						<div class="col-lg-3">
 						</c:forEach>
 					</div>
 				</div>

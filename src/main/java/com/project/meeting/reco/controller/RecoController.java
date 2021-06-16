@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-import com.project.meeting.parse.RecoDBlibParser;
+import com.project.meeting.parse.RecoDBStudyParser;
 import com.project.meeting.reco.dao.RecoDAO;
 import com.project.meeting.reco.dto.RecoDTO;
 
@@ -30,9 +29,23 @@ public class RecoController {
 	public String reco(HttpServletRequest request) throws IOException, InterruptedException {
 		
 		String subject = request.getParameter("subject");
+		String mode = request.getParameter("mode");
+		
+		
+		if(mode!=null) {
+			
+			
+			  int pageNo=0; dao.insertData(RecoDBStudyParser.DBLibParser(0));
+			  
+			  for(pageNo=1;pageNo<(RecoDBStudyParser.totalCount/100)+1;pageNo++){
+			  dao.insertData(RecoDBStudyParser.DBLibParser(pageNo)); }
+			 
+			  System.out.println("업데이트 완료");
+		}
+		
 		
 		if(subject!=null) {
-			dao.insertData(RecoDBlibParser.DBparser(1));
+			
 			List<RecoDTO> lists = dao.getList(subject);
 			
 			request.setAttribute("subject", subject);
