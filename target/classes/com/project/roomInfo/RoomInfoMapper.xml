@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="project.RoomInfoMapper">
+	<select id="getBoardList" resultType="com.project.roomInfo.RoomInfoDTO" parameterType="int">
+		select boardNum, roomNum, boardId, boardName, boardTitle, boardContent, hitCount, to_char(created, 'YYYY-MM-DD') from roomBoard where roomNum = #{roomNum}
+	</select>
+	
+	<select id="getBoardData" resultType="com.project.roomInfo.RoomInfoDTO" parameterType="map">
+		select boardNum, roomNum, boardId, boardName, boardTitle, boardContent, boardIpAddr, imagePath, hitCount, to_char(created, 'YYYY-MM-DD') from roomBoard where roomNum = #{roomNum} and boardNum = #{boardNum}
+	</select>
+	
+	<insert id="insertBoardData" parameterType="com.project.roomInfo.RoomInfoDTO">
+		insert into roomBoard
+			(boardNum, roomNum, boardId, boardName, boardTitle, boardContent,
+			imagePath, groupNum, depth, orderNum, parent, hitCount, created)
+		values
+			(#{boardNum}, #{roomNum}, #{boardId}, #{boardName}, #{boardTitle}, #{boardContent},
+			#{imagePath}, #{groupNum}, #{depth}, #{orderNum}, #{parent}, 0, sysdate)
+	</insert>
+	
+	<update id="orderNumUpdate" parameterType="map">
+		update roomBoard set orderNum = orderNum + 1
+			where boardNum = #{boardNum} and (groupNum = #{groupNum} and orderNum > #{orderNum})
+	</update>
+	
+	<update id="updateRoomBoard" parameterType="map">
+		update roomBoard set boardId=#{boardId}, boardName=#{boardName}, boardTitle=#{boardTitle}, boardContent=#{boardContent}, imagePath=#{imagepath} where roomBoard = #{roomBoard} and boardNum=#{boardNum}
+	</update>
+	
+	<delete id="deleteBoardData" parameterType="map">
+		delete roomBoard where roomNum = #{roomNum} and boardNum = #{boardNum} and groupNum in (
+			select boardNum from roomBoard start with boardNum = #{boardNum} connect by prior boardNum = parent
+		)
+	</delete>
+	
+	<delete id="deleteBoardMyData" parameterType="map">
+		delete roomBoard where roomNum = #{roomNum} and boardId = #{boardId}
+	</delete>
+	
+	<delete id="deleteBoardAllData" parameterType="int">
+		delete roomBoard where roomNum = #{roomNum}
+	</delete>
+	
+	<select id="getRoomData" resultType="com.project.roomInfo.RoomInfoDTO" parameterType="int">
+		select subject, keyword, manager, title, introduce, backgroundImage, totalP, currentP, created from wholeRoom where roomNum = #{roomNum}
+	</select>
+	
+	<select id="getRoomList" resultType="com.project.roomInfo.RoomInfoDTO" parameterType="map">
+		select * from (
+			select rownum rnum, data.* from (
+		 		select roomNum, subject, keyword, manager, title, introduce, backgroundImage, totalP, currentP, to_char(created, 'YYYY-MM-DD') created from wholeRoom
+		 		where (subject like '%' || #{subject} || '%' and regexp_like (keyword, #{keyword})) order by created desc
+	 		) data
+ 		) where rnum >= #{start} and rnum <![CDATA[<=]]> #{end}
+	</select>
+	
+	<select id="getTest" resultType="com.project.roomInfo.TestDTO" parameterType="map">
+		select * from test
+			where <foreach collection="list" item="item" index="index" separator="and"> name like '%' || #{item} || '%' </foreach>
+	</select>
+</mapper>
