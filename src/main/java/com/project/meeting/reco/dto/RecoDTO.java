@@ -9,7 +9,9 @@ public class RecoDTO {
 	private String introduce;
 	private String content;
 	private String location;
-	private String imgUrl;
+	private String lat;
+	private String lon;
+	
 	public int getRecoNum() {
 		return recoNum;
 	}
@@ -52,12 +54,21 @@ public class RecoDTO {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public String getImgUrl() {
-		return imgUrl;
+	public String getLat() {
+		return lat;
 	}
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
+	public void setLat(String lat) {
+		this.lat = lat;
 	}
+	public String getLon() {
+		return lon;
+	}
+	public void setLon(String lon) {
+		this.lon = lon;
+	}
+	
+	
+	
 	
 	
 	

@@ -35,10 +35,11 @@ public class RecoController {
 		if(mode!=null) {
 			
 			
-			  int pageNo=0; dao.insertData(RecoDBStudyParser.DBLibParser(0));
+			  int pageNo=0; 
+			  dao.insertData(RecoDBStudyParser.libParser(0));
 			  
-			  for(pageNo=1;pageNo<(RecoDBStudyParser.totalCount/100)+1;pageNo++){
-			  dao.insertData(RecoDBStudyParser.DBLibParser(pageNo)); }
+			  for(pageNo=1;pageNo<(RecoDBStudyParser.totalCount/100)+2;pageNo++){
+			  dao.insertData(RecoDBStudyParser.libParser(pageNo)); }
 			 
 			  System.out.println("업데이트 완료");
 		}

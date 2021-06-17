@@ -18,6 +18,7 @@ import com.project.meeting.reco.controller.RecoController;
 import com.project.meeting.reco.dao.RecoDAO;
 import com.project.meeting.reco.dto.RecoDTO;
 
+import java.awt.dnd.DropTargetListener;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -31,13 +32,15 @@ public class RecoDBStudyParser {
 	
 	public static int totalCount;//도서관 totalCount
 	
+	
 	/*
 	 * public static void main(String[] args) throws IOException,
-	 * InterruptedException { DBLibParser(0); }
+	 * InterruptedException { libParser(0); }
 	 */
+	 
 	
 	
-    public static List<RecoDTO> DBLibParser(int pageNo) throws IOException, InterruptedException {
+    public static List<RecoDTO> libParser(int pageNo) throws IOException, InterruptedException {
     	//도서관 API
     	
         StringBuilder urlBuilder = new StringBuilder("http://api.data.go.kr/openapi/tn_pubr_public_lbrry_api"); /*URL*/
@@ -99,10 +102,11 @@ public class RecoDBStudyParser {
         	+ "<br/>공휴일운영종료시각 : " + ((object.get("holidayCloseOpenHhmm")).toString()).replace("\"", "")//공휴일운영종료시각 content
         	+ "<br/>도서관전화번호 : " + ((object.get("phoneNumber")).toString()).replace("\"", ""));////도서관전화번호 content
         	dto.setLocation("소재지도로명주소 : " + ((object.get("rdnmadr")).toString()).replace("\"", ""));//소재지도로명주소 location
-			dto.setImgUrl(RecoDBNaverParser.naverImg(dto.getTitle()));  
+        	dto.setLat(((object.get("latitude")).toString()).replace("\"", ""));
+        	dto.setLon(((object.get("longitude")).toString()).replace("\"", ""));
         	
         	list.add(dto);
-        	Thread.sleep(50);
+        	
 
         }
         
