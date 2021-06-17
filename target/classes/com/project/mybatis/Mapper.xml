@@ -11,13 +11,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(userNum_seq.nextval,#{userId},#{userPwd},#{userName},#{gender},#{email},${tel},0)
 	</insert>
 	
-	<select id="overlapId" parameterType="map" resultType="int">
+	<select id="checkId" parameterType="map" resultType="int">
 		select count(*) from users where userId=#{userId} 
 	</select>
 	
-	<select id="overlapEmail" parameterType="map" resultType="int">
+	<select id="checkEmail" parameterType="map" resultType="int">
 		select count(*) from users where email=#{userEmail} 
 	</select>
+	
+	<select id="checkPwd" parameterType="map" resultType="String">
+		select userPwd from users where userId=#{userId} or email=#{userId}
+	</select>
+	
+	<update id="resetPwd" parameterType="map">
+		update users set userPwd = #{userPwd} where email = #{email}
+	</update>
 
 
 </mapper>

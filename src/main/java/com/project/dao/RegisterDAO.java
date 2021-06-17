@@ -21,19 +21,35 @@ public class RegisterDAO {
 	public void insertUserData(UserDTO dto) {
 		sessionTemplate.insert("com.Mapper.insertUserData",dto);
 	}
-	public int overlapId(String userId) {
+	public int checkId(String userId) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("userId",userId);
 		
-		return sessionTemplate.selectOne("com.Mapper.overlapId",params);
+		int result = sessionTemplate.selectOne("com.Mapper.checkId",params);
+		
+		return result;
 	}
-	public int overlapEmail(String email) {
+	public int checkEmail(String email) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("userEmail",email);
+		return sessionTemplate.selectOne("com.Mapper.checkEmail",params);
+	}
+	public String checkPwd(String userId) {
 		
-		return sessionTemplate.selectOne("com.Mapper.overlapEmail",params);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("userId",userId);
+		
+		return sessionTemplate.selectOne("com.Mapper.checkPwd",params);
+	}
+	public void resetPwd(String email,String pwd) {
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("email", email);
+		params.put("userPwd", pwd);
+		
+		sessionTemplate.update("com.Mapper.resetPwd", params);
+		
 	}
 
 }

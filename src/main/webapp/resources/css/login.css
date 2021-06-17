@@ -1,1 +1,7 @@
 @charset "UTF-8";
+
+/*ERROR MESSAGE*/
+.errorMessage{
+	color: #D63727;
+	font-weight: 700;
+}

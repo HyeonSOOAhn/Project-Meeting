@@ -28,25 +28,7 @@
 <link href="css/register.css" rel="stylesheet">
 
 
-<script type="text/javascript">
 
-function sendIt() {
-	
-	var f = document.myForm;
-	
-	//값들이 형식에 맞는지 구현 (이거 spring에 있나?)
-	
-	
-	
-	f.action = "<%=cp%>/register_ok.action";
-	f.submit();
-	
-}
-
-
-
-
-</script>
 
 </head>
 
@@ -65,26 +47,31 @@ function sendIt() {
 								<h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
 							</div>
 							<form name="myForm" class="user" method="post">
-							
+
 								<div class="form-group">
 									<span class="errorMessage nameCon hide"></span>
 								</div>
-								
+
 								<div class="form-group row">
 									<div class="col-sm-8">
-										<input type="text" name="userName" class="form-control form-control-user"
+										<input type="text" name="userName"
+											class="form-control form-control-user btn-active"
 											id="userName" placeholder="이름">
 									</div>
-									
-										<div class="col-sm-4 " style="vertical-align: middle; text-align: left;">
-											<input type="radio" id="man" value=1 name=gender style="display:none ;">
-											<label for="man" class="genderLabel"><span>남</span></label>
-											<input type="radio" id="woman" value=0 name="gender" style="display:none";>
-											<label for="woman" class="genderLabel"><span>여</span></label>
-										</div>
-									
+
+									<div class="col-sm-4 "
+										style="vertical-align: middle; text-align: left;">
+										<input type="radio" id="man" value=1 name="gender"
+											style="display: none;"> <label for="man"
+											class="genderLabel"><span>남</span></label> 
+										<input
+											type="radio" id="woman" value=2 name="gender"
+											style="display: none;"> <label for="woman"
+											class="genderLabel"><span>여</span></label>
+									</div>
+
 								</div>
-								
+
 								<c:choose>
 									<c:when test="${!empty requestScope.existId}">
 										<div class="form-group">
@@ -92,18 +79,19 @@ function sendIt() {
 										</div>
 									</c:when>
 								</c:choose>
-								
+
 								<div class="form-group">
 									<span class="errorMessage idCon hide"></span>
 								</div>
-								
+
 								<div class="form-group row">
 									<div class="col-sm-8">
-										<input type="text" name="userId" class="form-control form-control-user"
-											id="userId" placeholder="아이디">
+										<input type="text" name="userId"
+											class="form-control form-control-user btn-active" id="userId"
+											placeholder="아이디">
 									</div>
 								</div>
-								
+
 								<c:choose>
 									<c:when test="${!empty requestScope.existEmail}">
 										<div class="form-group">
@@ -111,46 +99,52 @@ function sendIt() {
 										</div>
 									</c:when>
 								</c:choose>
-								
+
 								<div class="form-group">
-									<span class="errorMessage emailCon hide">이메일 형식에 맞게 입력해주세요.</span>
+									<span class="errorMessage emailCon hide"></span>
 								</div>
-								
+
 								<div class="form-group">
-									<input type="email" name="email" class="form-control form-control-user"
+									<input type="email" name="email"
+										class="form-control form-control-user btn-active"
 										id="InputEmail" placeholder="이메일">
 								</div>
-								
-								
+
+
 								<div class="form-group">
 									<span class="errorMessage passwordCon hide"></span>
 								</div>
-								
+
 								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
-										<input type="password" name="userPwd" class="form-control form-control-user"
+										<input type="password" name="userPwd"
+											class="form-control form-control-user btn-active"
 											id="InputPassword" placeholder="비밀번호">
 									</div>
 									<div class="col-sm-6">
-										<input type="password" name="userPwdCon" class="form-control form-control-user"
+										<input type="password" name="userPwdCon"
+											class="form-control form-control-user btn-active"
 											id="RepeatPassword" placeholder="비밀번호 확인">
 									</div>
 								</div>
-								
+
 								<div class="form-group">
-									<span class="errorMessage telCon hide">["-","."]등 이 없이 입력해주세요.</span>
+									<span class="errorMessage telCon hide"></span>
 								</div>
-								
+
 								<div class="form-group">
-									<input type="text" name="tel" class="form-control form-control-user"
-										id="tel" placeholder="전화번호">
+									<input type="text" name="tel"
+										class="form-control form-control-user btn-active" id="tel"
+										placeholder="전화번호">
 								</div>
-								
-								
-								<input type="button" value="Register Account" disabled="disabled" class="btn btn-primary btn-user btn-block" \
-									onclick="sendIt();"/>
+
+
+								<input type="button" value="Register Account"
+									disabled="disabled"
+									class="btn btn-primary registerBtn btn-user btn-block"
+									onclick="sendIt();" />
 								<hr>
-								
+
 							</form>
 							<hr>
 							<div class="text-center">
@@ -178,9 +172,18 @@ function sendIt() {
 
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
-	
+
 	<!-- confirm -->
 	<script src="js/register.js"></script>
+	<script type="text/javascript">
+	
+		function sendIt() {
+			f.action = "<%=cp%>/register_ok.action";
+			f.submit();
+		}
+	
+	</script>]
+
 
 </body>
 
