@@ -1,4 +1,4 @@
-package com.project.meeting;
+package com.project.controller;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +37,7 @@ public class MeetingController {
 		if(info == null) {
 			
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("login");
+			mav.setViewName("/login/login");
 			
 			return mav;
 		}
@@ -54,7 +54,7 @@ public class MeetingController {
 	public ModelAndView register() throws Exception{
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("Register");
+		mav.setViewName("/register/Register");
 		
 		return mav;
 	}
@@ -65,11 +65,11 @@ public class MeetingController {
 		//값들이 존재하는 값들이 아닌지 구현
 		if(dao.checkId(dto.getUserId()) != 0) {
 			req.setAttribute("existId","아이디가 이미 존재합니다." );
-			return "Register";
+			return "/register/Register";
 		}
 		if(dao.checkEmail(dto.getEmail()) != 0) {
 			req.setAttribute("existEmail","이메일이 이미 존재합니다." );
-			return "Register";
+			return "/register/Register";
 		}
 		
 		dao.insertUserData(dto);
@@ -82,21 +82,18 @@ public class MeetingController {
 	public ModelAndView login() throws Exception{
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("login");
+		mav.setViewName("/login/login");
 		
 		return mav;
 	}
 	@RequestMapping(value="/logout.action",
 			method = RequestMethod.POST)
-	public ModelAndView logout(HttpServletRequest req) throws Exception{
+	public String logout(HttpServletRequest req) throws Exception{
 		
 		HttpSession session = req.getSession();
 		session.removeAttribute("userInfo");
 		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("main");
-		
-		return mav;
+		return "redirect:/main.action";
 	}
 	
 	@RequestMapping(value="/login_ok.action",
@@ -106,12 +103,12 @@ public class MeetingController {
 		//아이디 or 이메일 존재하는지 있다면 비밀번호 맞는지 확인하는 거 구현
 		if(dao.checkId(userId) == 0 && dao.checkEmail(userId) == 0) {
 			req.setAttribute("noExistInfo","아이디/이메일이나 비밀번호가 틀렸습니다." );
-			return "login";
+			return "/login/login";
 		}
 		
 		if(!dao.checkPwd(userId).equals(userPwd)) {
 			req.setAttribute("noExistInfo","아이디/이메일이나 비밀번호가 틀렸습니다." );
-			return "login";
+			return "/login/login";
 		}
 		
 		UserDTO dto = new UserDTO();
@@ -148,7 +145,7 @@ public class MeetingController {
 
 		req.setAttribute("email", email);
 		
-		return "forgotPwd";
+		return "/login/forgotPwd";
 	}
 	
 	@RequestMapping(value="/forgotPwd_ok.action",
@@ -157,7 +154,7 @@ public class MeetingController {
 		
 		if(dao.checkEmail(email) == 0) {
 			req.setAttribute("noExistEmail","등록된 이메일이 없습니다." );
-			return "forgot-password";
+			return "/login/forgotPwd";
 		}else {
 			return "redirect:/sendEmail.action?email=" + email;
 		}
@@ -188,14 +185,14 @@ public class MeetingController {
 		
 		req.setAttribute("sendedEmail","등록된 이메일주소로 메일을 보냈습니다. 확인해 주세요. <br> 이 창은 종료하셔도 좋습니다.");
 		
-		return "forgotPwd";
+		return "/login/forgotPwd";
 	}
 	@RequestMapping(value="/resetPwd_ok.action",
 			method = {RequestMethod.POST,RequestMethod.GET})
 	public String resetPwd(String email,String userPwd,HttpServletRequest req) throws Exception{
 		dao.resetPwd(email, userPwd);
 		
-		return "login";
+		return "/login/login";
 	}
 	
 	
