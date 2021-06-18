@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 </environments>
 
 <mappers>
-	<mapper resource="com/jdbc/mybatis/boardMapper.xml"/>
+	<mapper resource="com/project/mybatis/Mapper.xml"/>
 	
 </mappers>
 
