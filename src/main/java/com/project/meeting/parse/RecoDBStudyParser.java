@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class RecoDBStudyParser {
 	
-	public static int totalCount;//µµ¼­°ü totalCount
+	public static int totalCount;//ë„ì„œê´€ totalCount
 	
 	
 	/*
@@ -39,13 +39,13 @@ public class RecoDBStudyParser {
 	 */
 	 
 	public static void totalCountParser() throws IOException, InterruptedException {
-    	//µµ¼­°ü APIÀÇ totalCount¸¦ °¡Á®¿Â´Ù.
+    	//ë„ì„œê´€ APIì˜ totalCountë¥¼ ê°€ì ¸ì˜¨ë‹¤.
     	
         StringBuilder urlBuilder = new StringBuilder("http://api.data.go.kr/openapi/tn_pubr_public_lbrry_api"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=wx1FtCvq2AivHsuIAfn24wTlffKB2K7uVzmPcNxwKSbT2ZNKATW4WdEDX%2Fx7MPv4PTxrP3zUqPANPq%2Byqdz5tg%3D%3D"); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + 1); /*ÆäÀÌÁö ¹øÈ£*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*ÇÑ ÆäÀÌÁö °á°ú ¼ö*/
-        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*XML/JSON ¿©ºÎ*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + 1); /*í˜ì´ì§€ ë²ˆí˜¸*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*í•œ í˜ì´ì§€ ê²°ê³¼ ìˆ˜*/
+        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*XML/JSON ì—¬ë¶€*/
 
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -66,23 +66,23 @@ public class RecoDBStudyParser {
         rd.close();
         conn.disconnect();
          
-        //ÆÄ½Ì
+        //íŒŒì‹±
         JsonParser Parser = new JsonParser();
         JsonObject jObj1 = (JsonObject) Parser.parse(sb.toString());
         jObj1 = (JsonObject) jObj1.get("response");
         jObj1 = (JsonObject) jObj1.get("body");
         
-        totalCount = Integer.parseInt((((jObj1.get("totalCount")).toString()).replace("\"", "")));//µ¥ÀÌÅÍ ÀüÃ¼ °¹¼ö
+        totalCount = Integer.parseInt((((jObj1.get("totalCount")).toString()).replace("\"", "")));//ë°ì´í„° ì „ì²´ ê°¯ìˆ˜
         
 	}
 	
     public static List<RecoDTO> libParser(int pageNo) throws IOException, InterruptedException {
-    	//µµ¼­°ü APIÀÇ µ¥ÀÌÅÍ¸¦ dto¿¡ ´ã´Â´Ù.
+    	//ë„ì„œê´€ APIì˜ ë°ì´í„°ë¥¼ dtoì— ë‹´ëŠ”ë‹¤.
         StringBuilder urlBuilder = new StringBuilder("http://api.data.go.kr/openapi/tn_pubr_public_lbrry_api"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=wx1FtCvq2AivHsuIAfn24wTlffKB2K7uVzmPcNxwKSbT2ZNKATW4WdEDX%2Fx7MPv4PTxrP3zUqPANPq%2Byqdz5tg%3D%3D"); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + pageNo); /*ÆäÀÌÁö ¹øÈ£*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*ÇÑ ÆäÀÌÁö °á°ú ¼ö*/
-        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*XML/JSON ¿©ºÎ*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + pageNo); /*í˜ì´ì§€ ë²ˆí˜¸*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*í•œ í˜ì´ì§€ ê²°ê³¼ ìˆ˜*/
+        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*XML/JSON ì—¬ë¶€*/
 
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -103,7 +103,7 @@ public class RecoDBStudyParser {
         rd.close();
         conn.disconnect();
          
-        //ÆÄ½Ì
+        //íŒŒì‹±
         JsonParser Parser = new JsonParser();
         JsonObject jObj1 = (JsonObject) Parser.parse(sb.toString());
         jObj1 = (JsonObject) jObj1.get("response");
@@ -119,19 +119,19 @@ public class RecoDBStudyParser {
 			dto.setRecoNum(((pageNo-1)*100)+i);
 			dto.setSubject("study");
 			dto.setKeyword("library");
-        	dto.setTitle(((object.get("lbrryNm")).toString()).replace("\"", ""));//µµ¼­°ü¸í title 
-        	dto.setIntroduce("½Ãµµ¸í : " + ((object.get("ctprvnNm")).toString()).replace("\"", "")//½Ãµµ¸í introduce
-        	+ "<br/>½Ã±º±¸¸í : " + ((object.get("signguNm")).toString()).replace("\"", "")//½Ã±º±¸¸í introduce
-        	+ "<br/>µµ¼­°ü À¯Çü : " + ((object.get("lbrrySe")).toString()).replace("\"", ""));//µµ¼­°ü À¯Çü introduce
-        	dto.setContent("ÈŞ°üÀÏ : " + ((object.get("closeDay")).toString()).replace("\"", "")//ÈŞ°üÀÏ content
-        	+ "<br/>ÆòÀÏ¿î¿µ½ÃÀÛ½Ã°£ : " + ((object.get("weekdayOperOpenHhmm")).toString()).replace("\"", "")//ÆòÀÏ¿î¿µ½ÃÀÛ½Ã°£ content
-        	+ "<br/>ÆòÀÏ¿î¿µÁ¾·á½Ã°£ : " + ((object.get("weekdayOperColseHhmm")).toString()).replace("\"", "")//ÆòÀÏ¿î¿µÁ¾·á½Ã°£ content
-        	+ "<br/>Åä¿äÀÏ¿î¿µ½ÃÀÛ½Ã°¢ : " + ((object.get("satOperOperOpenHhmm")).toString()).replace("\"", "")//Åä¿äÀÏ¿î¿µ½ÃÀÛ½Ã°¢ content
-        	+ "<br/>Åä¿äÀÏ¿î¿µÁ¾·á½Ã°¢ : " + ((object.get("satOperCloseHhmm")).toString()).replace("\"", "")//Åä¿äÀÏ¿î¿µÁ¾·á½Ã°¢ content
-        	+ "<br/>°øÈŞÀÏ¿î¿µ½ÃÀÛ½Ã°¢ : " + ((object.get("holidayOperOpenHhmm")).toString()).replace("\"", "")//°øÈŞÀÏ¿î¿µ½ÃÀÛ½Ã°¢ content
-        	+ "<br/>°øÈŞÀÏ¿î¿µÁ¾·á½Ã°¢ : " + ((object.get("holidayCloseOpenHhmm")).toString()).replace("\"", "")//°øÈŞÀÏ¿î¿µÁ¾·á½Ã°¢ content
-        	+ "<br/>µµ¼­°üÀüÈ­¹øÈ£ : " + ((object.get("phoneNumber")).toString()).replace("\"", ""));////µµ¼­°üÀüÈ­¹øÈ£ content
-        	dto.setLocation("¼ÒÀçÁöµµ·Î¸íÁÖ¼Ò : " + ((object.get("rdnmadr")).toString()).replace("\"", ""));//¼ÒÀçÁöµµ·Î¸íÁÖ¼Ò location
+        	dto.setTitle(((object.get("lbrryNm")).toString()).replace("\"", ""));//ë„ì„œê´€ëª… title 
+        	dto.setIntroduce("ì‹œë„ëª… : " + ((object.get("ctprvnNm")).toString()).replace("\"", "")//ì‹œë„ëª… introduce
+        	+ "<br/>ì‹œêµ°êµ¬ëª… : " + ((object.get("signguNm")).toString()).replace("\"", "")//ì‹œêµ°êµ¬ëª… introduce
+        	+ "<br/>ë„ì„œê´€ ìœ í˜• : " + ((object.get("lbrrySe")).toString()).replace("\"", ""));//ë„ì„œê´€ ìœ í˜• introduce
+        	dto.setContent("íœ´ê´€ì¼ : " + ((object.get("closeDay")).toString()).replace("\"", "")//íœ´ê´€ì¼ content
+        	+ "<br/>í‰ì¼ìš´ì˜ì‹œì‘ì‹œê°„ : " + ((object.get("weekdayOperOpenHhmm")).toString()).replace("\"", "")//í‰ì¼ìš´ì˜ì‹œì‘ì‹œê°„ content
+        	+ "<br/>í‰ì¼ìš´ì˜ì¢…ë£Œì‹œê°„ : " + ((object.get("weekdayOperColseHhmm")).toString()).replace("\"", "")//í‰ì¼ìš´ì˜ì¢…ë£Œì‹œê°„ content
+        	+ "<br/>í† ìš”ì¼ìš´ì˜ì‹œì‘ì‹œê° : " + ((object.get("satOperOperOpenHhmm")).toString()).replace("\"", "")//í† ìš”ì¼ìš´ì˜ì‹œì‘ì‹œê° content
+        	+ "<br/>í† ìš”ì¼ìš´ì˜ì¢…ë£Œì‹œê° : " + ((object.get("satOperCloseHhmm")).toString()).replace("\"", "")//í† ìš”ì¼ìš´ì˜ì¢…ë£Œì‹œê° content
+        	+ "<br/>ê³µíœ´ì¼ìš´ì˜ì‹œì‘ì‹œê° : " + ((object.get("holidayOperOpenHhmm")).toString()).replace("\"", "")//ê³µíœ´ì¼ìš´ì˜ì‹œì‘ì‹œê° content
+        	+ "<br/>ê³µíœ´ì¼ìš´ì˜ì¢…ë£Œì‹œê° : " + ((object.get("holidayCloseOpenHhmm")).toString()).replace("\"", "")//ê³µíœ´ì¼ìš´ì˜ì¢…ë£Œì‹œê° content
+        	+ "<br/>ë„ì„œê´€ì „í™”ë²ˆí˜¸ : " + ((object.get("phoneNumber")).toString()).replace("\"", ""));////ë„ì„œê´€ì „í™”ë²ˆí˜¸ content
+        	dto.setLocation("ì†Œì¬ì§€ë„ë¡œëª…ì£¼ì†Œ : " + ((object.get("rdnmadr")).toString()).replace("\"", ""));//ì†Œì¬ì§€ë„ë¡œëª…ì£¼ì†Œ location
         	dto.setLat(((object.get("latitude")).toString()).replace("\"", ""));
         	dto.setLon(((object.get("longitude")).toString()).replace("\"", ""));
         	

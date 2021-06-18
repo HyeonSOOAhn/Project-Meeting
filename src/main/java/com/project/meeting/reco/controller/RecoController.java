@@ -51,11 +51,25 @@ public class RecoController {
 		dao.insertData();
 		
 
-		System.out.println("¾÷µ¥ÀÌÆ® ¿Ï·á");
+		System.out.println("ì—…ë°ì´íŠ¸ ì™„ë£Œ");
 		
 		return "redirect:reco_main";
 	}
+	
+	@RequestMapping(value = "/reco_showMap", method = RequestMethod.GET)
+	public String showMap(HttpServletRequest request){
+		
+		int recoNum = Integer.parseInt(request.getParameter("recoNum"));
+		
+		RecoDTO list = (RecoDTO) dao.getRecoNum(recoNum);
 
+		request.setAttribute("list", list);
+
+		return "showMap";
+		
+		
+	}
+	
 	
 	
 }

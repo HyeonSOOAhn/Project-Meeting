@@ -16,15 +16,15 @@ import com.project.meeting.reco.dto.RecoDTO;
 public class RecoDBNaverParser {
 	
 	public static String naverImg(String title) throws IOException {
-    	//³×ÀÌ¹öÀÌ¹ÌÁö °Ë»ö API
-    	String clientID = "35pKO_jU57WPSwxCblWm"; //¾ÖÇÃ¸®ÄÉÀÌ¼Ç Å¬¶óÀÌ¾ğÆ® ¾ÆÀÌµğ°ª"
-        String clientSecret = "kkmJ_uImfj"; //¾ÖÇÃ¸®ÄÉÀÌ¼Ç Å¬¶óÀÌ¾ğÆ® ½ÃÅ©¸´°ª"
+    	//ë„¤ì´ë²„ì´ë¯¸ì§€ ê²€ìƒ‰ API
+    	String clientID = "35pKO_jU57WPSwxCblWm"; //ì• í”Œë¦¬ì¼€ì´ì…˜ í´ë¼ì´ì–¸íŠ¸ ì•„ì´ë””ê°’"
+        String clientSecret = "kkmJ_uImfj"; //ì• í”Œë¦¬ì¼€ì´ì…˜ í´ë¼ì´ì–¸íŠ¸ ì‹œí¬ë¦¿ê°’"
         
         String text = null;
         try {
             text = URLEncoder.encode(title, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("°Ë»ö¾î ÀÎÄÚµù ½ÇÆĞ",e);
+            throw new RuntimeException("ê²€ìƒ‰ì–´ ì¸ì½”ë”© ì‹¤íŒ¨",e);
         }
         
         StringBuilder urlBuilder = new StringBuilder(("https://openapi.naver.com/v1/search/image?query=") + text); /*URL*/

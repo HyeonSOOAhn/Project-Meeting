@@ -25,6 +25,13 @@ public class RecoDAO {
 		return lists;
 	}
 	
+	public RecoDTO getRecoNum(int recoNum){
+		
+		RecoDTO list = (RecoDTO) sessionTemplate.selectList("com.recoMapper.getLists", recoNum);
+		
+		return list;
+	}
+	
 	public void insertData() throws IOException, InterruptedException{
 
 		RecoDBStudyParser.totalCountParser();
@@ -38,6 +45,8 @@ public class RecoDAO {
 		}
 
 	}
+	
+	
 
 
 }
