@@ -35,11 +35,16 @@
 		<beans:property name="maxInMemorySize" value="100000000" /> 
 	</beans:bean>
 	
-	<!-- MyBatis DB연결 -->
+	<!-- DAO -->
+	<beans:bean id="registerDAO" class="com.project.dao.RegisterDAO">
+		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
+	</beans:bean>
+	
 	<beans:bean id="roomDAO" class="com.project.dao.RoomDAO">
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
 	
+	<!-- MyBatis DB연결 -->
 	<beans:bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg ref="sessionFactory"/>
 	</beans:bean>
@@ -55,5 +60,6 @@
 		<beans:property name="username" value="suzi"/>
 		<beans:property name="password" value="a123"/>
 	</beans:bean>
+
 	
 </beans:beans>
