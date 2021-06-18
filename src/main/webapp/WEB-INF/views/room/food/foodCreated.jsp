@@ -133,7 +133,7 @@
                                 </div>
                                	
                                	<input type="hidden" name="subject" value="맛집">
-                                <input type="hidden" name="manager" value="1">
+                                <input type="hidden" name="manager" value="manager">
                                 
                                 <input type="button" class="btn btn-primary btn-user btn-block" value="생 성 하 기" onclick="sendIt();">
                                 

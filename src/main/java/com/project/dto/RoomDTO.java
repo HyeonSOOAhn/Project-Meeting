@@ -12,7 +12,7 @@ public class RoomDTO {
 	private int totalP;
 	private int currentP;
 	
-	private int manager;
+	private String manager;
 	
 	//파일 업로드
 	private int fileNum;
@@ -69,10 +69,10 @@ public class RoomDTO {
 	public void setCurrentP(int currentP) {
 		this.currentP = currentP;
 	}
-	public int getManager() {
+	public String getManager() {
 		return manager;
 	}
-	public void setManager(int manager) {
+	public void setManager(String manager) {
 		this.manager = manager;
 	}
 	public int getFileNum() {
