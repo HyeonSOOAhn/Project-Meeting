@@ -15,17 +15,17 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Component("fileUtil")
 public class FileUtil {
 	
-	//ÆÄÀÏÀÌ ÀúÀåµÉ À§Ä¡
+	//íŒŒì¼ì´ ì €ì¥ë  ìœ„ì¹˜
 	//private static final String filePath = "D:\\sts-bundle\\Project-Meeting\\src\\main\\webapp\\resources\\upload\\";
 	private static final String filePath = "D:\\sts-bundle\\work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Meeting\\resources\\upload\\";
 	
-	//ÆÄÀÏ ¾÷·Îµå
+	//íŒŒì¼ ì—…ë¡œë“œ
 	public List<Map<String,Object>> parseInsertFileInfo (RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
 		
 		/*
-		IteratorÀº µ¥ÀÌÅÍµéÀÇ ÁıÇÕÃ¼? ¿¡¼­ ÄÃ·º¼ÇÀ¸·ÎºÎÅÍ Á¤º¸¸¦ ¾ò¾î¿Ã ¼ö ÀÖ´Â ÀÎÅÍÆäÀÌ½ºÀÔ´Ï´Ù.
-		List³ª ¹è¿­Àº ¼øÂ÷ÀûÀ¸·Î µ¥ÀÌÅÍÀÇ Á¢±ÙÀÌ °¡´ÉÇÏÁö¸¸, MapµîÀÇ Å¬·¡½ºµéÀº ¼øÂ÷ÀûÀ¸·Î Á¢±ÙÇÒ ¼ö°¡ ¾ø½À´Ï´Ù.
-		IteratorÀ» ÀÌ¿ëÇÏ¿© Map¿¡ ÀÖ´Â µ¥ÀÌÅÍµéÀ» while¹®À» ÀÌ¿ëÇÏ¿© ¼øÂ÷ÀûÀ¸·Î Á¢±ÙÇÕ´Ï´Ù.
+		Iteratorì€ ë°ì´í„°ë“¤ì˜ ì§‘í•©ì²´? ì—ì„œ ì»¬ë ‰ì…˜ìœ¼ë¡œë¶€í„° ì •ë³´ë¥¼ ì–»ì–´ì˜¬ ìˆ˜ ìˆëŠ” ì¸í„°í˜ì´ìŠ¤ì…ë‹ˆë‹¤.
+		Listë‚˜ ë°°ì—´ì€ ìˆœì°¨ì ìœ¼ë¡œ ë°ì´í„°ì˜ ì ‘ê·¼ì´ ê°€ëŠ¥í•˜ì§€ë§Œ, Mapë“±ì˜ í´ë˜ìŠ¤ë“¤ì€ ìˆœì°¨ì ìœ¼ë¡œ ì ‘ê·¼í•  ìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤.
+		Iteratorì„ ì´ìš©í•˜ì—¬ Mapì— ìˆëŠ” ë°ì´í„°ë“¤ì„ whileë¬¸ì„ ì´ìš©í•˜ì—¬ ìˆœì°¨ì ìœ¼ë¡œ ì ‘ê·¼í•©ë‹ˆë‹¤.
 		*/
 		
 		Iterator<String> it = mpRequest.getFileNames();
@@ -79,7 +79,7 @@ public class FileUtil {
 		
 	}
 	
-	//ÆÄÀÏ ¼öÁ¤
+	//íŒŒì¼ ìˆ˜ì •
 	public List<Map<String,Object>> parseUpdateFileInfo (RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
 		
 		Iterator<String> it = mpRequest.getFileNames();
@@ -92,7 +92,7 @@ public class FileUtil {
 		List<Map<String,Object>> lists = new ArrayList<Map<String,Object>>();
 		Map<String,Object> listsMap = null;
 		
-		//±âÁ¸ ÆÄÀÏ »èÁ¦
+		//ê¸°ì¡´ íŒŒì¼ ì‚­ì œ
 		File deleteFile = new File(filePath + dto.getStoredFileName());
 		if(deleteFile.exists()) {
 			deleteFile.delete();
@@ -144,7 +144,7 @@ public class FileUtil {
 		
 	}
 	
-	//ÆÄÀÏ »èÁ¦
+	//íŒŒì¼ ì‚­ì œ
 	public void parseDeleteFileInfo (String storedFileName) {
 		
 		File file = new File(filePath + storedFileName);
@@ -155,7 +155,7 @@ public class FileUtil {
 		
 	}
 	
-	//32±ÛÀÚÀÇ ·£´ıÇÑ ¹®ÀÚ¿­(¼ıÀÚÆ÷ÇÔ)À» ¸¸µé¾î¼­ ¹İÈ¯ÇØÁÖ´Â ±â´É
+	//32ê¸€ìì˜ ëœë¤í•œ ë¬¸ìì—´(ìˆ«ìí¬í•¨)ì„ ë§Œë“¤ì–´ì„œ ë°˜í™˜í•´ì£¼ëŠ” ê¸°ëŠ¥
 	public static String getRandomString() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}

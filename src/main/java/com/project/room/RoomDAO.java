@@ -10,15 +10,15 @@ public class RoomDAO {
 	
 private SqlSessionTemplate sessionTemplate;
 	
-	//ÀÇÁ¸¼º ÁÖÀÔ
+	//ì˜ì¡´ì„± ì£¼ì…
 	public void setSessionTemplate(SqlSessionTemplate sessionTemplate) {
 		
 		this.sessionTemplate = sessionTemplate;
 		
 	}
 	
-	//ÀüÃ¼ ¹æ --------------------------------------------------------------
-	//ÀÔ·Â
+	//ì „ì²´ ë°© --------------------------------------------------------------
+	//ì…ë ¥
 	public void insertData(Map<String,Object> map) {
 		
 		sessionTemplate.insert("com.roomMapper.insertData", map);
@@ -26,14 +26,14 @@ private SqlSessionTemplate sessionTemplate;
 	}
 	
 	/*
-	//ÆÄÀÏ ÀÔ·Â
+	//íŒŒì¼ ì…ë ¥
 	public void insertFile(Map<String,Object> map) {
 		
 		sessionTemplate.insert("com.roomMapper.insertFile", map);
 		
 	}
 	
-	//ÆÄÀÏ Ãâ·Â
+	//íŒŒì¼ ì¶œë ¥
 	public List<Map<String,Object>> selectFileList(int roomNum) {
 		
 		List<Map<String,Object>> lists = sessionTemplate.selectList("com.roomMapper.selectFileList",roomNum);
@@ -43,7 +43,7 @@ private SqlSessionTemplate sessionTemplate;
 	}
 	*/
 	
-	//ÀüÃ¼ µ¥ÀÌÅÍ °³¼ö
+	//ì „ì²´ ë°ì´í„° ê°œìˆ˜
 	public int getDataCount(String searchKey,String searchValue) {
 		
 		int totalDataCount = 0;
@@ -58,8 +58,8 @@ private SqlSessionTemplate sessionTemplate;
 		
 	}
 	
-	//Ç¥½ÃÇÒ ÆäÀÌÁö (rownum ¹üÀ§) µ¥ÀÌÅÍ
-	public List<RoomDTO> getLists(int start,int end,String searchKey,String searchValue) {//ÆäÀÌÂ¡ÇÒ ¹øÈ£ÀÇ ½ÃÀÛ°ú ³¡
+	//í‘œì‹œí•  í˜ì´ì§€ (rownum ë²”ìœ„) ë°ì´í„°
+	public List<RoomDTO> getLists(int start,int end,String searchKey,String searchValue) {//í˜ì´ì§•í•  ë²ˆí˜¸ì˜ ì‹œì‘ê³¼ ë
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("start", start);
@@ -73,7 +73,7 @@ private SqlSessionTemplate sessionTemplate;
 			
 	}
 	
-	//roomNumÀ¸·Î Á¶È¸ÇÑ ÇÑ °³ÀÇ µ¥ÀÌÅÍ
+	//roomNumìœ¼ë¡œ ì¡°íšŒí•œ í•œ ê°œì˜ ë°ì´í„°
 	public RoomDTO getReadData(int roomNum) {
 		
 		RoomDTO dto = sessionTemplate.selectOne("com.roomMapper.getReadData", roomNum);
@@ -82,14 +82,14 @@ private SqlSessionTemplate sessionTemplate;
 		
 	}
 	
-	//¼öÁ¤
+	//ìˆ˜ì •
 	public void updateData (Map<String,Object> map) {
 		
 		sessionTemplate.update("com.roomMapper.updateData", map);
 		
 	}
 	
-	//»èÁ¦
+	//ì‚­ì œ
 	public void deleteData(int roomNum) {
 		
 		sessionTemplate.delete("com.roomMapper.deleteData", roomNum);
@@ -97,7 +97,7 @@ private SqlSessionTemplate sessionTemplate;
 	}
 	
 	
-	//¿©Çà ¹æ --------------------------------------------------------------
+	//ì—¬í–‰ ë°© --------------------------------------------------------------
 	public int travelDataCount(String searchKey,String searchValue) {
 		
 		int totalDataCount = 0;
@@ -127,7 +127,7 @@ private SqlSessionTemplate sessionTemplate;
 	}
 	
 	
-	//¸ÀÁı ¹æ --------------------------------------------------------------
+	//ë§›ì§‘ ë°© --------------------------------------------------------------
 	public int foodDataCount(String searchKey,String searchValue) {
 		
 		int totalDataCount = 0;
@@ -157,7 +157,7 @@ private SqlSessionTemplate sessionTemplate;
 	}
 	
 	
-	//¿îµ¿ ¹æ --------------------------------------------------------------
+	//ìš´ë™ ë°© --------------------------------------------------------------
 	public int sportsDataCount(String searchKey,String searchValue) {
 		
 		int totalDataCount = 0;
@@ -187,7 +187,7 @@ private SqlSessionTemplate sessionTemplate;
 	}
 	
 	
-	//¿îµ¿ ¹æ --------------------------------------------------------------
+	//ìš´ë™ ë°© --------------------------------------------------------------
 	public int studyDataCount(String searchKey,String searchValue) {
 		
 		int totalDataCount = 0;

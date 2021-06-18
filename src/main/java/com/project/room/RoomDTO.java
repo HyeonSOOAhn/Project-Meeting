@@ -14,7 +14,7 @@ public class RoomDTO {
 	
 	private int manager;
 	
-	//ÆÄÀÏ ¾÷·Îµå
+	//íŒŒì¼ ì—…ë¡œë“œ
 	private int fileNum;
 	private String originalFileName;
 	private String storedFileName;

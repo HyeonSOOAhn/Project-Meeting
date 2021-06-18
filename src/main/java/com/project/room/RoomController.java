@@ -42,8 +42,8 @@ public class RoomController {
 		
 	}
 	
-	//ÀüÃ¼ ¹æ --------------------------------------------------------------
-	//¹æ ¸¸µé±â
+	//ì „ì²´ ë°© --------------------------------------------------------------
+	//ë°© ë§Œë“¤ê¸°
 	@RequestMapping(value = "/created.action")
 	public ModelAndView created() throws Exception {
 		
@@ -73,7 +73,7 @@ public class RoomController {
 		
 	}
 	
-	//¹æ ¸®½ºÆ®
+	//ë°© ë¦¬ìŠ¤íŠ¸
 	@RequestMapping(value = "/list.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String list(HttpServletRequest request) throws Exception {
 		
@@ -131,7 +131,7 @@ public class RoomController {
 		*/
 		//List<Map<String,Object>> fileList = dao.selectFileList();
 		
-		//param »ç¿ëÀÚ Á¤ÀÇ
+		//param ì‚¬ìš©ì ì •ì˜
 		String param = "";
 		
 		if(!searchValue.equals("")) {
@@ -139,17 +139,17 @@ public class RoomController {
 			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
 		
-		//url »ç¿ëÀÚ Á¤ÀÇ
+		//url ì‚¬ìš©ì ì •ì˜
 		String listUrl = cp + "/list.action";
 		
 		if(!param.equals("")) {
 			listUrl += "?" + param;
 		}
 		
-		//ÆäÀÌÂ¡
+		//í˜ì´ì§•
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
-		//article »ç¿ëÀÚ Á¤ÀÇ
+		//article ì‚¬ìš©ì ì •ì˜
 		String articleUrl = cp + "/article.action?pageNum=" + currentPage;
 		
 		if(!param.equals("")) {
@@ -159,7 +159,7 @@ public class RoomController {
 		String imagePath = request.getSession().getServletContext().getRealPath("/resources/upload/");
 		
 		
-		//Æ÷¿öµùÇÒ ÆäÀÌÁö¿¡ ³Ñ±æ µ¥ÀÌÅÍ
+		//í¬ì›Œë”©í•  í˜ì´ì§€ì— ë„˜ê¸¸ ë°ì´í„°
 		request.setAttribute("lists", lists);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
@@ -171,7 +171,7 @@ public class RoomController {
 		
 	}
 	
-	//¹æ Á¤º¸
+	//ë°© ì •ë³´
 	@RequestMapping(value = "/article.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String article(HttpServletRequest request) throws Exception {
 		
@@ -188,7 +188,7 @@ public class RoomController {
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
-		//¶óÀÎ¼ö
+		//ë¼ì¸ìˆ˜
 		int lineSu = dto.getIntroduce().split("\n").length;
 		
 		dto.setIntroduce(dto.getIntroduce().replaceAll("\n", "<br/>"));
@@ -208,10 +208,10 @@ public class RoomController {
 		
 	}
 	
-	//¼öÁ¤ÇÒ ¶§ »çÁøÆÄÀÏ µî·ÏÇÏ±â.
-	//ÆÄÀÏ ¼öÁ¤Àº µÇ³ª searchkey,searchvalueÁÖ°í ±âÁ¸ÆÄÀÏ »èÁ¦ ¾ÈµÊ.
+	//ìˆ˜ì •í•  ë•Œ ì‚¬ì§„íŒŒì¼ ë“±ë¡í•˜ê¸°.
+	//íŒŒì¼ ìˆ˜ì •ì€ ë˜ë‚˜ searchkey,searchvalueì£¼ê³  ê¸°ì¡´íŒŒì¼ ì‚­ì œ ì•ˆë¨.
 	
-	//¼öÁ¤ÇÒ Àå¼Ò´Â ¹æ¾È¿¡¼­ ÇÏ±â.
+	//ìˆ˜ì •í•  ì¥ì†ŒëŠ” ë°©ì•ˆì—ì„œ í•˜ê¸°.
 	@RequestMapping(value = "/updated.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String updated(HttpServletRequest request) throws Exception {
 		
@@ -283,7 +283,7 @@ public class RoomController {
 		
 	}
 	
-	//»èÁ¦
+	//ì‚­ì œ
 	@RequestMapping(value = "/deleted.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String deleted(HttpServletRequest request) throws Exception {
 		
@@ -312,7 +312,7 @@ public class RoomController {
 	
 	
 	
-	//¿©Çà ¹æ --------------------------------------------------------------
+	//ì—¬í–‰ ë°© --------------------------------------------------------------
 	@RequestMapping(value = "/travelCreated.action")
 	public ModelAndView travelCreated() throws Exception {
 		
@@ -377,7 +377,7 @@ public class RoomController {
 		
 		List<RoomDTO> lists = dao.travelGetLists(start, end, searchKey, searchValue);
 		
-		//param »ç¿ëÀÚ Á¤ÀÇ
+		//param ì‚¬ìš©ì ì •ì˜
 		String param = "";
 		
 		if(!searchValue.equals("")) {
@@ -385,17 +385,17 @@ public class RoomController {
 			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
 		
-		//url »ç¿ëÀÚ Á¤ÀÇ
+		//url ì‚¬ìš©ì ì •ì˜
 		String listUrl = cp + "/travelList.action";
 		
 		if(!param.equals("")) {
 			listUrl += "?" + param;
 		}
 		
-		//ÆäÀÌÂ¡
+		//í˜ì´ì§•
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
-		//article »ç¿ëÀÚ Á¤ÀÇ
+		//article ì‚¬ìš©ì ì •ì˜
 		String articleUrl = cp + "/travelArticle.action?pageNum=" + currentPage;
 		
 		if(!param.equals("")) {
@@ -405,7 +405,7 @@ public class RoomController {
 		String imagePath = request.getSession().getServletContext().getRealPath("/resources/upload/");
 		
 		
-		//Æ÷¿öµùÇÒ ÆäÀÌÁö¿¡ ³Ñ±æ µ¥ÀÌÅÍ
+		//í¬ì›Œë”©í•  í˜ì´ì§€ì— ë„˜ê¸¸ ë°ì´í„°
 		request.setAttribute("lists", lists);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
@@ -432,7 +432,7 @@ public class RoomController {
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
-		//¶óÀÎ¼ö
+		//ë¼ì¸ìˆ˜
 		int lineSu = dto.getIntroduce().split("\n").length;
 		
 		dto.setIntroduce(dto.getIntroduce().replaceAll("\n", "<br/>"));
@@ -454,7 +454,7 @@ public class RoomController {
 	
 	
 	
-	//¸ÀÁı ¹æ --------------------------------------------------------------
+	//ë§›ì§‘ ë°© --------------------------------------------------------------
 	@RequestMapping(value = "/foodCreated.action")
 	public ModelAndView foodCreated() throws Exception {
 		
@@ -519,7 +519,7 @@ public class RoomController {
 		
 		List<RoomDTO> lists = dao.foodGetLists(start, end, searchKey, searchValue);
 		
-		//param »ç¿ëÀÚ Á¤ÀÇ
+		//param ì‚¬ìš©ì ì •ì˜
 		String param = "";
 		
 		if(!searchValue.equals("")) {
@@ -527,17 +527,17 @@ public class RoomController {
 			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
 		
-		//url »ç¿ëÀÚ Á¤ÀÇ
+		//url ì‚¬ìš©ì ì •ì˜
 		String listUrl = cp + "/foodList.action";
 		
 		if(!param.equals("")) {
 			listUrl += "?" + param;
 		}
 		
-		//ÆäÀÌÂ¡
+		//í˜ì´ì§•
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
-		//article »ç¿ëÀÚ Á¤ÀÇ
+		//article ì‚¬ìš©ì ì •ì˜
 		String articleUrl = cp + "/foodArticle.action?pageNum=" + currentPage;
 		
 		if(!param.equals("")) {
@@ -547,7 +547,7 @@ public class RoomController {
 		String imagePath = request.getSession().getServletContext().getRealPath("/resources/upload/");
 		
 		
-		//Æ÷¿öµùÇÒ ÆäÀÌÁö¿¡ ³Ñ±æ µ¥ÀÌÅÍ
+		//í¬ì›Œë”©í•  í˜ì´ì§€ì— ë„˜ê¸¸ ë°ì´í„°
 		request.setAttribute("lists", lists);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
@@ -574,7 +574,7 @@ public class RoomController {
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
-		//¶óÀÎ¼ö
+		//ë¼ì¸ìˆ˜
 		int lineSu = dto.getIntroduce().split("\n").length;
 		
 		dto.setIntroduce(dto.getIntroduce().replaceAll("\n", "<br/>"));
@@ -596,7 +596,7 @@ public class RoomController {
 	
 	
 	
-	//¿îµ¿ ¹æ --------------------------------------------------------------
+	//ìš´ë™ ë°© --------------------------------------------------------------
 	@RequestMapping(value = "/sportsCreated.action")
 	public ModelAndView sportsCreated() throws Exception {
 		
@@ -661,7 +661,7 @@ public class RoomController {
 		
 		List<RoomDTO> lists = dao.sportsGetLists(start, end, searchKey, searchValue);
 		
-		//param »ç¿ëÀÚ Á¤ÀÇ
+		//param ì‚¬ìš©ì ì •ì˜
 		String param = "";
 		
 		if(!searchValue.equals("")) {
@@ -669,17 +669,17 @@ public class RoomController {
 			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
 		
-		//url »ç¿ëÀÚ Á¤ÀÇ
+		//url ì‚¬ìš©ì ì •ì˜
 		String listUrl = cp + "/sportsList.action";
 		
 		if(!param.equals("")) {
 			listUrl += "?" + param;
 		}
 		
-		//ÆäÀÌÂ¡
+		//í˜ì´ì§•
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
-		//article »ç¿ëÀÚ Á¤ÀÇ
+		//article ì‚¬ìš©ì ì •ì˜
 		String articleUrl = cp + "/sportsArticle.action?pageNum=" + currentPage;
 		
 		if(!param.equals("")) {
@@ -689,7 +689,7 @@ public class RoomController {
 		String imagePath = request.getSession().getServletContext().getRealPath("/resources/upload/");
 		
 		
-		//Æ÷¿öµùÇÒ ÆäÀÌÁö¿¡ ³Ñ±æ µ¥ÀÌÅÍ
+		//í¬ì›Œë”©í•  í˜ì´ì§€ì— ë„˜ê¸¸ ë°ì´í„°
 		request.setAttribute("lists", lists);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
@@ -716,7 +716,7 @@ public class RoomController {
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
-		//¶óÀÎ¼ö
+		//ë¼ì¸ìˆ˜
 		int lineSu = dto.getIntroduce().split("\n").length;
 		
 		dto.setIntroduce(dto.getIntroduce().replaceAll("\n", "<br/>"));
@@ -738,7 +738,7 @@ public class RoomController {
 	
 	
 	
-	//°øºÎ ¹æ --------------------------------------------------------------
+	//ê³µë¶€ ë°© --------------------------------------------------------------
 	@RequestMapping(value = "/studyCreated.action")
 	public ModelAndView studyCreated() throws Exception {
 		
@@ -803,7 +803,7 @@ public class RoomController {
 		
 		List<RoomDTO> lists = dao.studyGetLists(start, end, searchKey, searchValue);
 		
-		//param »ç¿ëÀÚ Á¤ÀÇ
+		//param ì‚¬ìš©ì ì •ì˜
 		String param = "";
 		
 		if(!searchValue.equals("")) {
@@ -811,17 +811,17 @@ public class RoomController {
 			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
 		
-		//url »ç¿ëÀÚ Á¤ÀÇ
+		//url ì‚¬ìš©ì ì •ì˜
 		String listUrl = cp + "/studyList.action";
 		
 		if(!param.equals("")) {
 			listUrl += "?" + param;
 		}
 		
-		//ÆäÀÌÂ¡
+		//í˜ì´ì§•
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
-		//article »ç¿ëÀÚ Á¤ÀÇ
+		//article ì‚¬ìš©ì ì •ì˜
 		String articleUrl = cp + "/studyArticle.action?pageNum=" + currentPage;
 		
 		if(!param.equals("")) {
@@ -831,7 +831,7 @@ public class RoomController {
 		String imagePath = request.getSession().getServletContext().getRealPath("/resources/upload/");
 		
 		
-		//Æ÷¿öµùÇÒ ÆäÀÌÁö¿¡ ³Ñ±æ µ¥ÀÌÅÍ
+		//í¬ì›Œë”©í•  í˜ì´ì§€ì— ë„˜ê¸¸ ë°ì´í„°
 		request.setAttribute("lists", lists);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
@@ -858,7 +858,7 @@ public class RoomController {
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
-		//¶óÀÎ¼ö
+		//ë¼ì¸ìˆ˜
 		int lineSu = dto.getIntroduce().split("\n").length;
 		
 		dto.setIntroduce(dto.getIntroduce().replaceAll("\n", "<br/>"));
