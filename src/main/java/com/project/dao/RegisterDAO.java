@@ -49,6 +49,13 @@ public class RegisterDAO {
 		params.put("userPwd", pwd);
 		
 		sessionTemplate.update("com.Mapper.resetPwd", params);
+	}
+	public UserDTO getUserInfo(String userId) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("userId", userId);
+		
+		UserDTO dto = sessionTemplate.selectOne("com.Mapper.getUserInfo", params);
+		return dto;
 		
 	}
 

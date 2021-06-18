@@ -26,6 +26,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="resetPwd" parameterType="map">
 		update users set userPwd = #{userPwd} where email = #{email}
 	</update>
+	
+	<select id="getUserInfo" parameterType="map" resultType="com.project.dto.UserDTO">
+		select userNum,userId,userPwd,name,gender,email,tel,right from users
+			where userId = #{}
+	</select>
 
 
 </mapper>

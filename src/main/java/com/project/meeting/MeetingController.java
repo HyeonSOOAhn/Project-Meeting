@@ -103,9 +103,6 @@ public class MeetingController {
 			method = RequestMethod.POST)
 	public String login_ok(String userId,String userPwd,String rememberBtn, HttpServletRequest req) throws Exception{
 		
-		
-		System.out.println(rememberBtn);
-		
 		//아이디 or 이메일 존재하는지 있다면 비밀번호 맞는지 확인하는 거 구현
 		if(dao.checkId(userId) == 0 && dao.checkEmail(userId) == 0) {
 			req.setAttribute("noExistInfo","아이디/이메일이나 비밀번호가 틀렸습니다." );
@@ -117,9 +114,13 @@ public class MeetingController {
 			return "login";
 		}
 		
+		UserDTO dto = new UserDTO();
+		
+		dto = dao.getUserInfo(userId);
+		
 		UserInfo info = new UserInfo();
-		info.getUserId();
-		info.getUserName();
+		info.setUserId(dto.getUserId());
+		info.setUserName(dto.getUserName());
 		
 		HttpSession session = req.getSession();
 		
