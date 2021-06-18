@@ -103,7 +103,7 @@
 										<a class="small" href="forgotPwd.action">비밀번호가 기억나지 않으세요?</a>
 									</div>
 									<div class="text-center">
-										<a class="small" href="register.html">Create an Account!</a>
+										<a class="small" href="register.action">Create an Account!</a>
 									</div>
 								</div>
 							</div>

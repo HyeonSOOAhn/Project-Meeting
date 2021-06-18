@@ -62,13 +62,13 @@ public class MeetingController {
 	@RequestMapping(value="/register_ok.action", method = RequestMethod.POST)
 	public String register_ok(UserDTO dto, HttpServletRequest req) throws Exception{
 		
-		//값들이 존재하는 값들이 아닌지 구현
+		//媛믩뱾�씠 議댁옱�븯�뒗 媛믩뱾�씠 �븘�땶吏� 援ы쁽
 		if(dao.checkId(dto.getUserId()) != 0) {
-			req.setAttribute("existId","아이디가 이미 존재합니다." );
+			req.setAttribute("existId","�븘�씠�뵒媛� �씠誘� 議댁옱�빀�땲�떎." );
 			return "Register";
 		}
 		if(dao.checkEmail(dto.getEmail()) != 0) {
-			req.setAttribute("existEmail","이메일이 이미 존재합니다." );
+			req.setAttribute("existEmail","�씠硫붿씪�씠 �씠誘� 議댁옱�빀�땲�떎." );
 			return "Register";
 		}
 		
@@ -103,21 +103,21 @@ public class MeetingController {
 			method = RequestMethod.POST)
 	public String login_ok(String userId,String userPwd,String rememberBtn, HttpServletRequest req) throws Exception{
 		
-		//아이디 or 이메일 존재하는지 있다면 비밀번호 맞는지 확인하는 거 구현
+		//�븘�씠�뵒 or �씠硫붿씪 議댁옱�븯�뒗吏� �엳�떎硫� 鍮꾨�踰덊샇 留욌뒗吏� �솗�씤�븯�뒗 嫄� 援ы쁽
 		if(dao.checkId(userId) == 0 && dao.checkEmail(userId) == 0) {
-			req.setAttribute("noExistInfo","아이디/이메일이나 비밀번호가 틀렸습니다." );
+			req.setAttribute("noExistInfo","�븘�씠�뵒/�씠硫붿씪�씠�굹 鍮꾨�踰덊샇媛� ���졇�뒿�땲�떎." );
 			return "login";
 		}
 		
 		if(!dao.checkPwd(userId).equals(userPwd)) {
-			req.setAttribute("noExistInfo","아이디/이메일이나 비밀번호가 틀렸습니다." );
+			req.setAttribute("noExistInfo","�븘�씠�뵒/�씠硫붿씪�씠�굹 鍮꾨�踰덊샇媛� ���졇�뒿�땲�떎." );
 			return "login";
 		}
 		
 		UserDTO dto = new UserDTO();
 		
 		dto = dao.getUserInfo(userId);
-		
+		System.out.println(dto.getUserId());
 		UserInfo info = new UserInfo();
 		info.setUserId(dto.getUserId());
 		info.setUserName(dto.getUserName());
@@ -126,7 +126,7 @@ public class MeetingController {
 		
 		session.setAttribute("userInfo", info);
 		
-		session.setMaxInactiveInterval(60*30); //30분
+		session.setMaxInactiveInterval(60*30); //30遺�
 		
 		return "redirect:/main.action";
 	}
@@ -155,7 +155,7 @@ public class MeetingController {
 	public String forgotPwd_ok(String email, HttpServletRequest req) throws Exception{
 		
 		if(dao.checkEmail(email) == 0) {
-			req.setAttribute("noExistEmail","등록된 이메일이 없습니다." );
+			req.setAttribute("noExistEmail","�벑濡앸맂 �씠硫붿씪�씠 �뾾�뒿�땲�떎." );
 			return "forgot-password";
 		}else {
 			return "redirect:/sendEmail.action?email=" + email;
@@ -175,7 +175,7 @@ public class MeetingController {
 			
 			mailHelper.setFrom("Meeting");
 			mailHelper.setTo(email);
-			mailHelper.setSubject("Meeting비밀번호 초기화 메일입니다.");
+			mailHelper.setSubject("Meeting鍮꾨�踰덊샇 珥덇린�솕 硫붿씪�엯�땲�떎.");
 			mailHelper.setText("http://localhost:"+ req.getServerPort() +"/meeting/forgotPwd.action?email=" + email +"&wow=1",true);
 			
 			mailSender.send(mail);
@@ -185,7 +185,7 @@ public class MeetingController {
 			System.out.println(e.toString());
 		}
 		
-		req.setAttribute("sendedEmail","등록된 이메일주소로 메일을 보냈습니다. 확인해 주세요. <br> 이 창은 종료하셔도 좋습니다.");
+		req.setAttribute("sendedEmail","�벑濡앸맂 �씠硫붿씪二쇱냼濡� 硫붿씪�쓣 蹂대깉�뒿�땲�떎. �솗�씤�빐 二쇱꽭�슂. <br> �씠 李쎌� 醫낅즺�븯�뀛�룄 醫뗭뒿�땲�떎.");
 		
 		return "forgotPwd";
 	}
