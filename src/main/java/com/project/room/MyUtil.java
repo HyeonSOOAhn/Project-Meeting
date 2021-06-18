@@ -71,9 +71,13 @@ public class MyUtil {
 		//12 > 5 && 5 > 0 - 이전 글자 나옴 currentPageSetup=5
 		if(totalPage > numPerBlock && currentPageSetup > 0) {//전체페이지 > 뿌려지는 페이지 목록 개수 &그리고& 이전 페이지 번호 > 0 (1 2 3 4 5는 이전 없기 때문)
 			//\" 들어가는 값 \" 는 <a href=> 안의 ""를 문자로 표시한 것 //listUrl에 ?붙어있다.
-			sb.append("<a href=\"" + listUrl + "pageNum=" + currentPageSetup + "\">◀이전</a>&nbsp;");
+			//sb.append("<a href=\"" + listUrl + "pageNum=" + currentPageSetup + "\">◀이전</a>&nbsp;");
 		
 			//<a href="list.jsp?pageNum=5">◀이전</a>&nbsp; //6에서 이전했을 때
+			
+			sb.append("<li class=\"paginate_button page-item previous\" id=\"dataTable_previous\">");
+			sb.append("<a href=\"" + listUrl + "pageNum=" + currentPageSetup + "\" class=\"page-link\">이전</a></li>");
+			
 		}
 		
 		//바로가기 페이지
@@ -94,13 +98,20 @@ public class MyUtil {
 			if(page==currentPage) {
 				
 				//누적
-				sb.append("<font color=\"Fuchsia\">" + page + "</font>&nbsp;"); //내가보는 페이지는 색깔만 입히고 링크 안걸기
+				//sb.append("<font color=\"#4D71DB\">" + page + "</font>&nbsp;"); //내가보는 페이지는 색깔만 입히고 링크 안걸기
 				//<font color="Fuchsia">2</font>&nbsp;
+				
+				sb.append("<li class=\"paginate_button page-item active\">");
+				sb.append("<a href=\"#\" class=\"page-link\">" + page + "</a></li>");
 				
 			}else {
 				
-				sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">" + page + "</a>&nbsp;"); //그 외는 링크 걸기 -> get방식으로 다이렉트로 전달하여 페이지 이동
+				//sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\"><font color=\"#696969\">" + page + "</font></a>&nbsp;"); //그 외는 링크 걸기 -> get방식으로 다이렉트로 전달하여 페이지 이동
 				//<a href="list.jsp?pageNum=9">9</a>&nbsp;
+				
+				sb.append("<li class=\"paginate_button page-item\">");
+				sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\" class=\"page-link\">" + page + "</a></li>");
+				
 			}
 			
 			//계속 증가
@@ -116,8 +127,12 @@ public class MyUtil {
 		//(12-10) >5 - 다음X
 		if(totalPage - currentPageSetup > numPerBlock) {
 			
-			sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">▶다음</a>&nbsp;");
+			//sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">▶다음</a>&nbsp;");
 			//<a href="list.jsp?pageNum=11">▶다음</a>&nbsp;
+			
+			sb.append("<li class=\"paginate_button page-item next\" id=\"dataTable_next\">");
+			sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\" class=\"page-link\">다음</a></li>");
+			
 		}
 		//5,10,... 이상이면 빠져나와서 ▶다음 링크 건다
 		//즉 11,12 이후 ▶다음 나올지 유무를 적용하는 곳

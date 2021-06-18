@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>방 만들기</title>
+    <title>방 수정</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,16 +34,6 @@
 	function sendIt() {
 		
 		f = document.myForm;
-		
-		str = f.subject.value;
-		//util에 있는 trim
-		str = str.trim();
-		if(!str) {
-			alert("\n방 카테고리를 선택하세요!");
-			f.subject.focus();
-			return;
-		}
-		f.subject.value = str;
 		
 		
 		str = f.title.value;
@@ -78,7 +68,7 @@
 		
 		
 		//가상경로
-		f.action = "<%=cp%>/created_ok.action";
+		f.action = "<%=cp%>/updated_ok.action";
 		f.submit();
 		
 	}
@@ -116,20 +106,12 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4"><b>방 만들기</b></h1>
+                                <h1 class="h4 text-gray-900 mb-4"><b>방 수정하기</b></h1>
                             </div>
                             <form action="" name="myForm" class="user" method="post" enctype="multipart/form-data">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <!-- <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="방 카테고리"> -->
-                                        <select name="subject" class="custom-select custom-select-sm form-control form-control-sm">
-                                        	<option value="">방 카테고리</option>
-                                        	<option value="여행">여행</option>
-                                        	<option value="맛집">맛집</option>
-                                        	<option value="운동">운동</option>
-                                        	<option value="공부">공부</option>
-                                        </select>
+                                        <h4>${dto.subject }</h4>
                                     </div>
                                     <!-- <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" id="exampleLastName"
@@ -138,14 +120,14 @@
                                 </div>
                                 <div class="form-group">
                                     <input name="title" type="text" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="방 이름">
+                                        placeholder="방 이름" value="${dto.title }"/>
                                 </div>
                                 <div class="form-group">
                                     <input name="keyword" type="text" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="#키워드">
+                                        placeholder="#키워드" value="${dto.keyword }"/>
                                 </div>
                                 <div>
-                               		<textarea name="introduce" rows="12" cols="63" placeholder="방을 소개해주세요." class="form-control"></textarea>
+                               		<textarea name="introduce" rows="12" cols="63" placeholder="방을 소개해주세요." class="form-control">${dto.introduce }</textarea>
                                	</div><br/>
                                	
                                	<div class="form-group">
@@ -155,16 +137,17 @@
                                 </div>
                                	
                                 <input type="hidden" name="manager" value="1">
+                                <input type="hidden" name="roomNum" value="${dto.roomNum }">
+								<input type="hidden" name="pageNum" value="${pageNum }">
+								<input type="hidden" name="searchKey" value="${searchKey }">
+								<input type="hidden" name="searchValue" value="${searchValue }">
                                 
-                                <input type="button" class="btn btn-primary btn-user btn-block" value="생 성 하 기" onclick="sendIt();">
+                                <input type="button" class="btn btn-primary btn-user btn-block" value="수 정 하 기" onclick="sendIt();">
                                 
                             </form>
                             <hr>
-                            <!-- <div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div> -->
                             <div class="text-center">
-                                <a class="small" href="<%=cp%>/list.action">전체 방 목록으로 돌아가기</a>
+                                <a class="small" href="<%=cp%>/index.action">방 카테고리 목록으로 돌아가기</a>
                             </div>
                         </div>
                     </div>

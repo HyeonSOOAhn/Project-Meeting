@@ -6,6 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.roomMapper">
 	
+	<!-- 전체 방 -->
+	<!-- 
 	<insert id="insertData" parameterType="com.project.room.RoomDTO"
 	useGeneratedKeys="true" keyProperty="roomNum">
 		<selectKey keyProperty="roomNum" resultType="int" order="BEFORE">
@@ -22,6 +24,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (fileNum_SEQ.NEXTVAL,#{roomNum},#{originalFileName},#{storedFileName},#{fileSize})
 	</insert>
 	
+	fileNum,originalFileName, ,ROUND(fileSize/1024,1) AS fileSize
+	<select id="selectFileList" resultType="hashMap" parameterType="int">
+		select storedFileName from roomFile where roomNum = #{roomNum} and DEL_GB = 'N'
+	</select>
+	 -->
+	<insert id="insertData" parameterType="hashMap">
+		insert into wholeRoom(roomNum,subject,title,keyword,introduce,created,
+		totalP,currentP,manager,originalFileName,storedFileName)
+		values (roomNum_SEQ.NEXTVAL,#{subject},#{title},#{keyword},#{introduce},sysdate,
+		1,1,#{manager},#{originalFileName},#{storedFileName})
+	</insert>
+	
 	<select id="getDataCount" resultType="int" parameterType="hashMap">
 		select nvl(count(*),0) from wholeRoom
 		where ${searchKey} like '%' || #{searchValue} || '%'
@@ -31,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from (
 		select rownum rnum, data.* from (
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
-		totalP,currentP,manager
+		totalP,currentP,manager,originalFileName,storedFileName
 		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%'
 		order by roomNum desc) data)
 		<![CDATA[
@@ -41,19 +55,98 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getReadData" resultType="com.project.room.RoomDTO" parameterType="int">
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
-		totalP,currentP,manager
+		totalP,currentP,manager,originalFileName,storedFileName
 		from wholeRoom where roomNum = #{roomNum}
 	</select>
 	
-	<!-- 
-	<update id="updateData" parameterType="com.project.room.RoomDTO">
-		update board set name = #{name},pwd = #{pwd},email = #{email},
-		subject = #{subject},content = #{content} where num = #{num}
+	<update id="updateData" parameterType="hashMap">
+		update wholeRoom set title = #{title},keyword = #{keyword},
+		introduce = #{introduce},originalFileName = #{originalFileName},
+		storedFileName = #{storedFileName} where roomNum = #{roomNum}
 	</update>
 	
 	<delete id="deleteData" parameterType="int">
-		delete board where num = #{num}
+		delete wholeRoom where roomNum = #{roomNum}
 	</delete>
-	 -->
+	
+	
+	
+	<!-- 여행 방 조회 -->
+	<select id="travelDataCount" resultType="int" parameterType="hashMap">
+		select nvl(count(*),0) from wholeRoom
+		where ${searchKey} like '%' || #{searchValue} || '%' and subject = '여행'
+	</select>
+	
+	<select id="travelGetLists" resultType="com.project.room.RoomDTO" parameterType="map">
+		select * from (
+		select rownum rnum, data.* from (
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%' and subject = '여행'
+		order by roomNum desc) data)
+		<![CDATA[
+		where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
+	
+	
+	
+	<!-- 맛집 방 조회 -->
+	<select id="foodDataCount" resultType="int" parameterType="hashMap">
+		select nvl(count(*),0) from wholeRoom
+		where ${searchKey} like '%' || #{searchValue} || '%' and subject = '맛집'
+	</select>
+	
+	<select id="foodGetLists" resultType="com.project.room.RoomDTO" parameterType="map">
+		select * from (
+		select rownum rnum, data.* from (
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%' and subject = '맛집'
+		order by roomNum desc) data)
+		<![CDATA[
+		where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
+	
+	
+	
+	<!-- 운동 방 조회 -->
+	<select id="sportsDataCount" resultType="int" parameterType="hashMap">
+		select nvl(count(*),0) from wholeRoom
+		where ${searchKey} like '%' || #{searchValue} || '%' and subject = '운동'
+	</select>
+	
+	<select id="sportsGetLists" resultType="com.project.room.RoomDTO" parameterType="map">
+		select * from (
+		select rownum rnum, data.* from (
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%' and subject = '운동'
+		order by roomNum desc) data)
+		<![CDATA[
+		where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
+	
+	
+	
+	<!-- 공부 방 조회 -->
+	<select id="studyDataCount" resultType="int" parameterType="hashMap">
+		select nvl(count(*),0) from wholeRoom
+		where ${searchKey} like '%' || #{searchValue} || '%' and subject = '공부'
+	</select>
+	
+	<select id="studyGetLists" resultType="com.project.room.RoomDTO" parameterType="map">
+		select * from (
+		select rownum rnum, data.* from (
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%' and subject = '공부'
+		order by roomNum desc) data)
+		<![CDATA[
+		where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
 	
 </mapper>

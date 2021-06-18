@@ -16,7 +16,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class FileUtil {
 	
 	//파일이 저장될 위치
-	private static final String filePath = "D:\\sts-bundle\\Project-Meeting\\src\\main\\webapp\\resources\\upload\\";
+	//private static final String filePath = "D:\\sts-bundle\\Project-Meeting\\src\\main\\webapp\\resources\\upload\\";
+	private static final String filePath = "D:\\sts-bundle\\work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Meeting\\resources\\upload\\";
 	
 	//파일 업로드
 	public List<Map<String,Object>> parseInsertFileInfo (RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
@@ -37,7 +38,7 @@ public class FileUtil {
 		List<Map<String,Object>> lists = new ArrayList<Map<String,Object>>();
 		Map<String,Object> listsMap = null;
 		
-		int roomNum = dto.getRoomNum();
+		//int roomNum = dto.getRoomNum();
 		
 		File file = new File(filePath);
 		if(file.exists() == false) {
@@ -57,10 +58,16 @@ public class FileUtil {
 				file = new File(filePath + storedFileName);
 				multipartFile.transferTo(file);
 				listsMap = new HashMap<String, Object>();
-				listsMap.put("roomNum", roomNum);
+				listsMap.put("roomNum",dto.getRoomNum());
+				listsMap.put("subject",dto.getSubject());
+				listsMap.put("title",dto.getTitle());
+				listsMap.put("keyword",dto.getKeyword());
+				listsMap.put("introduce",dto.getIntroduce());
+				listsMap.put("manager",dto.getManager());
+				
 				listsMap.put("originalFileName", originalFileName);
 				listsMap.put("storedFileName", storedFileName);
-				listsMap.put("fileSize", multipartFile.getSize());
+				//listsMap.put("fileSize", multipartFile.getSize());
 				
 				lists.add(listsMap);
 				
@@ -69,6 +76,82 @@ public class FileUtil {
 		}
 		
 		return lists;
+		
+	}
+	
+	//파일 수정
+	public List<Map<String,Object>> parseUpdateFileInfo (RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
+		
+		Iterator<String> it = mpRequest.getFileNames();
+		
+		MultipartFile multipartFile = null;
+		String originalFileName = null;
+		String originalFileExtension = null;
+		String storedFileName = null;
+		
+		List<Map<String,Object>> lists = new ArrayList<Map<String,Object>>();
+		Map<String,Object> listsMap = null;
+		
+		//기존 파일 삭제
+		File deleteFile = new File(filePath + dto.getStoredFileName());
+		if(deleteFile.exists()) {
+			deleteFile.delete();
+		}
+		
+		File file = new File(filePath);
+		if(file.exists() == false) {
+			file.mkdirs();
+		}
+		
+		while(it.hasNext()) {
+			
+			multipartFile = mpRequest.getFile(it.next());
+			
+			if(multipartFile.isEmpty() == false) {
+				
+				originalFileName = multipartFile.getOriginalFilename();
+				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+				storedFileName = getRandomString() + originalFileExtension;
+				
+				file = new File(filePath + storedFileName);
+				multipartFile.transferTo(file);
+				listsMap = new HashMap<String, Object>();
+				listsMap.put("roomNum",dto.getRoomNum());
+				listsMap.put("title",dto.getTitle());
+				listsMap.put("keyword",dto.getKeyword());
+				listsMap.put("introduce",dto.getIntroduce());
+				
+				listsMap.put("storedFileName", storedFileName);
+				listsMap.put("originalFileName", originalFileName);
+				
+				/*
+				if(keepStoredFileName!=null && keepOriginalFileName!=null) {
+					listsMap.put("storedFileName", keepStoredFileName);
+					listsMap.put("originalFileName", keepOriginalFileName);
+				}else {
+					listsMap.put("storedFileName", storedFileName);
+					listsMap.put("originalFileName", originalFileName);
+				}
+				*/
+				
+				lists.add(listsMap);
+				
+			}
+			
+		}
+		
+		return lists;
+		
+	}
+	
+	//파일 삭제
+	public void parseDeleteFileInfo (String storedFileName) {
+		
+		File file = new File(filePath + storedFileName);
+		
+		if(file.exists()) {
+			file.delete();
+		}
 		
 	}
 	

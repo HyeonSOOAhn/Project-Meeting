@@ -19,6 +19,7 @@ public class RoomDTO {
 	private String originalFileName;
 	private String storedFileName;
 	private int fileSize;
+	private String DEL_GB;
 	
 	public int getRoomNum() {
 		return roomNum;
@@ -97,6 +98,12 @@ public class RoomDTO {
 	}
 	public void setFileSize(int fileSize) {
 		this.fileSize = fileSize;
+	}
+	public String getDEL_GB() {
+		return DEL_GB;
+	}
+	public void setDEL_GB(String dEL_GB) {
+		DEL_GB = dEL_GB;
 	}
 	
 }

@@ -14,45 +14,54 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>방 카테고리</title>
+    <title>맛집 방 목록</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+    <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     
-    <style type="text/css">
-    
-    	button {
-    		
-    		padding: 10px;
-    		width: 100%;
-    		height: 100%;
-    	
-    	}
-    	
-    	font {
-    		
-    		font-family: Times New Roman;
-    		font-weight: bold;
-    		font-size: 20px;
-    		color: #4D71DB;
-    	
-    	}
-    	
-    	p {
-    		
-			font-style: oblique;
-			font-weight: bold;
-			font-size: 15px;
-			color: #4D71DB;
-    	
-    	}
-    
+    <script type="text/javascript">
+
+		function sendIt() {
+			
+			var f = document.searchForm;
+			
+			f.action = "<%=cp%>/foodList.action";
+			f.submit();
+			
+		}
+
+	</script>
+	
+	<style>
+	
+	    div.ok {
+	    	
+	        width: 100%;
+	        height: 200px;
+
+	    }
+	    div.left {
+	        width: 70%;
+	        float: left;
+	        box-sizing: border-box;
+
+	    }
+	    div.right {
+	        width: 30%;
+	        float: right;
+	        box-sizing: border-box;
+
+	    }
+	    
     </style>
 
 </head>
@@ -90,7 +99,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header"><a class="small" href="<%=cp%>/index.action"">방 카테고리</a></h6>
+                        <h6 class="collapse-header"><a class="small" href="<%=cp%>/index.action">방 카테고리</a></h6>
                         <a class="collapse-item" href="<%=cp%>/list.action">전체</a>
                         <a class="collapse-item" href="<%=cp%>/travelList.action">여행</a>
                         <a class="collapse-item" href="<%=cp%>/foodList.action">맛집</a>
@@ -103,7 +112,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-           	<!-- 사이드바 공간1 -->
+            <!-- 사이드바 공간1 -->
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -123,9 +132,11 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                    <form class="form-inline">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </form>
 
                     <!-- Topbar Search -->
                     <form
@@ -326,97 +337,65 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800"><b>방 카테고리</b></h1>
-                        <a href="<%=cp%>/created.action" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
+                    	<div>
+                    		<h1 class="h3 mb-2 text-gray-800">맛집 방 목록</h1>
+                    		<p class="mb-4">이제 혼밥은 그만. 음식 취향이 같은 친구들과 함께 즐겨요!</p>
+                    	</div>
+                    	<a href="<%=cp%>/foodCreated.action" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> 맛집 방 만들기</a>
                     </div>
 
-                    <!-- Content Row class="row" -->
-                    <div class="">
-
-                        <!-- Content Column - class="col-lg-6 mb-4" -->
-                        <div class="">
-
-                            <!-- Color System -->
-                            <div class="row">
-                                <div class="col-lg-6 mb-4" >
-                                    <button class="card bg-primary text-white shadow"" onclick="javascript:location.href='<%=cp%>/travelList.action'">
-                                        <div class="card-body" align="left">
-                                        	여   행
-	                                        <div class="text-white-50 small">
-	                                        	여행 떠나실 준비 되셨나요? 마음이 맞는 사람들과 행복한 동행의 시작.
-	                                        </div>
-                                        </div>
-                                    </button>
-                                </div>
-                                <div class="col-lg-6 mb-4" >
-                                	<button class="card bg-success text-white shadow"" onclick="javascript:location.href='<%=cp%>/travelList.action'">
-                                        <div class="card-body" align="left">
-                                        	맛   집
-	                                        <div class="text-white-50 small">
-	                                        	이제 혼밥은 그만. 음식 취향이 같은 친구들과 함께 즐겨요!
-	                                        </div>
-                                        </div>
-                                    </button>
-                                </div>
-                                <div class="col-lg-6 mb-4" >
-                                	<button class="card bg-info text-white shadow"" onclick="javascript:location.href='<%=cp%>/travelList.action'">
-                                        <div class="card-body" align="left">
-                                        	운   동
-	                                        <div class="text-white-50 small">
-	                                        	여러가지 운동을 다양한 사람들과 함께 즐겨봐요!
-	                                        </div>
-                                        </div>
-                                    </button>
-                                </div>
-                                <div class="col-lg-6 mb-4" >
-                               		<button class="card bg-info text-white shadow"" onclick="javascript:location.href='<%=cp%>/travelList.action'">
-                                        <div class="card-body" align="left">
-                                        	공   부
-	                                        <div class="text-white-50 small">
-	                                        	공부도 하고 지식도 나누고 미래도 함께 준비해요!
-	                                        </div>
-                                        </div>
-                                    </button>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <button class="card bg-danger text-white shadow">
-                                        <div class="card-body" align="left">
-                                            Danger
-                                            <div class="text-white-50 small">#e74a3b</div>
-                                        </div>
-                                    </button>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <button class="card bg-secondary text-white shadow">
-                                        <div class="card-body">
-                                            Secondary
-                                            <div class="text-white-50 small">#858796</div>
-                                        </div>
-                                    </button>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <button class="card bg-light text-black shadow">
-                                        <div class="card-body">
-                                            Light
-                                            <div class="text-black-50 small">#f8f9fc</div>
-                                        </div>
-                                    </button>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <button class="card bg-dark text-white shadow">
-                                        <div class="card-body">
-                                            Dark
-                                            <div class="text-white-50 small">#5a5c69</div>
-                                        </div>
-                                    </button>
-                                </div>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                    
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary" style="display: inline;">맛집 방</h6>
+	               
+                            <br/><br/>
+                            
+                            <div>
+								<form action="" name="searchForm" method="post">
+									<select name="searchKey" class="custom-select custom-select-sm form-control form-control-sm" style="width: 10%;display: inline;">
+										<option value="title">방 이름</option>
+										<option value="keyword">키워드</option>
+									</select>
+									<input type="text" name="searchValue" class="form-control form-control-sm" style="width: 20%;display: inline;"/>
+									<input type="button" value=" 검 색 " class="btn btn-primary btn-user btn-block" onclick="sendIt()" style="width: 10%;display: inline;"/>
+								</form>
+								<br/>
+							</div>
+                            
+                            <c:forEach var="dto" items="${lists }">
+                            <div class="card-header py-3 card shadow mb-4">
+                            	<div class="ok">
+									<div class="left">
+										<u>${dto.subject }</u><br/>
+										<h2><a href="${articleUrl }&roomNum=${dto.roomNum}">${dto.title }</a></h2><br/>
+										${dto.keyword }<br/>
+										창설일 : ${dto.created }&nbsp;&nbsp;참가자 : ${dto.totalP } / ${dto.currentP } 명
+									</div>
+									<div class="right"><img src="${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }" width="200" height="200"/></div>
+								</div>
                             </div>
-
+                           </c:forEach>
                         </div>
-
+                        
+                        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate" align="center">
+                        	
+                        	<ul class="pagination">
+	                        
+								<c:if test="${dataCount!=0 }">
+									${pageIndexList }
+								</c:if>
+								<c:if test="${dataCount==0 }">
+									등록된 게시물이 없습니다.
+								</c:if>
+							
+							</ul>
+							
+						</div>
+                        
                     </div>
 
                 </div>
@@ -429,7 +408,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
             </footer>
@@ -477,11 +456,11 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 </html>

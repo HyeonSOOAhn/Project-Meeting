@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>방 만들기</title>
+    <title>여행 방 만들기</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,16 +34,6 @@
 	function sendIt() {
 		
 		f = document.myForm;
-		
-		str = f.subject.value;
-		//util에 있는 trim
-		str = str.trim();
-		if(!str) {
-			alert("\n방 카테고리를 선택하세요!");
-			f.subject.focus();
-			return;
-		}
-		f.subject.value = str;
 		
 		
 		str = f.title.value;
@@ -78,7 +68,7 @@
 		
 		
 		//가상경로
-		f.action = "<%=cp%>/created_ok.action";
+		f.action = "<%=cp%>/travelCreated_ok.action";
 		f.submit();
 		
 	}
@@ -116,25 +106,13 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4"><b>방 만들기</b></h1>
+                                <h1 class="h4 text-gray-900 mb-4"><b>여행 방 만들기</b></h1>
                             </div>
                             <form action="" name="myForm" class="user" method="post" enctype="multipart/form-data">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <!-- <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="방 카테고리"> -->
-                                        <select name="subject" class="custom-select custom-select-sm form-control form-control-sm">
-                                        	<option value="">방 카테고리</option>
-                                        	<option value="여행">여행</option>
-                                        	<option value="맛집">맛집</option>
-                                        	<option value="운동">운동</option>
-                                        	<option value="공부">공부</option>
-                                        </select>
+                                        <h4>여행</h4>
                                     </div>
-                                    <!-- <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="방 이름">
-                                    </div> -->
                                 </div>
                                 <div class="form-group">
                                     <input name="title" type="text" class="form-control form-control-user" id="exampleInputEmail"
@@ -154,6 +132,7 @@
                                     style="font-size: 0.8rem; border-radius: 10rem; padding: 0.75rem 1rem;">방 프로필 이미지</button>
                                 </div>
                                	
+                               	<input type="hidden" name="subject" value="여행">
                                 <input type="hidden" name="manager" value="1">
                                 
                                 <input type="button" class="btn btn-primary btn-user btn-block" value="생 성 하 기" onclick="sendIt();">
@@ -164,7 +143,7 @@
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div> -->
                             <div class="text-center">
-                                <a class="small" href="<%=cp%>/list.action">전체 방 목록으로 돌아가기</a>
+                                <a class="small" href="<%=cp%>/travelList.action">여행 방 목록으로 돌아가기</a>
                             </div>
                         </div>
                     </div>
