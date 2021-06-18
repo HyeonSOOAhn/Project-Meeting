@@ -21,7 +21,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.project.meeting" />
+	<context:component-scan base-package="com.project.controller" />
 	
 	<beans:bean id="registerDAO" class="com.project.dao.RegisterDAO">
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
