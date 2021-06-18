@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getUserInfo" parameterType="map" resultType="com.project.dto.UserDTO">
 		select userNum,userId,userPwd,name,gender,email,tel,right from users
-			where userId = #{}
+			where userId = #{userId}
 	</select>
 
 
