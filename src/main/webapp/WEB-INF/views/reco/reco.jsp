@@ -390,7 +390,7 @@
 											class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
 											aria-labelledby="dropdownMenuLink">
 											<div class="dropdown-header">Dropdown Header:</div>
-											<a class="dropdown-item" href="showMap"onclick="window.open(this.href, '_blank', 'width=가로사이즈px,height=세로사이즈px,toolbars=no,scrollbars=no'); return false;">Action</a> <a
+											<a class="dropdown-item" href="showMap.jsp"onclick="window.open(this.href, '_blank', 'width=가로사이즈px,height=세로사이즈px,toolbars=no,scrollbars=no'); return false;">Action</a> <a
 												class="dropdown-item" href="#">Another action</a>
 											<div class="dropdown-divider"></div>
 											<a class="dropdown-item" href="#">Something else here</a>
