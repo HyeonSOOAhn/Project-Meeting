@@ -1,4 +1,4 @@
-package com.project.room;
+package com.project.dto;
 
 public class RoomDTO {
 	

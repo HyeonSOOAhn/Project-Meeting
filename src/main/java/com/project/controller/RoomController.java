@@ -1,4 +1,4 @@
-package com.project.room;
+package com.project.controller;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.dao.RoomDAO;
+import com.project.dto.RoomDTO;
+import com.project.util.FileUtil;
+import com.project.util.PageUtil;
+
 @Controller
 public class RoomController {
 	
@@ -23,8 +28,8 @@ public class RoomController {
 	RoomDAO dao;
 	
 	@Autowired
-	@Qualifier("myUtil")
-	MyUtil myUtil;
+	@Qualifier("pageUtil")
+	PageUtil pageUtil;
 	
 	@Autowired
 	@Qualifier("fileUtil")
@@ -104,7 +109,7 @@ public class RoomController {
 		int dataCount = dao.getDataCount(searchKey, searchValue);
 		
 		int numPerPage = 5;
-		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
 		
 		if(currentPage>totalPage) {
 			currentPage = totalPage;
@@ -147,7 +152,7 @@ public class RoomController {
 		}
 		
 		//페이징
-		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
 		//article 사용자 정의
 		String articleUrl = cp + "/article.action?pageNum=" + currentPage;
@@ -366,7 +371,7 @@ public class RoomController {
 		int dataCount = dao.travelDataCount(searchKey, searchValue);
 		
 		int numPerPage = 5;
-		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
 		
 		if(currentPage>totalPage) {
 			currentPage = totalPage;
@@ -393,7 +398,7 @@ public class RoomController {
 		}
 		
 		//페이징
-		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
 		//article 사용자 정의
 		String articleUrl = cp + "/travelArticle.action?pageNum=" + currentPage;
@@ -508,7 +513,7 @@ public class RoomController {
 		int dataCount = dao.foodDataCount(searchKey, searchValue);
 		
 		int numPerPage = 5;
-		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
 		
 		if(currentPage>totalPage) {
 			currentPage = totalPage;
@@ -535,7 +540,7 @@ public class RoomController {
 		}
 		
 		//페이징
-		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
 		//article 사용자 정의
 		String articleUrl = cp + "/foodArticle.action?pageNum=" + currentPage;
@@ -650,7 +655,7 @@ public class RoomController {
 		int dataCount = dao.sportsDataCount(searchKey, searchValue);
 		
 		int numPerPage = 5;
-		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
 		
 		if(currentPage>totalPage) {
 			currentPage = totalPage;
@@ -677,7 +682,7 @@ public class RoomController {
 		}
 		
 		//페이징
-		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
 		//article 사용자 정의
 		String articleUrl = cp + "/sportsArticle.action?pageNum=" + currentPage;
@@ -792,7 +797,7 @@ public class RoomController {
 		int dataCount = dao.studyDataCount(searchKey, searchValue);
 		
 		int numPerPage = 5;
-		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
 		
 		if(currentPage>totalPage) {
 			currentPage = totalPage;
@@ -819,7 +824,7 @@ public class RoomController {
 		}
 		
 		//페이징
-		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
 		//article 사용자 정의
 		String articleUrl = cp + "/studyArticle.action?pageNum=" + currentPage;

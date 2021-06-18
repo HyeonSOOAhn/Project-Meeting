@@ -1,9 +1,9 @@
-package com.project.room;
+package com.project.util;
 
 import org.springframework.stereotype.Component;
 
-@Component("myUtil")
-public class MyUtil {
+@Component("pageUtil")
+public class PageUtil {
 	
 	//전체 페이지 수 구하기
 	//numPerPage : 한 화면에 표시할 데이터의 갯수 (페이지수)

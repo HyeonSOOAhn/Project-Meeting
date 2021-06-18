@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 전체 방 -->
 	<!-- 
-	<insert id="insertData" parameterType="com.project.room.RoomDTO"
+	<insert id="insertData" parameterType="com.project.dto.RoomDTO"
 	useGeneratedKeys="true" keyProperty="roomNum">
 		<selectKey keyProperty="roomNum" resultType="int" order="BEFORE">
 			select roomNum_SEQ.NEXTVAL from dual
@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${searchKey} like '%' || #{searchValue} || '%'
 	</select>
 	
-	<select id="getLists" resultType="com.project.room.RoomDTO" parameterType="map">
+	<select id="getLists" resultType="com.project.dto.RoomDTO" parameterType="map">
 		select * from (
 		select rownum rnum, data.* from (
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 	
-	<select id="getReadData" resultType="com.project.room.RoomDTO" parameterType="int">
+	<select id="getReadData" resultType="com.project.dto.RoomDTO" parameterType="int">
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
 		totalP,currentP,manager,originalFileName,storedFileName
 		from wholeRoom where roomNum = #{roomNum}
@@ -77,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${searchKey} like '%' || #{searchValue} || '%' and subject = '여행'
 	</select>
 	
-	<select id="travelGetLists" resultType="com.project.room.RoomDTO" parameterType="map">
+	<select id="travelGetLists" resultType="com.project.dto.RoomDTO" parameterType="map">
 		select * from (
 		select rownum rnum, data.* from (
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
@@ -97,7 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${searchKey} like '%' || #{searchValue} || '%' and subject = '맛집'
 	</select>
 	
-	<select id="foodGetLists" resultType="com.project.room.RoomDTO" parameterType="map">
+	<select id="foodGetLists" resultType="com.project.dto.RoomDTO" parameterType="map">
 		select * from (
 		select rownum rnum, data.* from (
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
@@ -117,7 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${searchKey} like '%' || #{searchValue} || '%' and subject = '운동'
 	</select>
 	
-	<select id="sportsGetLists" resultType="com.project.room.RoomDTO" parameterType="map">
+	<select id="sportsGetLists" resultType="com.project.dto.RoomDTO" parameterType="map">
 		select * from (
 		select rownum rnum, data.* from (
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
@@ -137,7 +137,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${searchKey} like '%' || #{searchValue} || '%' and subject = '공부'
 	</select>
 	
-	<select id="studyGetLists" resultType="com.project.room.RoomDTO" parameterType="map">
+	<select id="studyGetLists" resultType="com.project.dto.RoomDTO" parameterType="map">
 		select * from (
 		select rownum rnum, data.* from (
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,

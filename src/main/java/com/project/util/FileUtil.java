@@ -1,4 +1,4 @@
-package com.project.room;
+package com.project.util;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -11,6 +11,8 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.project.dto.RoomDTO;
 
 @Component("fileUtil")
 public class FileUtil {
