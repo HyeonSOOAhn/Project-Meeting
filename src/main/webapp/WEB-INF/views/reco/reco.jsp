@@ -351,11 +351,12 @@
 				<!-- End of Topbar -->
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
+					
 
 					<!-- Page Heading -->
 					<c:set var="subject" value="${subject }" />
 					<c:if test="${subject ne null}">
-						<a href="reco?subject=${subject }&mode=update"
+						<a href="reco_update"
 							class="btn btn-secondary btn-icon-split"> <span
 							class="icon text-white-50"> <i class="fas fa-arrow-right"></i>
 						</span> <span class="text">자료 업데이트</span>
@@ -389,7 +390,7 @@
 											class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
 											aria-labelledby="dropdownMenuLink">
 											<div class="dropdown-header">Dropdown Header:</div>
-											<a class="dropdown-item" href="#">Action</a> <a
+											<a class="dropdown-item" href="showMap"onclick="window.open(this.href, '_blank', 'width=가로사이즈px,height=세로사이즈px,toolbars=no,scrollbars=no'); return false;">Action</a> <a
 												class="dropdown-item" href="#">Another action</a>
 											<div class="dropdown-divider"></div>
 											<a class="dropdown-item" href="#">Something else here</a>
@@ -398,14 +399,8 @@
 								</div>
 								<!-- Card Body -->
 								<div class="card-body" align="center">
-								<c:set var="imgUrl" value="${dto.imgUrl }" />
-									<c:if test="${imgUrl eq null}">
-									   <img src="img/nullimg.bmp" alt="null" width="200" height="200"><br/>
-									</c:if>
-									<c:if test="${imgUrl ne null}">
-									   <img src="${dto.imgUrl }" alt="${dto.title }" width="200" height="200"><br/>
-									</c:if>
-								${dto.introduce}
+								${dto.introduce}<br/>
+								${dto.location}
 								</div>
 							</div>
 						</div>

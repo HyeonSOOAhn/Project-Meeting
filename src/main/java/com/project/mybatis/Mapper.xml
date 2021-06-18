@@ -21,14 +21,16 @@ select * from Recommend where subject=#{subject}
 	UPDATE SET
 	subject = #{subject},keyword = #{keyword},
 	title = #{title}, introduce = #{introduce},content = #{content},
-	location = #{location},imgUrl = #{imgUrl, jdbcType=VARCHAR}
+	location = #{location},
+	lat = #{lat, jdbcType=VARCHAR},lon = #{lon, jdbcType=VARCHAR}
 	WHEN NOT MATCHED THEN
 	INSERT
 	(recoNum,subject,keyword,title,
-	introduce,content,location,imgUrl)
+	introduce,content,location,lat,lon)
 	VALUES
 	(#{recoNum},#{subject},#{keyword},#{title},
-	#{introduce},#{content},#{location},#{imgUrl, jdbcType=VARCHAR})
+	#{introduce},#{content},#{location},
+	#{lat, jdbcType=VARCHAR},#{lon, jdbcType=VARCHAR})
 </update>
 
 

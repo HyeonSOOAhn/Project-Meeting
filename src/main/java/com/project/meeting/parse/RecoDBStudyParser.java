@@ -38,11 +38,46 @@ public class RecoDBStudyParser {
 	 * InterruptedException { libParser(0); }
 	 */
 	 
-	
+	public static void totalCountParser() throws IOException, InterruptedException {
+    	//도서관 API의 totalCount를 가져온다.
+    	
+        StringBuilder urlBuilder = new StringBuilder("http://api.data.go.kr/openapi/tn_pubr_public_lbrry_api"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=wx1FtCvq2AivHsuIAfn24wTlffKB2K7uVzmPcNxwKSbT2ZNKATW4WdEDX%2Fx7MPv4PTxrP3zUqPANPq%2Byqdz5tg%3D%3D"); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + 1); /*페이지 번호*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*XML/JSON 여부*/
+
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+         
+        //파싱
+        JsonParser Parser = new JsonParser();
+        JsonObject jObj1 = (JsonObject) Parser.parse(sb.toString());
+        jObj1 = (JsonObject) jObj1.get("response");
+        jObj1 = (JsonObject) jObj1.get("body");
+        
+        totalCount = Integer.parseInt((((jObj1.get("totalCount")).toString()).replace("\"", "")));//데이터 전체 갯수
+        
+	}
 	
     public static List<RecoDTO> libParser(int pageNo) throws IOException, InterruptedException {
-    	//도서관 API
-    	
+    	//도서관 API의 데이터를 dto에 담는다.
         StringBuilder urlBuilder = new StringBuilder("http://api.data.go.kr/openapi/tn_pubr_public_lbrry_api"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=wx1FtCvq2AivHsuIAfn24wTlffKB2K7uVzmPcNxwKSbT2ZNKATW4WdEDX%2Fx7MPv4PTxrP3zUqPANPq%2Byqdz5tg%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + pageNo); /*페이지 번호*/
@@ -73,11 +108,6 @@ public class RecoDBStudyParser {
         JsonObject jObj1 = (JsonObject) Parser.parse(sb.toString());
         jObj1 = (JsonObject) jObj1.get("response");
         jObj1 = (JsonObject) jObj1.get("body");
-        
-        if(pageNo==0) {
-            totalCount = Integer.parseInt((((jObj1.get("totalCount")).toString()).replace("\"", "")));//데이터 전체 갯수
-        }
-        
         JsonArray memberArray = (JsonArray) jObj1.get("items");
         System.out.println(memberArray);
         List<RecoDTO> list = new ArrayList<RecoDTO>();
@@ -86,7 +116,7 @@ public class RecoDBStudyParser {
         	RecoDTO dto = new RecoDTO();
         	JsonObject object = (JsonObject) memberArray.get(i);
 			
-			dto.setRecoNum((pageNo*100)+i);
+			dto.setRecoNum(((pageNo-1)*100)+i);
 			dto.setSubject("study");
 			dto.setKeyword("library");
         	dto.setTitle(((object.get("lbrryNm")).toString()).replace("\"", ""));//도서관명 title 

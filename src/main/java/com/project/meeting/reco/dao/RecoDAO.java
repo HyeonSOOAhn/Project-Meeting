@@ -1,9 +1,13 @@
 package com.project.meeting.reco.dao;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
 import org.mybatis.spring.SqlSessionTemplate;
+
+import com.project.meeting.parse.RecoDBStudyParser;
 import com.project.meeting.reco.dto.RecoDTO;
 
 public class RecoDAO {
@@ -21,11 +25,17 @@ public class RecoDAO {
 		return lists;
 	}
 	
-	public void insertData(List<RecoDTO> list){
-		for(RecoDTO data : list) {
-			sessionTemplate.insert("com.recoMapper.insertData",data);
+	public void insertData() throws IOException, InterruptedException{
+
+		RecoDBStudyParser.totalCountParser();
+		for(int i=1;i<(RecoDBStudyParser.totalCount/100)+2;i++)
+		{				
+			for(RecoDTO data : RecoDBStudyParser.libParser(i)) {
+				sessionTemplate.insert("com.recoMapper.insertData",data);
+			
+			}
+			
 		}
-		
 
 	}
 

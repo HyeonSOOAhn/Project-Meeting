@@ -25,36 +25,37 @@ public class RecoController {
 	RecoDAO dao;
 	
 	
-	@RequestMapping(value = "/reco", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "/reco_main", method = RequestMethod.GET)
 	public String reco(HttpServletRequest request) throws IOException, InterruptedException {
-		
-		String subject = request.getParameter("subject");
-		String mode = request.getParameter("mode");
-		
-		
-		if(mode!=null) {
-			
-			
-			  int pageNo=0; 
-			  dao.insertData(RecoDBStudyParser.libParser(0));
-			  
-			  for(pageNo=1;pageNo<(RecoDBStudyParser.totalCount/100)+2;pageNo++){
-			  dao.insertData(RecoDBStudyParser.libParser(pageNo)); }
-			 
-			  System.out.println("업데이트 완료");
-		}
-		
-		
-		if(subject!=null) {
-			
-			List<RecoDTO> lists = dao.getList(subject);
-			
-			request.setAttribute("subject", subject);
-			request.setAttribute("lists", lists);
-		}
-		
 
 		return "reco";
 	}
+	
+	@RequestMapping(value = "/reco", method = RequestMethod.GET)
+	public String recoStudy(HttpServletRequest request) throws IOException, InterruptedException {
+
+		String subject = request.getParameter("subject");
+
+		List<RecoDTO> lists = dao.getList(subject);
+
+		request.setAttribute("subject", subject);
+		request.setAttribute("lists", lists);
+
+		return "reco";
+	}
+	
+	
+	@RequestMapping(value = "/reco_update", method = RequestMethod.GET)
+	public String recoUpdate(HttpServletRequest request) throws IOException, InterruptedException {
+		dao.insertData();
+		
+
+		System.out.println("업데이트 완료");
+		
+		return "redirect:reco_main";
+	}
+
+	
 	
 }
