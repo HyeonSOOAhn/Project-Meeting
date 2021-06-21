@@ -29,11 +29,13 @@
 	<!-- 어노테이션 설정 -->
 	<context:component-scan base-package="com.project.controller,com.project.util" />
 	
+	
 	<!-- commons multipart resolver -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
 		<beans:property name="maxUploadSize" value="100000000" /> 
 		<beans:property name="maxInMemorySize" value="100000000" /> 
 	</beans:bean>
+	
 	
 	<!-- DAO -->
 	<beans:bean id="registerDAO" class="com.project.dao.RegisterDAO">
@@ -43,6 +45,7 @@
 	<beans:bean id="roomDAO" class="com.project.dao.RoomDAO">
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
+	
 	
 	<!-- MyBatis DB연결 -->
 	<beans:bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">

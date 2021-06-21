@@ -86,6 +86,7 @@ public class MeetingController {
 		
 		return mav;
 	}
+	
 	@RequestMapping(value="/logout.action",
 			method = RequestMethod.POST)
 	public String logout(HttpServletRequest req) throws Exception{
@@ -116,7 +117,7 @@ public class MeetingController {
 		dto = dao.getUserInfo(userId);
 		
 		UserInfo info = new UserInfo();
-		System.out.println(dto.getUserId());
+		
 		info.setUserId(dto.getUserId());
 		info.setUserName(dto.getUserName());
 		
@@ -160,6 +161,7 @@ public class MeetingController {
 		}
 				
 	}
+	
 	@RequestMapping(value="/sendEmail.action",
 			method = {RequestMethod.GET,RequestMethod.POST})
 	public String sendEmail(String email,String wow, HttpServletRequest req) throws Exception{
@@ -187,6 +189,7 @@ public class MeetingController {
 		
 		return "/login/forgotPwd";
 	}
+	
 	@RequestMapping(value="/resetPwd_ok.action",
 			method = {RequestMethod.POST,RequestMethod.GET})
 	public String resetPwd(String email,String userPwd,HttpServletRequest req) throws Exception{

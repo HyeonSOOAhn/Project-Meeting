@@ -21,6 +21,7 @@ public class RegisterDAO {
 	public void insertUserData(UserDTO dto) {
 		sessionTemplate.insert("com.Mapper.insertUserData",dto);
 	}
+	
 	public int checkId(String userId) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -30,12 +31,14 @@ public class RegisterDAO {
 		
 		return result;
 	}
+	
 	public int checkEmail(String email) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("userEmail",email);
 		return sessionTemplate.selectOne("com.Mapper.checkEmail",params);
 	}
+	
 	public String checkPwd(String userId) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -43,6 +46,7 @@ public class RegisterDAO {
 		
 		return sessionTemplate.selectOne("com.Mapper.checkPwd",params);
 	}
+	
 	public void resetPwd(String email,String pwd) {
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("email", email);
@@ -50,6 +54,7 @@ public class RegisterDAO {
 		
 		sessionTemplate.update("com.Mapper.resetPwd", params);
 	}
+	
 	public UserDTO getUserInfo(String userId) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("userId", userId);

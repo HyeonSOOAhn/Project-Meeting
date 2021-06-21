@@ -90,7 +90,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header"><a class="small" href="<%=cp%>/index.action"">방 카테고리</a></h6>
+                        <h6 class="collapse-header"><a class="small" href="<%=cp%>/index.action">방 카테고리</a></h6>
                         <a class="collapse-item" href="<%=cp%>/list.action">전체</a>
                         <a class="collapse-item" href="<%=cp%>/travelList.action">여행</a>
                         <a class="collapse-item" href="<%=cp%>/foodList.action">맛집</a>
@@ -329,8 +329,13 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800"><b>방 카테고리</b></h1>
-                        <a href="<%=cp%>/created.action" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
+                        <c:if test="${!empty sessionScope.userInfo.userId }">
+	                        <a href="<%=cp%>/created.action" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+	                                class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
+                        </c:if>
+                        <c:if test="${empty sessionScope.userInfo.userId }">
+	                        <p>로그인을 하셔야 방 만들기가 가능합니다.</p>
+                        </c:if>
                     </div>
 
                     <!-- Content Row class="row" -->
