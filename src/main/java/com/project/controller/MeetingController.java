@@ -120,7 +120,6 @@ public class MeetingController {
 		
 		info.setUserId(dto.getUserId());
 		info.setUserName(dto.getUserName());
-		System.out.println(dto.getUserName());
 		
 		HttpSession session = req.getSession();
 		

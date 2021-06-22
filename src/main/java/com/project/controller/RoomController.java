@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -225,6 +226,8 @@ public class RoomController {
 		}
 		
 		RoomDTO dto = dao.getReadData(roomNum);
+		
+		System.out.println(dto.getMember());
 		
 		//라인수
 		int lineSu = dto.getIntroduce().split("\n").length;
@@ -1005,6 +1008,21 @@ public class RoomController {
 		request.setAttribute("pageNum", pageNum);
 		
 		return "room/study/studyArticle";
+		
+	}
+	
+	@RequestMapping(value = "/request.action"
+					,method = RequestMethod.GET)
+	public ModelAndView roomRequest(HttpServletRequest request) throws Exception{
+		
+		String manager = request.getParameter("manager");
+		
+		
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("room/index");
+		
+		return mav;
 		
 	}
 

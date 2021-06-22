@@ -15,6 +15,7 @@
 <a href="<%=cp%>/index.action">방 카테고리</a>
 <form action="logout.action" method="post">
 <input type="submit" value="로그아웃">
+<a href="list.action">방리스트</a>
 </form>
 </body>
 </html>
