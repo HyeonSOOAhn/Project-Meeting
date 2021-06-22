@@ -84,12 +84,22 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                        <p>창설일 : ${dto.created }&nbsp;&nbsp;참가자 : ${dto.totalP } / ${dto.currentP } 명</p><br/>
+                                        <p>창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 : ${dto.currentP } / ${dto.totalP } 명</p><br/>
                                     </div>
-                                    <a href="#" class="btn btn-primary btn-user btn-block">
-                                        방 참여 신청하기
-                                    </a>
-                                        
+                                    
+                                    <div class="form-group">
+                                    	<c:if test="${sessionScope.userInfo.userId != dto.manager || dto.member}">
+		                                    <a href="#" class="btn btn-primary btn-user btn-block">
+		                                        방 참여 신청하기
+		                                    </a>
+	                                    </c:if>
+	                                    <c:if test="${sessionScope.userInfo.userId == dto.manager && dto.member}">
+		                                    <a href="#" class="btn btn-primary btn-user btn-block">
+		                                        방 참가하기
+		                                    </a>
+	                                    </c:if>
+                                    </div>
+                                    
                                     
                                     <hr>
                                     <div class="text-center">

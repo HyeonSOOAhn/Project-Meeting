@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,7 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.RoomDAO;
 import com.project.dto.RoomDTO;
-import com.project.util.FileUtil;
+import com.project.dto.UserInfo;
+import com.project.util.RoomFileUtil;
 import com.project.util.PageUtil;
 
 @Controller
@@ -32,8 +34,8 @@ public class RoomController {
 	PageUtil pageUtil;
 	
 	@Autowired
-	@Qualifier("fileUtil")
-	FileUtil fileUtil;
+	@Qualifier("roomFileUtil")
+	RoomFileUtil roomFileUtil;
 	
 	@RequestMapping(value = "/index.action")
 	public ModelAndView index() throws Exception {
@@ -50,9 +52,22 @@ public class RoomController {
 	//전체 방 --------------------------------------------------------------
 	//방 만들기
 	@RequestMapping(value = "/created.action")
-	public ModelAndView created() throws Exception {
+	public ModelAndView created(HttpServletRequest request) throws Exception {
 		
 		//http://localhost:8080/meeting/created.action
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("login/login");
+			
+			return mav;
+			
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room/created");
@@ -66,7 +81,7 @@ public class RoomController {
 		
 		//dao.insertData(dto);
 		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
 		
 		int size = lists.size();
 		
@@ -180,6 +195,16 @@ public class RoomController {
 	@RequestMapping(value = "/article.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String article(HttpServletRequest request) throws Exception {
 		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "redirect:/login.action";
+			
+		}
+		
 		String cp = request.getContextPath();
 		
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
@@ -269,7 +294,7 @@ public class RoomController {
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
 		
-		List<Map<String, Object>> lists = fileUtil.parseUpdateFileInfo(dto, mpRequest);
+		List<Map<String, Object>> lists = roomFileUtil.parseUpdateFileInfo(dto, mpRequest);
 		
 		int size = lists.size();
 		
@@ -300,7 +325,7 @@ public class RoomController {
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
-		fileUtil.parseDeleteFileInfo(dto.getStoredFileName());
+		roomFileUtil.parseDeleteFileInfo(dto.getStoredFileName());
 		
 		dao.deleteData(roomNum);
 		
@@ -319,7 +344,20 @@ public class RoomController {
 	
 	//여행 방 --------------------------------------------------------------
 	@RequestMapping(value = "/travelCreated.action")
-	public ModelAndView travelCreated() throws Exception {
+	public ModelAndView travelCreated(HttpServletRequest request) throws Exception {
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("login/login");
+			
+			return mav;
+			
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room/travel/travelCreated");
@@ -331,7 +369,7 @@ public class RoomController {
 	@RequestMapping(value = "/travelCreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String travelCreated_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
 		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
 		
 		int size = lists.size();
 		
@@ -424,6 +462,16 @@ public class RoomController {
 	@RequestMapping(value = "/travelArticle.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String travelArticle(HttpServletRequest request) throws Exception {
 		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "redirect:/login.action";
+			
+		}
+		
 		String cp = request.getContextPath();
 		
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
@@ -461,7 +509,20 @@ public class RoomController {
 	
 	//맛집 방 --------------------------------------------------------------
 	@RequestMapping(value = "/foodCreated.action")
-	public ModelAndView foodCreated() throws Exception {
+	public ModelAndView foodCreated(HttpServletRequest request) throws Exception {
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("login/login");
+			
+			return mav;
+			
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room/food/foodCreated");
@@ -473,7 +534,7 @@ public class RoomController {
 	@RequestMapping(value = "/foodCreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String foodCreated_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
 		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
 		
 		int size = lists.size();
 		
@@ -566,6 +627,16 @@ public class RoomController {
 	@RequestMapping(value = "/foodArticle.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String foodArticle(HttpServletRequest request) throws Exception {
 		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "redirect:/login.action";
+			
+		}
+		
 		String cp = request.getContextPath();
 		
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
@@ -603,7 +674,20 @@ public class RoomController {
 	
 	//운동 방 --------------------------------------------------------------
 	@RequestMapping(value = "/sportsCreated.action")
-	public ModelAndView sportsCreated() throws Exception {
+	public ModelAndView sportsCreated(HttpServletRequest request) throws Exception {
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("login/login");
+			
+			return mav;
+			
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room/sports/sportsCreated");
@@ -615,7 +699,7 @@ public class RoomController {
 	@RequestMapping(value = "/sportsCreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String sportsCreated_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
 		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
 		
 		int size = lists.size();
 		
@@ -708,6 +792,16 @@ public class RoomController {
 	@RequestMapping(value = "/sportsArticle.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String sportsArticle(HttpServletRequest request) throws Exception {
 		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "redirect:/login.action";
+			
+		}
+		
 		String cp = request.getContextPath();
 		
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
@@ -745,7 +839,20 @@ public class RoomController {
 	
 	//공부 방 --------------------------------------------------------------
 	@RequestMapping(value = "/studyCreated.action")
-	public ModelAndView studyCreated() throws Exception {
+	public ModelAndView studyCreated(HttpServletRequest request) throws Exception {
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("login/login");
+			
+			return mav;
+			
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room/study/studyCreated");
@@ -757,7 +864,7 @@ public class RoomController {
 	@RequestMapping(value = "/studyCreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String studyCreated_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
 		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
 		
 		int size = lists.size();
 		
@@ -849,6 +956,16 @@ public class RoomController {
 	
 	@RequestMapping(value = "/studyArticle.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String studyArticle(HttpServletRequest request) throws Exception {
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "redirect:/login.action";
+			
+		}
 		
 		String cp = request.getContextPath();
 		

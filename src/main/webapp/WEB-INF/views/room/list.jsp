@@ -81,7 +81,8 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <!-- <sup>너와 나의 은밀한 만남</sup> -->
+                <div class="sidebar-brand-text mx-3">방 Ting</div>
             </a>
 
             <!-- Divider -->
@@ -344,8 +345,13 @@
                     		<h1 class="h3 mb-2 text-gray-800">전체 방 목록</h1>
                     		<p class="mb-4">여러분들이 참여하실 수 있는 모든 방 목록입니다.</p>
                     	</div>
-                    	<a href="<%=cp%>/created.action" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
+                    	<c:if test="${!empty sessionScope.userInfo.userId }">
+	                    	<a href="<%=cp%>/created.action" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+	                                class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
+                        </c:if>
+                        <c:if test="${empty sessionScope.userInfo.userId }">
+	                        <p style="font-style: oblique;font-weight: bold;font-size: 15px;color: #4D71DB;">로그인을 하셔야 방 만들기가 가능합니다.</p>
+                        </c:if>
                     </div>
 
                     <!-- DataTales Example -->
@@ -376,7 +382,7 @@
 										<u>${dto.subject }</u><br/>
 										<h2><a href="${articleUrl }&roomNum=${dto.roomNum}">${dto.title }</a></h2><br/>
 										${dto.keyword }<br/>
-										창설일 : ${dto.created }&nbsp;&nbsp;참가자 : ${dto.totalP } / ${dto.currentP } 명
+										창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 : ${dto.currentP } / ${dto.totalP } 명
 									</div>
 									<div class="right"><img src="${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }" width="200" height="200"/></div>
 								</div>

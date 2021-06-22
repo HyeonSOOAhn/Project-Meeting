@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into wholeRoom(roomNum,subject,title,keyword,introduce,created,
 		totalP,currentP,manager,originalFileName,storedFileName)
 		values (roomNum_SEQ.NEXTVAL,#{subject},#{title},#{keyword},#{introduce},sysdate,
-		1,1,#{manager},#{originalFileName},#{storedFileName})
+		#{totalP},1,#{manager},#{originalFileName},#{storedFileName})
 	</insert>
 	
 	<select id="getDataCount" resultType="int" parameterType="hashMap">
@@ -57,6 +57,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
 		totalP,currentP,manager,originalFileName,storedFileName
 		from wholeRoom where roomNum = #{roomNum}
+	</select>
+	
+	<select id="usersReadData" resultType="com.project.dto.RoomDTO" parameterType="int">
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where manager = #{manager}
 	</select>
 	
 	<update id="updateData" parameterType="hashMap">

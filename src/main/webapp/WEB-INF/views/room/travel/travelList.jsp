@@ -49,12 +49,14 @@
 	        height: 200px;
 
 	    }
+	    
 	    div.left {
 	        width: 70%;
 	        float: left;
 	        box-sizing: border-box;
 
 	    }
+	    
 	    div.right {
 	        width: 30%;
 	        float: right;
@@ -79,7 +81,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">방 Ting</div>
             </a>
 
             <!-- Divider -->
@@ -342,8 +344,13 @@
                     		<h1 class="h3 mb-2 text-gray-800">여행 방 목록</h1>
                     		<p class="mb-4">여행 떠나실 준비 되셨나요? 마음이 맞는 사람들과 행복한 동행의 시작.</p>
                     	</div>
-                    	<a href="<%=cp%>/travelCreated.action" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    	<c:if test="${!empty sessionScope.userInfo.userId }">
+	                    	<a href="<%=cp%>/travelCreated.action" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> 여행 방 만들기</a>
+                        </c:if>
+                        <c:if test="${empty sessionScope.userInfo.userId }">
+	                        <p style="font-style: oblique;font-weight: bold;font-size: 15px;color: #4D71DB;">로그인을 하셔야 여행 방 만들기가 가능합니다.</p>
+                        </c:if>
                     </div>
 
                     <!-- DataTales Example -->
@@ -373,7 +380,7 @@
 										<u>${dto.subject }</u><br/>
 										<h2><a href="${articleUrl }&roomNum=${dto.roomNum}">${dto.title }</a></h2><br/>
 										${dto.keyword }<br/>
-										창설일 : ${dto.created }&nbsp;&nbsp;참가자 : ${dto.totalP } / ${dto.currentP } 명
+										창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 : ${dto.currentP } / ${dto.totalP } 명
 									</div>
 									<div class="right"><img src="${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }" width="200" height="200"/></div>
 								</div>
