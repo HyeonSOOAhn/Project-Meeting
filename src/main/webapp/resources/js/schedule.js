@@ -89,6 +89,9 @@ function getDate(year, month, day, oY, oM, oD) {
 	
 	cal_content += "</dl></div>";
 	
+	if(month < 10) month = "0" + month;
+	if(day < 10) day = "0" + day;
+	
 	var selectDay =  year + "-" + month + "-" + day;
 	
 	document.getElementById("cal_frame").innerHTML = cur_calendar + cal_container;

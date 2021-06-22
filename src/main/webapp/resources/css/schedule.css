@@ -79,14 +79,17 @@
 	padding-left:15px;
 }
 
-#select_cal textarea {
-	min-height:26px;
-	max-height:26px;
+#select_cal text, #select_cal textarea {
+	min-height:28px;
+	max-height:28px;
+	padding-left:10px;
 }
 
 .select_category {
 	width:150px;
 	text-align:right;
+	padding-top:2px;
+	height:28px;
 }
 
 .adst {

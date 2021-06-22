@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="project.RoomInfoMapper">
+	<select id="getMaxBoardNum" resultType="int">
+		select nvl(max(boardNum), 0) from roomBoard
+	</select>
+	
+	<insert id="insertRoomBoard" parameterType="com.project.dto.RoomInfoDTO">
+		insert into roomBoard
+			(roomNum, boardNum, userId, boardName, boardTitle, boardContent, selectDay, adst, mode1, created)
+		values
+			(#{roomNum}, #{boardNum}, #{userId}, #{boardName}, #{boardTitle}, #{boardContent}, #{selectDay}, #{adst}, #{mode1}, sysdate)
+	</insert>
+	
+	<select id="getAllBoard" resultType="com.project.dto.RoomInfoDTO" parameterType="int">
+		select roomNum, boardNum, userId, boardName, boardTitle, boardContent, selectDay, adst, selectDay, to_char(created, 'YYYY-MM-DD') created, mode1 from roomBoard
+			where roomNum = #{roomNum} order by created desc
+	</select>
+	
+	<select id="getRoomData" resultType="com.project.dto.RoomDTO" parameterType="int">
+		select	roomNum, subject, title, keyword, introduce, to_char(created,'YYYY-MM-DD') created,
+				totalP, currentP, manager, member, originalFileName, storedFileName
+			from wholeRoom
+			where roomNum = #{roomNum}
+	</select>
+	
+	<select id="getSolt" resultType="com.project.dto.RoomInfoDTO" parameterType="map">
+		select roomNum, boardNum, userId, boardName, boardTitle, boardContent, selectDay, adst, selectDay, to_char(created, 'YYYY-MM-DD') created, mode1 from roomBoard
+			where roomNum = #{roomNum} and mode1 = #{mode1} order by created desc
+	</select>
+	
+	<delete id="deleteRoomBoard" parameterType="int">
+		delete roomBoard where roomNum = #{roomNum}
+	</delete>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete roomBoard where boardNum = #{boardNum}
+	</delete>
+	
+	<delete id="deleteRoomForId" parameterType="String">
+		delete roomBoard where userId = #{userId}
+	</delete>
+	
+	<!--  -->
+	
+	<select id="getRoomData" resultType="com.project.dto.RoomInfoDTO" parameterType="int">
+		select subject, keyword, manager, title, introduce, backgroundImage, totalP, currentP, created from wholeRoom where roomNum = #{roomNum}
+	</select>
+	
+	<select id="getRoomList" resultType="com.project.dto.RoomInfoDTO" parameterType="map">
+		select * from (
+			select rownum rnum, data.* from (
+		 		select roomNum, subject, keyword, manager, title, introduce, backgroundImage, totalP, currentP, to_char(created, 'YYYY-MM-DD') created from wholeRoom
+		 		where (subject like '%' || #{subject} || '%' and regexp_like (keyword, #{keyword})) order by created desc
+	 		) data
+ 		) where rnum >= #{start} and rnum <![CDATA[<=]]> #{end}
+	</select>
+	
+	<select id="getTest" resultType="com.project.roomInfo.TestDTO" parameterType="map">
+		select * from test
+			where <foreach collection="list" item="item" index="index" separator="and"> name like '%' || #{item} || '%' </foreach>
+	</select>
+</mapper>
