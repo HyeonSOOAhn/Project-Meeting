@@ -65,7 +65,13 @@ public class FileUtil {
 				listsMap.put("title",dto.getTitle());
 				listsMap.put("keyword",dto.getKeyword());
 				listsMap.put("introduce",dto.getIntroduce());
+				if(dto.getTotalP()==0) {
+					listsMap.put("totalP", dto.getTotalPDirect());
+				}else if(dto.getTotalP()!=0) {
+					listsMap.put("totalP", dto.getTotalP());
+				}
 				listsMap.put("manager",dto.getManager());
+				listsMap.put("member", dto.getMember());
 				
 				listsMap.put("originalFileName", originalFileName);
 				listsMap.put("storedFileName", storedFileName);

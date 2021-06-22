@@ -46,6 +46,21 @@
 		f.subject.value = str;
 		
 		
+		str = f.totalP.value;
+		//util에 있는 trim
+		str = str.trim();
+		if(!str) {
+			alert("\n방 인원설정을 선택하세요!");
+			f.totalP.focus();
+			return;
+		}
+		if(str === 0) {
+			f.totalPDirect.value;
+		}else {
+			f.totalP.value = str;
+		}
+		
+		
 		str = f.title.value;
 		str = str.trim();
 		if(!str) {
@@ -83,6 +98,7 @@
 		
 	}
 	
+	//파일 버튼
 	$(function() {
 		
 		$('#btn').click(function (e) {
@@ -95,11 +111,36 @@
 	function changeValue(obj) {
 		alert(obj.value);
 	}
+	
+	//직접 입력
+	$(function(){
+
+      	//직접입력 인풋박스 기존에는 숨어있다가
+		$("#totalPDirect").hide();
+		
+		$("#totalP").change(function() {
+		
+		    //직접입력을 누를 때 나타남
+			if($("#totalP").val() == "0") {
+					$("#totalPDirect").show();
+				}  else {
+					$("#totalPDirect").hide();
+				}
+		
+		})
+		
+	});
     
     </script>
     
     <style type="text/css">
-    	#file {display:none;}
+    
+    	#file {
+    	
+    		display:none;
+    		
+    	}
+    
     </style>
 
 </head>
@@ -130,6 +171,21 @@
                                         	<option value="운동">운동</option>
                                         	<option value="공부">공부</option>
                                         </select>
+                                        
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        
+                                        <select name="totalP" id="totalP" class="custom-select custom-select-sm form-control form-control-sm">
+                                        	<option value="">방 인원설정</option>
+                                        	<option value="10">10</option>
+                                        	<option value="30">30</option>
+                                        	<option value="50">50</option>
+                                        	<option value="100">100</option>
+                                        	<option value="0">직접입력</option>
+                                        </select>
+                                        
+                                        <input type="text" name="totalPDirect" id="totalPDirect" style="width:200px;" class="form-control form-control-user"  value="0"/>
+                                        
                                     </div>
                                     <!-- <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" id="exampleLastName"
@@ -154,7 +210,8 @@
                                     style="font-size: 0.8rem; border-radius: 10rem; padding: 0.75rem 1rem;">방 프로필 이미지</button>
                                 </div>
                                	
-                                <input type="hidden" name="manager" value="1">
+                                <input type="hidden" name="manager" value="${sessionScope.userInfo.userId }">
+                                <input type="hidden" name="member" value="${sessionScope.userInfo.userId }">
                                 
                                 <input type="button" class="btn btn-primary btn-user btn-block" value="생 성 하 기" onclick="sendIt();">
                                 

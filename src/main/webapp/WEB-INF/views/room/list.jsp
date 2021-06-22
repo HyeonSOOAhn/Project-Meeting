@@ -344,8 +344,13 @@
                     		<h1 class="h3 mb-2 text-gray-800">전체 방 목록</h1>
                     		<p class="mb-4">여러분들이 참여하실 수 있는 모든 방 목록입니다.</p>
                     	</div>
-                    	<a href="<%=cp%>/created.action" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
+                    	<c:if test="${!empty sessionScope.userInfo.userId }">
+	                    	<a href="<%=cp%>/created.action" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+	                                class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
+                        </c:if>
+                        <c:if test="${empty sessionScope.userInfo.userId }">
+	                        <p style="font-style: oblique;font-weight: bold;font-size: 15px;color: #4D71DB;">로그인을 하셔야 방 만들기가 가능합니다.</p>
+                        </c:if>
                     </div>
 
                     <!-- DataTales Example -->
