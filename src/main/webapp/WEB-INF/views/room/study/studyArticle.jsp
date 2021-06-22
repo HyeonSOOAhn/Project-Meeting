@@ -84,7 +84,7 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                        <p>창설일 : ${dto.created }&nbsp;&nbsp;참가자 : ${dto.totalP } / ${dto.currentP } 명</p><br/>
+                                        <p>창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 : ${dto.currentP } / ${dto.totalP } 명</p><br/>
                                     </div>
                                     
 									<div class="form-group">

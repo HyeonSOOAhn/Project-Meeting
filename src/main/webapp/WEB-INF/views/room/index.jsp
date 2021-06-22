@@ -70,7 +70,8 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <!-- <sup>너와 나의 은밀한 만남</sup> -->
+                <div class="sidebar-brand-text mx-3">방 Ting</div>
             </a>
 
             <!-- Divider -->

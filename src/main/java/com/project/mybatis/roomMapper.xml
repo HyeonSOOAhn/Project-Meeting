@@ -31,9 +31,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 -->
 	<insert id="insertData" parameterType="hashMap">
 		insert into wholeRoom(roomNum,subject,title,keyword,introduce,created,
-		totalP,currentP,manager,member,originalFileName,storedFileName)
+		totalP,currentP,manager,originalFileName,storedFileName)
 		values (roomNum_SEQ.NEXTVAL,#{subject},#{title},#{keyword},#{introduce},sysdate,
-		#{totalP},1,#{manager},#{member},#{originalFileName},#{storedFileName})
+		#{totalP},1,#{manager},#{originalFileName},#{storedFileName})
 	</insert>
 	
 	<select id="getDataCount" resultType="int" parameterType="hashMap">
@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from (
 		select rownum rnum, data.* from (
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
-		totalP,currentP,manager,member,originalFileName,storedFileName
+		totalP,currentP,manager,originalFileName,storedFileName
 		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%'
 		order by roomNum desc) data)
 		<![CDATA[
@@ -55,8 +55,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getReadData" resultType="com.project.dto.RoomDTO" parameterType="int">
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
-		totalP,currentP,manager,member,originalFileName,storedFileName
+		totalP,currentP,manager,originalFileName,storedFileName
 		from wholeRoom where roomNum = #{roomNum}
+	</select>
+	
+	<select id="usersReadData" resultType="com.project.dto.RoomDTO" parameterType="int">
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where manager = #{manager}
 	</select>
 	
 	<update id="updateData" parameterType="hashMap">
@@ -81,7 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from (
 		select rownum rnum, data.* from (
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
-		totalP,currentP,manager,member,originalFileName,storedFileName
+		totalP,currentP,manager,originalFileName,storedFileName
 		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%' and subject = '여행'
 		order by roomNum desc) data)
 		<![CDATA[
@@ -101,7 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from (
 		select rownum rnum, data.* from (
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
-		totalP,currentP,manager,member,originalFileName,storedFileName
+		totalP,currentP,manager,originalFileName,storedFileName
 		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%' and subject = '맛집'
 		order by roomNum desc) data)
 		<![CDATA[
@@ -121,7 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from (
 		select rownum rnum, data.* from (
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
-		totalP,currentP,manager,member,originalFileName,storedFileName
+		totalP,currentP,manager,originalFileName,storedFileName
 		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%' and subject = '운동'
 		order by roomNum desc) data)
 		<![CDATA[
@@ -141,7 +147,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from (
 		select rownum rnum, data.* from (
 		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
-		totalP,currentP,manager,member,originalFileName,storedFileName
+		totalP,currentP,manager,originalFileName,storedFileName
 		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%' and subject = '공부'
 		order by roomNum desc) data)
 		<![CDATA[

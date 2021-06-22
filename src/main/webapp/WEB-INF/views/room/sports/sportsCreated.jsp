@@ -193,11 +193,10 @@
                                     style="font-size: 0.8rem; border-radius: 10rem; padding: 0.75rem 1rem;">방 프로필 이미지</button>
                                 </div>
                                	
-                               	<input type="hidden" name="subject" value="운동">
-                                <input type="hidden" name="manager" value="${sessionScope.userInfo.userId }">
-                                <input type="hidden" name="member" value="${sessionScope.userInfo.userId }">
+                               	<input type="hidden" name="subject" value="운동"/>
+                                <input type="hidden" name="manager" value="${sessionScope.userInfo.userId }"/>
                                 
-                                <input type="button" class="btn btn-primary btn-user btn-block" value="생 성 하 기" onclick="sendIt();">
+                                <input type="button" class="btn btn-primary btn-user btn-block" value="생 성 하 기" onclick="sendIt();"/>
                                 
                             </form>
                             <hr>

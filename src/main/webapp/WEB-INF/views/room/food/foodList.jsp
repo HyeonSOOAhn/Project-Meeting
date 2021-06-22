@@ -81,7 +81,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">방 Ting</div>
             </a>
 
             <!-- Divider -->
@@ -380,7 +380,7 @@
 										<u>${dto.subject }</u><br/>
 										<h2><a href="${articleUrl }&roomNum=${dto.roomNum}">${dto.title }</a></h2><br/>
 										${dto.keyword }<br/>
-										창설일 : ${dto.created }&nbsp;&nbsp;참가자 : ${dto.totalP } / ${dto.currentP } 명
+										창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 : ${dto.currentP } / ${dto.totalP } 명
 									</div>
 									<div class="right"><img src="${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }" width="200" height="200"/></div>
 								</div>

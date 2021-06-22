@@ -14,8 +14,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.dto.RoomDTO;
 
-@Component("fileUtil")
-public class FileUtil {
+@Component("roomFileUtil")
+public class RoomFileUtil {
 	
 	//파일이 저장될 위치
 	//private static final String filePath = "D:\\sts-bundle\\Project-Meeting\\src\\main\\webapp\\resources\\upload\\";
@@ -60,6 +60,7 @@ public class FileUtil {
 				file = new File(filePath + storedFileName);
 				multipartFile.transferTo(file);
 				listsMap = new HashMap<String, Object>();
+				
 				listsMap.put("roomNum",dto.getRoomNum());
 				listsMap.put("subject",dto.getSubject());
 				listsMap.put("title",dto.getTitle());
@@ -71,7 +72,6 @@ public class FileUtil {
 					listsMap.put("totalP", dto.getTotalP());
 				}
 				listsMap.put("manager",dto.getManager());
-				listsMap.put("member", dto.getMember());
 				
 				listsMap.put("originalFileName", originalFileName);
 				listsMap.put("storedFileName", storedFileName);
