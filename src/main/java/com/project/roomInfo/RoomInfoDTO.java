@@ -2,23 +2,30 @@ package com.project.roomInfo;
 
 public class RoomInfoDTO {
 	
-	private int roomNum; // ¹æ °íÀ¯ ¹øÈ£
+	private int roomNum; // ë°© ê³ ìœ  ë²ˆí˜¸
 	
-	private int boardNum; // °Ô½ÃÆÇ ¹øÈ£
-	private String boardId; // ¾ÆÀÌµğ
-	private String boardName; // ÀÌ¸§
-	private String boardTitle; // Á¦¸ñ
-	private String boardContent; // ³»¿ë
+	private int boardNum; // ê²Œì‹œíŒ ë²ˆí˜¸
+	private String userId; // ì•„ì´ë””
+	private String boardName; // ì´ë¦„
+	private String boardTitle; // ì œëª©
+	private String boardContent; // ë‚´ìš©
+	private int groupNum;
+	private int depth;
+	private int orderNum;
+	private int parent;
+	private String selectDay;
+	private String adst;
+	private String mode1;
 	
-	private String subject; // ¹æ ´ëºĞ·ù
-	private String keyword; // ¹æ Å°¿öµå
-	private String manager; // ¹æÀå
-	private String title; // ¹æ Á¦¸ñ
-	private String introduce; // ¹æ ¼Ò°³±Û
-	private String backgroundImage; // ¹æ ¹è°æ»çÁø
-	private int totalP; // ÃÑ ÀÔÀå °¡´É ÀÎ¿ø
-	private int currentP; // ÇöÀç ÀÔÀå ÀÎ¿ø
-	private String created; // ¸¸µé¾îÁø ³¯Â¥
+	private String subject; // ë°© ëŒ€ë¶„ë¥˜
+	private String keyword; // ë°© í‚¤ì›Œë“œ
+	private String manager; // ë°©ì¥
+	private String title; // ë°© ì œëª©
+	private String introduce; // ë°© ì†Œê°œê¸€
+	private String backgroundImage; // ë°© ë°°ê²½ì‚¬ì§„
+	private int totalP; // ì´ ì…ì¥ ê°€ëŠ¥ ì¸ì›
+	private int currentP; // í˜„ì¬ ì…ì¥ ì¸ì›
+	private String created; // ë§Œë“¤ì–´ì§„ ë‚ ì§œ
 	
 	public int getRoomNum() {
 		return roomNum;
@@ -32,11 +39,11 @@ public class RoomInfoDTO {
 	public void setBoardNum(int boardNum) {
 		this.boardNum = boardNum;
 	}
-	public String getBoardId() {
-		return boardId;
+	public String getUserId() {
+		return userId;
 	}
-	public void setBoardId(String boardId) {
-		this.boardId = boardId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getBoardName() {
 		return boardName;
@@ -56,6 +63,49 @@ public class RoomInfoDTO {
 	public void setBoardContent(String boardContent) {
 		this.boardContent = boardContent;
 	}
+	public int getGroupNum() {
+		return groupNum;
+	}
+	public void setGroupNum(int groupNum) {
+		this.groupNum = groupNum;
+	}
+	public int getDepth() {
+		return depth;
+	}
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+	public int getOrderNum() {
+		return orderNum;
+	}
+	public void setOrderNum(int orderNum) {
+		this.orderNum = orderNum;
+	}
+	public int getParent() {
+		return parent;
+	}
+	public void setParent(int parent) {
+		this.parent = parent;
+	}
+	public String getSelectDay() {
+		return selectDay;
+	}
+	public void setSelectDay(String selectDay) {
+		this.selectDay = selectDay;
+	}
+	public String getAdst() {
+		return adst;
+	}
+	public void setAdst(String adst) {
+		this.adst = adst;
+	}
+	public String getMode1() {
+		return mode1;
+	}
+	public void setMode(String mode1) {
+		this.mode1 = mode1;
+	}
+	
 	public String getSubject() {
 		return subject;
 	}

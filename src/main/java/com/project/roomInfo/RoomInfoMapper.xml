@@ -5,45 +5,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="project.RoomInfoMapper">
-	<select id="getBoardList" resultType="com.project.roomInfo.RoomInfoDTO" parameterType="int">
-		select boardNum, roomNum, boardId, boardName, boardTitle, boardContent, hitCount, to_char(created, 'YYYY-MM-DD') from roomBoard where roomNum = #{roomNum}
+	<select id="getMaxBoardNum" resultType="int">
+		select nvl(max(boardNum), 0) from roomBoard
 	</select>
 	
-	<select id="getBoardData" resultType="com.project.roomInfo.RoomInfoDTO" parameterType="map">
-		select boardNum, roomNum, boardId, boardName, boardTitle, boardContent, boardIpAddr, imagePath, hitCount, to_char(created, 'YYYY-MM-DD') from roomBoard where roomNum = #{roomNum} and boardNum = #{boardNum}
-	</select>
-	
-	<insert id="insertBoardData" parameterType="com.project.roomInfo.RoomInfoDTO">
+	<insert id="insertRoomBoard" parameterType="com.project.roomInfo.RoomInfoDTO">
 		insert into roomBoard
-			(boardNum, roomNum, boardId, boardName, boardTitle, boardContent,
-			imagePath, groupNum, depth, orderNum, parent, hitCount, created)
+			(roomNum, boardNum, userId, boardName, boardTitle, boardContent, selectDay, adst, mode1, created)
 		values
-			(#{boardNum}, #{roomNum}, #{boardId}, #{boardName}, #{boardTitle}, #{boardContent},
-			#{imagePath}, #{groupNum}, #{depth}, #{orderNum}, #{parent}, 0, sysdate)
+			(#{roomNum}, #{boardNum}, #{userId}, #{boardName}, #{boardTitle}, #{boardContent}, #{selectDay}, #{adst}, #{mode1}, sysdate)
 	</insert>
 	
-	<update id="orderNumUpdate" parameterType="map">
-		update roomBoard set orderNum = orderNum + 1
-			where boardNum = #{boardNum} and (groupNum = #{groupNum} and orderNum > #{orderNum})
-	</update>
+	<select id="getAllBoard" resultType="com.project.roomInfo.RoomInfoDTO" parameterType="int">
+		select roomNum, boardNum, userId, boardName, boardTitle, boardContent, selectDay, adst, selectDay, to_char(created, 'YYYY-MM-DD') created, mode from roomBoard
+			where roomNum = #{roomNum} order by created desc
+	</select>
 	
-	<update id="updateRoomBoard" parameterType="map">
-		update roomBoard set boardId=#{boardId}, boardName=#{boardName}, boardTitle=#{boardTitle}, boardContent=#{boardContent}, imagePath=#{imagepath} where roomBoard = #{roomBoard} and boardNum=#{boardNum}
-	</update>
+	<select id="getSolt" resultType="com.project.roomInfo.RoomInfoDTO" parameterType="map">
+		select roomNum, boardNum, userId, boardName, boardTitle, boardContent, selectDay, adst, selectDay, to_char(created, 'YYYY-MM-DD') created, mode from roomBoard
+			where roomNum = #{roomNum} and mode = #{mode} order by created desc
+	</select>
 	
-	<delete id="deleteBoardData" parameterType="map">
-		delete roomBoard where roomNum = #{roomNum} and boardNum = #{boardNum} and groupNum in (
-			select boardNum from roomBoard start with boardNum = #{boardNum} connect by prior boardNum = parent
-		)
-	</delete>
-	
-	<delete id="deleteBoardMyData" parameterType="map">
-		delete roomBoard where roomNum = #{roomNum} and boardId = #{boardId}
-	</delete>
-	
-	<delete id="deleteBoardAllData" parameterType="int">
+	<delete id="deleteRoomBoard" parameterType="int">
 		delete roomBoard where roomNum = #{roomNum}
 	</delete>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete roomBoard where boardNum = #{boardNum}
+	</delete>
+	
+	<delete id="deleteRoomForId" parameterType="String">
+		delete roomBoard where userId = #{userId}
+	</delete>
+	
+	<!--  -->
 	
 	<select id="getRoomData" resultType="com.project.roomInfo.RoomInfoDTO" parameterType="int">
 		select subject, keyword, manager, title, introduce, backgroundImage, totalP, currentP, created from wholeRoom where roomNum = #{roomNum}

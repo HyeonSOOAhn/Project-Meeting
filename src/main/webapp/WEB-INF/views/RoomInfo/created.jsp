@@ -25,36 +25,6 @@
 	
 	    <!-- Custom styles for this page -->
 	    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-	    
-	    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-		<script type="text/javascript">
-		
-			$(function() {
-				
-				loadHtml = document.querySelector("#loadHtml");
-				$("#loadHtml").load("notice.action");
-				
-				$(':radio[name=sortBoard]').change(function() {
-					
-					var check = $(':radio[name=sortBoard]:checked').val();
-					
-					if(check == "notice") {
-						
-						$('#content').text("공지");
-						$("#loadHtml").load("notice.action");
-					} else if(check == "schedule") {
-						
-						$('#content').text("일정");
-						$("#loadHtml").load("schedule.action");
-					} else if(check == "vote") {
-						
-						$('#content').text("투표");
-						$("#loadHtml").load("vote.action");
-					}
-				});
-			});
-		
-		</script>
 	</head>
 	<body id="page-top">
 	    <div id="wrapper">
@@ -64,9 +34,7 @@
 	                    <i class="fas fa-laugh-wink"></i>
 	                </div>
 	                
-	                <div class="sidebar-brand-text mx-3">방이름
-	                	<span id="showTest" style="display:none;">이게 보이냐?</span>
-	                </div>
+	                <div class="sidebar-brand-text mx-3">방이름</div>
 	            </a>
 	            
 	            <hr class="sidebar-divider my-0">
@@ -162,11 +130,7 @@
 								<input type="radio" name="sortBoard" value="vote"/>투표
 							</div>
 							
-							<div>
-								내용 : 
-								<textarea id="content" rows="10" cols="30">공지</textarea>
-								<div id="loadHtml"></div>
-							</div>
+							<div id="loadHtml"></div>
 						</div>
 	                </div>
 	            </div>
@@ -222,5 +186,29 @@
 	
 	    <!-- Page level custom scripts -->
 	    <script src="js/demo/datatables-demo.js"></script>
+	    
+	    <script type="text/javascript">
+		    $(function() {
+				
+		    	loadHtml = document.querySelector("#loadHtml");
+		    	$("#loadHtml").load("notice.action");
+		    	
+		    	$(':radio[name=sortBoard]').change(function() {
+		    		
+		    		var check = $(':radio[name=sortBoard]:checked').val();
+		    		
+		    		if(check == "notice") {
+		    			
+		    			$("#loadHtml").load("notice.action");
+		    		} else if(check == "schedule") {
+		    			
+		    			$("#loadHtml").load("schedule.action");
+		    		} else if(check == "vote") {
+		    			
+		    			$("#loadHtml").load("vote.action");
+		    		}
+		    	});
+		    });
+	    </script>
 	</body>
 </html>

@@ -1,0 +1,100 @@
+@charset "UTF-8";
+
+* {
+	margin:0px;
+	padding:0px;
+}
+
+#cal_frame {
+	display:inline-block;
+	margin-bottom:1.5rem;
+	background-color:#ffffff;
+	padding-bottom:25px;
+}
+
+#cal_year {
+	width:400px;
+	clear:both;
+	padding-top:30px;
+}
+
+#cal_year dl {
+	width:50px;
+	float:left;
+	text-align:center;
+	font-size:3em;
+}
+
+#cal_year a {
+	
+}
+
+#cal_year #curr {
+	width:300px;
+}
+
+#cal_content {
+	margin-left:25px;
+	margin-right:25px;
+}
+
+#cal_content dd {
+	margin:1px;
+}
+
+#cal_week {
+	clear:both;
+}
+
+#cal_week dd {
+	width:50px;
+	height:50px;
+	text-align:center;
+	font-size:2em;
+	float:left;
+	margin-bottom:0px;
+	background-color:#e6e4e6;
+}
+
+#cal_week dd#today div {
+	margin:0px;
+	padding:0px;
+	border:1px solid #B2CCFF;
+	border-radius:25px;
+	color:#B2CCFF;
+}
+
+#cal_week dd#day_select div {
+	border:1px solid #B2CCFF;
+	border-radius:25px;
+	color:#B2CCFF;
+}
+
+#select_cal, #select_cal dl {
+	clear:both;
+}
+
+#select_cal dd {
+	float:left;
+	padding-left:15px;
+}
+
+#select_cal textarea {
+	min-height:26px;
+	max-height:26px;
+}
+
+.select_category {
+	width:150px;
+	text-align:right;
+}
+
+.adst {
+	margin-top:12px;
+}
+
+#act_schedule {
+	clear:both;
+	width:400px;
+	text-align:center;
+}

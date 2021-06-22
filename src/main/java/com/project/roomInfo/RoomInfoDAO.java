@@ -15,30 +15,50 @@ public class RoomInfoDAO {
 		this.sessionTemplate = sessionTemplate;
 	}
 
-//	¹æ ¸®½ºÆ® °¡Á®¿À±â
-	public List<RoomInfoDTO> getRoomList(String subject, String keyword, int start, int end) {
+//	ì¶”ê°€
+	public void insertRoomBoard(RoomInfoDTO dto) {
 		
-		Map<String, Object> map = new HashMap<String, Object>();
+		sessionTemplate.insert("project.RoomInfoMapper.insertRoomBoard", dto);
+	}
+	
+//	ì¶œë ¥
+	public List<RoomInfoDTO> getAllBoard(int roomNum) {
 		
-		map.put("start", start);
-		map.put("end", end);
-		map.put("subject", subject);
-		map.put("keyword", keyword);
-		
-		List<RoomInfoDTO> lists = sessionTemplate.selectList("project.RoomInfoMapper.getRoomList", map);
+		List<RoomInfoDTO> lists = sessionTemplate.selectList("project.RoomInfoMapper.getAllBoard", roomNum);
 		
 		return lists;
 	}
 	
-//	ÇØ´ç ¹æÀÇ Á¤º¸ °¡Á®¿À±â
-	public List<RoomInfoDTO> getRoomData(int roomNum) {
+	public List<RoomInfoDTO> getSolt(Map<String, Object> map) {
 		
-		List<RoomInfoDTO> lists = sessionTemplate.selectList("project.RoomInfoMapper.getRoomData", roomNum);
+		List<RoomInfoDTO> lists = sessionTemplate.selectList("project.RoomInfoMapper.getSolt", map);
 		
 		return lists;
 	}
 	
-//	¹æ ³»ºÎ °Ô½Ã¹° °¡Á®¿À±â
+	public int getMaxBoardNum() {
+		
+		return sessionTemplate.selectOne("project.RoomInfoMapper.getMaxBoardNum");
+	}
+	
+//	ì‚­ì œ
+	public void deleteRoomBoard(int roomNum) {
+		
+		sessionTemplate.delete("project.RoomInfoMapper.deleteRoomBoard", roomNum);
+	}
+	
+	public void deleteOne(int boardNum) {
+		
+		sessionTemplate.delete("project.RoomInfoMapper.deleteOne", boardNum);
+	}
+	
+	public void deleteRoomForId(String userId) {
+		
+		sessionTemplate.delete("project.RoomInfoMapper.deleteRoomForId", userId);
+	}
+	
+//	-------------------
+//	ë°© ë‚´ë¶€ ê²Œì‹œë¬¼ ê°€ì ¸ì˜¤ê¸°
 	public List<RoomInfoDTO> getBoardList(int roomNum) {
 		
 		List<RoomInfoDTO> lists = sessionTemplate.selectList("project.RoomInfoMapper.getBoardList", roomNum);
@@ -46,7 +66,7 @@ public class RoomInfoDAO {
 		return lists;
 	}
 	
-//	Å×½ºÆ®¿ë
+//	í…ŒìŠ¤íŠ¸ìš©
 	public List<TestDTO> getTest(String name) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();

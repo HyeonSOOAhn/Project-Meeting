@@ -18,7 +18,7 @@ public class RoomInfoController {
 	@Qualifier("roomInfoDAO")
 	RoomInfoDAO dao;
 	
-//	¹æ ¸®½ºÆ® ¸ŞÀÎ
+//	ë°© ë¦¬ìŠ¤íŠ¸ ë©”ì¸
 	@RequestMapping(value="/roomInfoMain.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView roomInfo(HttpServletRequest request) throws Exception {
 		
@@ -37,7 +37,7 @@ public class RoomInfoController {
 		return mav;
 	}
 	
-//	¹æ ¸ŞÀÎ
+//	ë°© ë©”ì¸
 	@RequestMapping(value="/room.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView room(HttpServletRequest request) throws Exception {
 		
@@ -48,7 +48,7 @@ public class RoomInfoController {
 		
 		List<RoomInfoDTO> lists = dao.getBoardList(roomNum);
 		
-//		System.out.println(String.format("roomÈ£Ãâ : roomNum = %s, subject = %s, keyword = %s", roomNum, subject, keyword));
+//		System.out.println(String.format("roomí˜¸ì¶œ : roomNum = %s, subject = %s, keyword = %s", roomNum, subject, keyword));
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("RoomInfo/room");
@@ -57,7 +57,16 @@ public class RoomInfoController {
 		return mav;
 	}
 	
-//	¹æ ³»ºÎ - °øÁö °Ô½ÃÆÇ
+//	ê²Œì‹œíŒ ë“±ë¡
+	@RequestMapping(value="/created.action", method= {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView created(HttpServletRequest request) throws Exception {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("RoomInfo/created");
+		
+		return mav;
+	}
+	
 	@RequestMapping(value="/notice.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView notice(HttpServletRequest request) throws Exception {
 		
@@ -67,7 +76,6 @@ public class RoomInfoController {
 		return mav;
 	}
 	
-//	¹æ ³»ºÎ - ÀÏÁ¤ °Ô½ÃÆÇ
 	@RequestMapping(value="/schedule.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView schedule(HttpServletRequest request) throws Exception {
 		
@@ -77,7 +85,6 @@ public class RoomInfoController {
 		return mav;
 	}
 	
-//	¹æ ³»ºÎ - ÅõÇ¥ °Ô½ÃÆÇ
 	@RequestMapping(value="/vote.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView vote(HttpServletRequest request) throws Exception {
 		
@@ -87,31 +94,53 @@ public class RoomInfoController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/created.action", method= {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView craeted(HttpServletRequest request) throws Exception {
+//	ê²Œì‹œíŒ ì¶”ê°€
+	@RequestMapping(value="/created_ok.action", method= {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView created_ok(RoomInfoDTO dto, HttpServletRequest request) throws Exception {
+		
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
+		int boardNum = dao.getMaxBoardNum();
+		String userId = request.getParameter("userId");
+		String boardTitle = request.getParameter("boardTitle");
+		String boardContent = request.getParameter("boardContent");
+		String selectDay = request.getParameter("selectDay");
+		String adst = request.getParameter("adst");
+		String mode1 = request.getParameter("mode1");
+		
+		dto.setRoomNum(roomNum);
+		dto.setBoardNum(boardNum + 1);
+		dto.setUserId(userId);
+		dto.setBoardNum(boardNum);
+		dto.setBoardTitle(boardTitle);
+		dto.setBoardContent(boardContent);
+		dto.setSelectDay(selectDay);
+		dto.setAdst(adst);
+		dto.setMode(mode1);
+		
+		dao.insertRoomBoard(dto);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("RoomInfo/created");
+		mav.setViewName("RoomInfo/room");
 		
 		return mav;
 	}
 	
-//	getRoomList Å×½ºÆ®ÇÏ±â À§ÇØ ¸¸µê
+//	getRoomList í…ŒìŠ¤íŠ¸í•˜ê¸° ìœ„í•´ ë§Œë“¦
 	@RequestMapping(value="/test.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView test(HttpServletRequest request) throws Exception {
 		
-//		keywordºÎºĞ¿¡ µé¾î°¥ °ª
-//		name = "*"ÀÏ °æ¿ì ÀüÃ¼ µ¥ÀÌÅÍ °Ë»ö
-//		name = "1|2"ÀÏ °æ¿ì 1 È¤Àº 2°¡ µé¾î°£ °ª °Ë»ö
-//		name = "111|222"ÀÏ °æ¿ì 111 È¤Àº 222°¡ µé¾î°£ °ª °Ë»ö
-		String name = "1 2";
+//		keywordë¶€ë¶„ì— ë“¤ì–´ê°ˆ ê°’
+//		name = "*"ì¼ ê²½ìš° ì „ì²´ ë°ì´í„° ê²€ìƒ‰
+//		name = "1|2"ì¼ ê²½ìš° 1 í˜¹ì€ 2ê°€ ë“¤ì–´ê°„ ê°’ ê²€ìƒ‰
+//		name = "111|222"ì¼ ê²½ìš° 111 í˜¹ì€ 222ê°€ ë“¤ì–´ê°„ ê°’ ê²€ìƒ‰
+//		String name = "1 2";
 		
-		List<TestDTO> lists = dao.getTest(name);
+//		List<TestDTO> lists = dao.getTest(name);
 		
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("RoomInfo/test");
-		mav.addObject("lists", lists);
+//		mav.addObject("lists", lists);
 		
 		return mav;
 	}

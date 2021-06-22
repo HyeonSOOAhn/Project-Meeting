@@ -141,7 +141,7 @@ td {
 	font-size:9pt; 
 }
 
-.boxTA { 
+.boxTA {
 	border:1px solid; 
 	height:150px; 
 	margin-top:9px; 
@@ -149,7 +149,7 @@ td {
 	border-color:#666666; 
 	background-color:#ffffff; 
 	font-family:"굴림"; 
-	font-size:9pt; 
+	font-size:9pt;
 	line-height:normal;
 }
 
