@@ -63,7 +63,7 @@ public class RoomController {
 		if(info == null) {
 			
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("login/login");
+			mav.setViewName("redirect:main.action");
 			
 			return mav;
 			
@@ -98,6 +98,14 @@ public class RoomController {
 	public String list(HttpServletRequest request) throws Exception {
 		
 		//http://localhost:8080/meeting/list.action
+		
+		// 로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+
+		if (info == null) {
+			return "redirect:main.action";
+		}
 		
 		String cp = request.getContextPath();
 		
@@ -201,7 +209,7 @@ public class RoomController {
 		
 		if(info == null) {
 			
-			return "redirect:/login.action";
+			return "redirect:/main.action";
 			
 		}
 		
@@ -353,7 +361,7 @@ public class RoomController {
 		if(info == null) {
 			
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("login/login");
+			mav.setViewName("redirect:main.action");
 			
 			return mav;
 			
@@ -468,7 +476,7 @@ public class RoomController {
 		
 		if(info == null) {
 			
-			return "redirect:/login.action";
+			return "redirect:/main.action";
 			
 		}
 		
@@ -518,7 +526,7 @@ public class RoomController {
 		if(info == null) {
 			
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("login/login");
+			mav.setViewName("redirect:main.action");
 			
 			return mav;
 			
@@ -633,7 +641,7 @@ public class RoomController {
 		
 		if(info == null) {
 			
-			return "redirect:/login.action";
+			return "redirect:/main.action";
 			
 		}
 		
@@ -683,7 +691,7 @@ public class RoomController {
 		if(info == null) {
 			
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("login/login");
+			mav.setViewName("redirect:main.action");
 			
 			return mav;
 			
@@ -798,7 +806,7 @@ public class RoomController {
 		
 		if(info == null) {
 			
-			return "redirect:/login.action";
+			return "redirect:/main.action";
 			
 		}
 		
@@ -848,7 +856,7 @@ public class RoomController {
 		if(info == null) {
 			
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("login/login");
+			mav.setViewName("redirect:main.action");
 			
 			return mav;
 			
@@ -963,7 +971,7 @@ public class RoomController {
 		
 		if(info == null) {
 			
-			return "redirect:/login.action";
+			return "redirect:/main.action";
 			
 		}
 		

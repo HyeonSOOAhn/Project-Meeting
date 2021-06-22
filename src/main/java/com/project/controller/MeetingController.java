@@ -88,7 +88,7 @@ public class MeetingController {
 	}
 	
 	@RequestMapping(value="/logout.action",
-			method = RequestMethod.POST)
+			method = {RequestMethod.POST,RequestMethod.GET})
 	public String logout(HttpServletRequest req) throws Exception{
 		
 		HttpSession session = req.getSession();
@@ -120,6 +120,7 @@ public class MeetingController {
 		
 		info.setUserId(dto.getUserId());
 		info.setUserName(dto.getUserName());
+		System.out.println(dto.getUserName());
 		
 		HttpSession session = req.getSession();
 		
