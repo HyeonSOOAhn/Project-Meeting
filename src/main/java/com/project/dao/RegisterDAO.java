@@ -18,8 +18,8 @@ public class RegisterDAO {
 	
 	Connection conn = null;
 	
-	public void insertUserData(UserDTO dto) {
-		sessionTemplate.insert("com.Mapper.insertUserData",dto);
+	public void insertUserData(Map<String,Object> map) {
+		sessionTemplate.insert("com.Mapper.insertUserData",map);
 	}
 	
 	public int checkId(String userId) {
@@ -30,13 +30,16 @@ public class RegisterDAO {
 		int result = sessionTemplate.selectOne("com.Mapper.checkId",params);
 		
 		return result;
+		
 	}
 	
 	public int checkEmail(String email) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("userEmail",email);
+		params.put("email",email);
+		
 		return sessionTemplate.selectOne("com.Mapper.checkEmail",params);
+		
 	}
 	
 	public String checkPwd(String userId) {
@@ -45,17 +48,21 @@ public class RegisterDAO {
 		params.put("userId",userId);
 		
 		return sessionTemplate.selectOne("com.Mapper.checkPwd",params);
+		
 	}
 	
-	public void resetPwd(String email,String pwd) {
+	public void resetPwd(String email,String userPwd) {
+		
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("email", email);
-		params.put("userPwd", pwd);
+		params.put("userPwd", userPwd);
 		
 		sessionTemplate.update("com.Mapper.resetPwd", params);
+		
 	}
 	
 	public UserDTO getUserInfo(String userId) {
+		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("userId", userId);
 		

@@ -27,7 +27,15 @@
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 <link href="css/register.css" rel="stylesheet">
 
-
+<style type="text/css">
+    
+    	#file {
+    	
+    		display:none;
+    		
+    	}
+    
+</style>
 
 
 </head>
@@ -46,7 +54,7 @@
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
 							</div>
-							<form name="myForm" class="user" method="post">
+							<form name="myForm" class="user" method="post" enctype="multipart/form-data">
 
 								<div class="form-group">
 									<span class="errorMessage nameCon hide"></span>
@@ -54,7 +62,7 @@
 
 								<div class="form-group row">
 									<div class="col-sm-8">
-										<input type="text" name="userName"
+										<input type="text" name="name"
 											class="form-control form-control-user btn-active"
 											id="userName" placeholder="이름">
 									</div>
@@ -103,9 +111,10 @@
 								<div class="form-group">
 									<span class="errorMessage emailCon hide"></span>
 								</div>
-
+								
+								<!-- type="email" -->
 								<div class="form-group">
-									<input type="email" name="email"
+									<input type="text" name="email"
 										class="form-control form-control-user btn-active"
 										id="InputEmail" placeholder="이메일">
 								</div>
@@ -137,8 +146,13 @@
 										class="form-control form-control-user btn-active" id="tel"
 										placeholder="전화번호">
 								</div>
-
-
+								
+								<div class="form-group">
+                                    <input type="file" name="file" id="file" value="Profile Image"/>
+                                    <button type="button" class="btn btn-primary btn-user btn-block" id="btn"
+                                    style="font-size: 0.8rem; border-radius: 10rem; padding: 0.75rem 1rem;">Profile Image</button>
+                                </div>
+								
 								<input type="button" value="Register Account"
 									disabled="disabled"
 									class="btn btn-primary registerBtn btn-user btn-block"
@@ -181,9 +195,22 @@
 			f.action = "<%=cp%>/register_ok.action";
 			f.submit();
 		}
+		
+		//파일 버튼
+		$(function() {
+			
+			$('#btn').click(function (e) {
+				e.preventDefault();
+				$('#file').click();
+			});
+			
+		});
+		
+		function changeValue(obj) {
+			alert(obj.value);
+		}
 	
-	</script>]
-
+	</script>
 
 </body>
 

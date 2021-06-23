@@ -6,21 +6,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.Mapper">
 
-	<insert id="insertUserData" parameterType="com.project.dto.UserDTO">
-		insert into users(userNum,userId,userPwd,name,gender,email,tel,right)
-		values(userNum_seq.nextval,#{userId},#{userPwd},#{userName},#{gender},#{email},#{tel},0)
+	<insert id="insertUserData" parameterType="hashMap">
+		insert into users (userNum,userId,userPwd,name,gender,email,tel,right,
+		uoriginalFileName,ustoredFileName)
+		values (userNum_seq.nextval,#{userId},#{userPwd},#{name},#{gender},#{email},#{tel},0,
+		#{uoriginalFileName},#{ustoredFileName})
 	</insert>
 	
 	<select id="checkId" parameterType="map" resultType="int">
-		select count(*) from users where userId=#{userId} 
+		select count(*) from users where userId = #{userId} 
 	</select>
 	
 	<select id="checkEmail" parameterType="map" resultType="int">
-		select count(*) from users where email=#{userEmail} 
+		select count(*) from users where email = #{email} 
 	</select>
 	
 	<select id="checkPwd" parameterType="map" resultType="String">
-		select userPwd from users where userId=#{userId} or email=#{userId}
+		select userPwd from users where userId = #{userId}
 	</select>
 	
 	<update id="resetPwd" parameterType="map">
@@ -28,9 +30,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<select id="getUserInfo" parameterType="map" resultType="com.project.dto.UserDTO">
-		select userNum,userId,userPwd,name,gender,email,tel,right from users
-			where userId = #{userId}
+		select userNum,userId,userPwd,name,gender,email,tel,right,uoriginalFileName,ustoredFileName
+		from users where userId = #{userId}
 	</select>
-
 
 </mapper>

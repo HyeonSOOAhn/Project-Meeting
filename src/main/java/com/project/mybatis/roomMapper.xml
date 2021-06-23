@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	 -->
 	<insert id="insertData" parameterType="hashMap">
-		insert into wholeRoom(roomNum,subject,title,keyword,introduce,created,
+		insert into wholeRoom (roomNum,subject,title,keyword,introduce,created,
 		totalP,currentP,manager,originalFileName,storedFileName)
 		values (roomNum_SEQ.NEXTVAL,#{subject},#{title},#{keyword},#{introduce},sysdate,
 		#{totalP},1,#{manager},#{originalFileName},#{storedFileName})
