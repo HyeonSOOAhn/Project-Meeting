@@ -13,7 +13,7 @@
 <body>
 메인페이지
 <a href="<%=cp%>/index.action">방 카테고리</a>
-<a href="<%=cp%>/mypage.action">마이페이지</a>
+<a href="<%=cp%>/myPage.action">마이페이지</a>
 <form action="logout.action" method="post">
 <input type="submit" value="로그아웃">
 </form>

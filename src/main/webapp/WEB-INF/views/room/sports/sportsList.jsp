@@ -86,6 +86,22 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0"><br/>
+            
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                MyPage
+            </div>
+            
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="<%=cp%>/myPage.action">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>내 정보</span>
+                </a>
+            </li>
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
 
             <!-- Heading -->
             <div class="sidebar-heading">

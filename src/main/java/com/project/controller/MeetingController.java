@@ -216,7 +216,7 @@ public class MeetingController {
 		return "/login/login";
 	}
 	
-	@RequestMapping(value = "/mypage.action", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/myPage.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String mypage(HttpServletRequest request) throws Exception {
 		
 		//로그인 확인
@@ -236,6 +236,75 @@ public class MeetingController {
 		request.setAttribute("dto", dto);
 		
 		return "register/myPage";
+		
+	}
+	
+	@RequestMapping(value = "/userUpdated.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String userUpdated(HttpServletRequest request) throws Exception {
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "redirect:/login.action";
+			
+		}
+		
+		String cp = request.getContextPath();
+		
+		UserDTO dto = dao.getUserInfo(info.getUserId());
+		
+		if(dto == null) {
+			return "redirect:/login.action";
+		}
+		
+		request.setAttribute("dto", dto);
+		
+		return "register/userUpdated";
+		
+	}
+	
+	@RequestMapping(value = "/userUpdated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String userUpdated_ok (UserDTO dto,HttpServletRequest request,MultipartHttpServletRequest mpRequest) throws Exception {
+		
+		List<Map<String, Object>> lists = userFileUtil.parseUpdateFileInfo(dto, mpRequest);
+		
+		int size = lists.size();
+		
+		for(int i=0;i<size;i++) {
+			dao.updateUserData(lists.get(i));
+		}
+		
+		return "redirect:/myPage.action";
+		
+	}
+	
+	@RequestMapping(value = "/userDeleted.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String userDeleted(HttpServletRequest request) throws Exception {
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "redirect:/login.action";
+			
+		}
+		
+		String cp = request.getContextPath();
+		
+		UserDTO dto = dao.getUserInfo(info.getUserId());
+		
+		userFileUtil.parseDeleteFileInfo(dto.getUstoredFileName());
+		
+		dao.deleteUserData(dto.getUserId());
+		
+		session.removeAttribute("userInfo");
+		
+		return "redirect:/login.action";
 		
 	}
 

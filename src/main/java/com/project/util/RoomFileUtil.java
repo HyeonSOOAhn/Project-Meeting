@@ -124,6 +124,7 @@ public class RoomFileUtil {
 				file = new File(filePath + storedFileName);
 				multipartFile.transferTo(file);
 				listsMap = new HashMap<String, Object>();
+				
 				listsMap.put("roomNum",dto.getRoomNum());
 				listsMap.put("title",dto.getTitle());
 				listsMap.put("keyword",dto.getKeyword());

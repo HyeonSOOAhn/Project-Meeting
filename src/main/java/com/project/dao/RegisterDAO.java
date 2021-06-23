@@ -70,5 +70,17 @@ public class RegisterDAO {
 		return dto;
 		
 	}
+	
+	public void updateUserData (Map<String,Object> map) {
+		
+		sessionTemplate.update("com.Mapper.updateUserData", map);
+		
+	}
+	
+	public void deleteUserData (String userId) {
+		
+		sessionTemplate.delete("com.Mapper.deleteUserData", userId);
+		
+	}
 
 }

@@ -33,5 +33,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select userNum,userId,userPwd,name,gender,email,tel,right,uoriginalFileName,ustoredFileName
 		from users where userId = #{userId}
 	</select>
+	
+	<update id="updateUserData" parameterType="hashMap">
+		update users set name = #{name},email = #{email},userPwd = #{userPwd},tel = #{tel},
+		uoriginalFileName = #{uoriginalFileName},ustoredFileName = #{ustoredFileName}
+		where userId = #{userId}
+	</update>
+	
+	<delete id="deleteUserData" parameterType="String">
+		delete users where userId = #{userId}
+	</delete>
 
 </mapper>
