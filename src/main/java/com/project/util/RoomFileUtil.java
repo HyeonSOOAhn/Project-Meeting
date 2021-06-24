@@ -19,7 +19,8 @@ public class RoomFileUtil {
 	
 	//파일이 저장될 위치
 	//private static final String filePath = "D:\\sts-bundle\\Project-Meeting\\src\\main\\webapp\\resources\\upload\\";
-	private static final String filePath = "D:\\sts-bundle\\work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Meeting\\resources\\upload\\";
+	//private static final String filePath = "D:\\sts-bundle\\work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Meeting\\resources\\upload\\";
+	private static final String filePath = "C:\\upload\\"; //<img src='<spring:url value="/upload/${dto.storedFileName }"/>' width="300" height="300"/>
 	
 	//파일 업로드
 	public List<Map<String,Object>> parseInsertFileInfo (RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {

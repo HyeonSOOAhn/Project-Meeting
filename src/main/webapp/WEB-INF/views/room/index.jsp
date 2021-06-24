@@ -86,7 +86,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="<%=cp%>/myPage.action">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>내 정보</span>
+                    <span>마이 페이지</span>
                 </a>
             </li>
             

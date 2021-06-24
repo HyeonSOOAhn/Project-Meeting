@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -75,7 +76,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="<%=cp%>/myPage.action">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>내 정보</span>
+                    <span>마이 페이지</span>
                 </a>
             </li>
             
@@ -333,8 +334,9 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
+                    
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Cards</h1>
+                        <h1 class="h3 mb-0 text-gray-800"><b>마이 페이지</b></h1>
                     </div>
 
                     <div class="row">
@@ -349,7 +351,7 @@
                                 <div class="card-body">
                                 
                                 	<div class="card shadow mb-4" align="center" style="display: block;padding-top: 1.5em;">
-                                		<img src="resources/upload/${dto.ustoredFileName }" width="300" height="300"><br/><br/>
+                                		<img src='<spring:url value="/image/${dto.ustoredFileName }"/>' width="300" height="300"/><br/><br/>
                                 	</div>
                                 	
                                 	<div class="card border-left-primary shadow h-100 py-2">
