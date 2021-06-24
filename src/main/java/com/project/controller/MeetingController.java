@@ -240,12 +240,17 @@ public class MeetingController {
 			
 		}
 		
+		// 내메세지 가져오기
+		List<msgDTO> msgList = roomDao.getMsgList(info.getUserId());
+
+		
+		
 		String cp = request.getContextPath();
 		
 		UserDTO dto = dao.getUserInfo(info.getUserId());
 		
 		request.setAttribute("dto", dto);
-		
+		request.setAttribute("msgList",msgList);
 		return "register/myPage";
 		
 	}

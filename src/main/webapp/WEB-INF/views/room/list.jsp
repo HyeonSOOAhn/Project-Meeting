@@ -195,62 +195,9 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- request Modal-->
-    <div class="modal fade" id="requestMsgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">요청메세지</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body"><input type="text" class="modalMsg"></div>
-                <div class="modal-footer">
-                	
-	                	<input type="hidden" class="msgNumContainer">
-	                    <a class="btn btn-primary" href="#" onclick="requestAccept();">수락</a>
-	                
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal Message -->
-    <script type="text/javascript">
-    
-    	$(document).on("click",".msg-confirm",function(){
-    		var msgNum = $(this).data('msg1');
-    		var msg = $(this).data('msg'); //지정해준 값 가져오기
-    
-    		$(".msgNumContainer").val(msgNum);
-    		$(".modalMsg").val(msg);
-    		
-    		
-    	});
-    	
-    	function requestAccept() {
-    		
-    		var msgNum = {"msgNum": $(".msgNumContainer").val()};
-    		
-    		$.ajax({
-    			
-    			url:"modalAccept.action",
-    	        type:'GET',
-    	        data: msgNum,
-    	        success:function(data){
-    	        	$(".modal").modal("hide");
-    	        }
-    	       
-   
-    		});
-			
-		}
-    	
     
     
-    </script>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
