@@ -25,8 +25,6 @@ import com.project.util.UserFileUtil;
 @Controller
 public class MeetingController {
 	
-	
-	
 	@Autowired
 	RegisterDAO dao;
 	

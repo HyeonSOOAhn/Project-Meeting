@@ -1,0 +1,201 @@
+@charset "UTF-8";
+
+* {
+	margin:0px;
+	padding:0px;
+}
+
+body {	
+	font-size: 9pt;
+	font-family:굴림;
+}
+
+a {
+	cursor: hand;
+	color: #000000;
+	text-decoration: none;
+	font-size: 9pt;
+	line-height: 150%;
+}
+
+a:hover, a:active {
+	font-size: 9pt;
+	color: #F28011;
+	text-decoration: underline;
+}
+
+ul {
+	list-style: none;
+}
+
+td {
+	font-size: 9pt;
+}
+
+.btn1 {
+	font-size: 9pt; 
+	color:rgb(0,0,0); 
+	background-color:rgb(245,245,245); 
+	line-height:16px;
+}
+
+.btn2 {   
+	color:#000000;
+	font: normal 9pt '굴림','trebuchet ms',helvetica,sans-serif;
+	background-color:#E4E4E4;
+	border:1px solid;
+	border-color: #696 #363 #363 #696;
+	line-height:16px;	
+	padding:1px 6px 1px 6px;
+}
+
+#frame {
+	width:600px;
+	margin:30px 20px;
+	text-align:left;
+	
+}
+
+#container {
+	width:600px;
+	overflow: visible;
+	border-top:3px solid #DBDBDB;
+	border-bottom:3px solid #DBDBDB;
+	text-align:left;
+}
+
+#bottomLine {
+	height:35px;
+	margin:10px 0px;
+	line-height:35px;
+	border-top:1px solid #DBDBDB;
+	border-bottom:1px solid #DBDBDB;
+	clear:both;
+	text-align:left;
+}
+
+#contents {
+	height:170px;
+	margin:10px 0px;
+	line-height:170px;
+	border-top:1px solid #DBDBDB;
+	border-bottom:1px solid #DBDBDB;
+	clear:both;
+	text-align:left;
+}
+
+#bottomLine dt {
+	float:left;
+	height:35px;
+	width:80px;
+	line-height:35px;
+	text-align:left;
+	padding-left:20px;
+	background-color:#EEEEEE;
+}
+
+#bottomLine dd {
+	float:left;
+	height:35px;
+	width:440px;
+	line-height:35px;
+	text-align:left;
+	padding-left:10px;
+}
+
+#contents dt {
+	float:left;
+	height:170px;
+	width:80px;
+	text-align:left;
+	padding-left:20px;
+	background-color:#EEEEEE;
+}
+#contents dd {
+	float:left;
+	height:170px;
+	width:440px;
+	line-height:170px;
+	text-align:left;
+	padding-left:10px;
+}
+
+#footer {
+	width:600px;
+	overflow: visible;
+	clear:both;
+	height:50px;
+	line-height:50px;
+	margin-bottom:20px;
+	text-align:center;
+}
+
+.boxTF { 
+	border:1px solid; 
+	height:20px; 
+	margin-top:7px;
+	padding:2px 2px 2px 2px; 
+	border-color:#666666; 
+	background-color:#ffffff; 
+	font-family:"굴림"; 
+	font-size:9pt; 
+}
+
+.boxTA {
+	border:1px solid; 
+	height:150px; 
+	margin-top:9px; 
+	padding:2px 2px 2px 2px; 
+	border-color:#666666; 
+	background-color:#ffffff; 
+	font-family:"굴림"; 
+	font-size:9pt;
+	line-height:normal;
+}
+
+#contentsManager {
+	width:600px;
+	overflow: visible;
+	clear:both;
+	height:50px;
+	line-height:50px;
+	margin-bottom:20px;
+	text-align:right;
+}
+
+#title_container {
+	width:600px;
+	overflow: visible;
+	border-top:3px solid #DBDBDB;
+	border-bottom:3px solid #DBDBDB;
+	text-align:left;
+}
+
+#title {
+	height:35px;
+	margin:10px 0px;
+	line-height:35px;
+	border-top:1px solid #DBDBDB;
+	border-bottom:1px solid #DBDBDB;
+	clear:both;
+	text-align:left;
+}
+
+#title dt {
+	float:left;
+	height:35px;
+	width:80px;
+	line-height:35px;
+	text-align:left;
+	padding-left:20px;
+	background-color:#EEEEEE;
+}
+
+#title dd {
+	float:left;
+	height:35px;
+	width:440px;
+	line-height:35px;
+	text-align:left;
+	padding-left:10px;
+}
