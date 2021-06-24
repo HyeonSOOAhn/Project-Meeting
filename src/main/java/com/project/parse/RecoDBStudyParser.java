@@ -1,4 +1,4 @@
-package com.project.meeting.parse;
+package com.project.parse;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -14,9 +14,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.project.meeting.reco.controller.RecoController;
-import com.project.meeting.reco.dao.RecoDAO;
-import com.project.meeting.reco.dto.RecoDTO;
+import com.project.controller.RecoController;
+import com.project.dao.RecoDAO;
+import com.project.dto.RecoDTO;
 
 import java.awt.dnd.DropTargetListener;
 import java.io.*;
@@ -32,11 +32,6 @@ public class RecoDBStudyParser {
 	
 	public static int totalCount;//도서관 totalCount
 	
-	
-	/*
-	 * public static void main(String[] args) throws IOException,
-	 * InterruptedException { libParser(0); }
-	 */
 	 
 	public static void totalCountParser() throws IOException, InterruptedException {
     	//도서관 API의 totalCount를 가져온다.

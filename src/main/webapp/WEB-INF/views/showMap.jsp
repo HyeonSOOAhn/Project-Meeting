@@ -85,9 +85,8 @@
                         <h6 class="collapse-header" href>추천장소</h6>
                         
                         <a class="collapse-item" href="reco?subject=study">스터디</a>
-                        <a class="collapse-item" href="reco?subject=restaurant">맛집</a>
                         <a class="collapse-item" href="reco?subject=travel">여행</a>
-                        <a class="collapse-item" href="reco?subject=blind_date">소개팅</a>
+                        <a class="collapse-item" href="reco?subject=sports">운동</a>
                         
                         
                         
@@ -351,55 +350,35 @@
 				<!-- End of Topbar -->
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-
+					
 
 					<!-- Page Heading -->
-					<c:set var="subject" value="${subject }" />
-					<c:if test="${subject ne null}">
-						<a href="reco_update" class="btn btn-secondary btn-icon-split">
-							<span class="icon text-white-50"> <i
-								class="fas fa-arrow-right"></i>
-						</span> <span class="text">자료 업데이트</span>
-						</a>
-					</c:if>
-
-					<div>${dto.subject }</div>
-
+					
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">${subject }</h1>
+						<h1 class="h3 mb-0 text-gray-800">${list.subject }</h1>
 					</div>
-
-					<div class="row">
-						<div class="col-lg-3">
-
-							<!-- Basic Card Example -->
-							<c:forEach var="dto" items="${lists }">
-								<div class="card shadow mb-4">
-									<div class="card-header py-3">
-										<a
-											href="reco_showMap?recoNum=${dto.recoNum}">
-											<h6 class="m-0 font-weight-bold text-primary">${dto.title }</h6>
-										</a>
-									</div>
-									<div class="card-body" align="center">
-											${dto.introduce}<br />
-											${dto.location}
-										
-									</div>
-								</div>
+					
+					<!-- Basic Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">${list.title }</h6>
+                                </div>
+                                <div class="card-body row">
+                                <div id="map" style="width:500px;height:500px;" class="col-sm-5"></div>
+                       
+						<div class="col-sm-7" align="center">
+						${list.introduce}<br/>
+						${list.content }<br/>
+						${list.location }
 						</div>
-						<div class="col-lg-3">
-							</c:forEach>
+						
+                                </div>
+                                
+                            </div>
 
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-
-
+                        </div>
+                        
 
 			<!-- Footer -->
             <footer class="sticky-footer bg-white">
@@ -451,6 +430,27 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+	<!-- showMap -->
+	 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=955f20db57985bdfe58bf91db6e7d4aa"></script>
+						<script>
+							var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+							    mapOption = {
+							        center: new kakao.maps.LatLng(${list.lat}, ${list.lon}), // 지도의 중심좌표
+							        level: 3, // 지도의 확대 레벨
+							        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+							    }; 
+					
+							// 지도를 생성한다 
+							var map = new kakao.maps.Map(mapContainer, mapOption); 
+					
+							// 지도에 마커를 생성하고 표시한다
+							var marker = new kakao.maps.Marker({
+							    position: new kakao.maps.LatLng(${list.lat}, ${list.lon}), // 마커의 좌표
+							    map: map // 마커를 표시할 지도 객체
+							});
+					
+						</script>
 
 </body>
 </html>

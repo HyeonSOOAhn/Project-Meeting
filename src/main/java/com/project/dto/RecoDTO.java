@@ -1,4 +1,4 @@
-package com.project.meeting.reco.dto;
+package com.project.dto;
 
 public class RecoDTO {
 	

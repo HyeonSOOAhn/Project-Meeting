@@ -1,4 +1,4 @@
-package com.project.meeting.parse;
+package com.project.parse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.net.URLEncoder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.project.meeting.reco.dto.RecoDTO;
+import com.project.dto.RecoDTO;
 
 public class RecoDBNaverParser {
 	
