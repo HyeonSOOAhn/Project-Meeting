@@ -351,7 +351,19 @@
                                 <div class="card-body">
                                 
                                 	<div class="card shadow mb-4" align="center" style="display: block;padding-top: 1.5em;">
-                                		<img src='<spring:url value="/image/${dto.ustoredFileName }"/>' width="300" height="300"/><br/><br/>
+                                	
+                                		<c:if test="${dto.ustoredFileName != null }">
+											<img src='<spring:url value="/image/${dto.ustoredFileName }"/>' width="300" height="300"/><br/><br/>
+										</c:if>
+										<c:if test="${dto.ustoredFileName == null }">
+											<c:if test="${dto.gender == 1}">
+												<img src='/img/M.png' width="200" height="200"/><br/><br/>
+											</c:if>
+											<c:if test="${dto.gender == 2}">
+												<img src='/img/F.png' width="200" height="200"/><br/><br/>
+											</c:if>
+										</c:if>
+                                		
                                 	</div>
                                 	
                                 	<div class="card border-left-primary shadow h-100 py-2">

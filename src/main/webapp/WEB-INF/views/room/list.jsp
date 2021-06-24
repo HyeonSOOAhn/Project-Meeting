@@ -402,8 +402,8 @@
 										창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 : ${dto.currentP } / ${dto.totalP } 명
 									</div>
 									<div class="right">
-										<%-- <img src="${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }" width="200" height="200"/> --%>
-										<img src='<spring:url value="/upload/${dto.storedFileName }"/>' width="200" height="200"/>
+											<%-- <img src="${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }" width="200" height="200"/> --%>
+											<img src='<spring:url value="/upload/${dto.storedFileName }"/>' width="200" height="200"/>
 									</div>
 								</div>
                             </div>
