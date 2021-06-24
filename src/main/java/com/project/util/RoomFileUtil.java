@@ -14,12 +14,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.dto.RoomDTO;
 
-@Component("fileUtil")
-public class FileUtil {
+@Component("roomFileUtil")
+public class RoomFileUtil {
 	
 	//파일이 저장될 위치
 	//private static final String filePath = "D:\\sts-bundle\\Project-Meeting\\src\\main\\webapp\\resources\\upload\\";
-	private static final String filePath = "C:\\meeting\\work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Meeting\\resources\\";
+	//private static final String filePath = "D:\\sts-bundle\\work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Meeting\\resources\\upload\\";
+	private static final String filePath = "C:\\upload\\"; //<img src='<spring:url value="/upload/${dto.storedFileName }"/>' width="300" height="300"/>
 	
 	//파일 업로드
 	public List<Map<String,Object>> parseInsertFileInfo (RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
@@ -60,6 +61,7 @@ public class FileUtil {
 				file = new File(filePath + storedFileName);
 				multipartFile.transferTo(file);
 				listsMap = new HashMap<String, Object>();
+				
 				listsMap.put("roomNum",dto.getRoomNum());
 				listsMap.put("subject",dto.getSubject());
 				listsMap.put("title",dto.getTitle());
@@ -71,7 +73,6 @@ public class FileUtil {
 					listsMap.put("totalP", dto.getTotalP());
 				}
 				listsMap.put("manager",dto.getManager());
-				listsMap.put("member", dto.getMember());
 				
 				listsMap.put("originalFileName", originalFileName);
 				listsMap.put("storedFileName", storedFileName);
@@ -124,6 +125,7 @@ public class FileUtil {
 				file = new File(filePath + storedFileName);
 				multipartFile.transferTo(file);
 				listsMap = new HashMap<String, Object>();
+				
 				listsMap.put("roomNum",dto.getRoomNum());
 				listsMap.put("title",dto.getTitle());
 				listsMap.put("keyword",dto.getKeyword());

@@ -49,6 +49,14 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0"><br/>
+            
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="<%=cp%>/myPage.action">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>마이 페이지</span>
+                </a>
+            </li>
 
             <!-- Heading -->
             <div class="sidebar-heading">

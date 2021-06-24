@@ -22,87 +22,90 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.dao.RoomDAO;
 import com.project.dto.RoomDTO;
 import com.project.dto.UserInfo;
+
 import com.project.dto.msgDTO;
-import com.project.util.FileUtil;
+
+import com.project.util.RoomFileUtil;
+
 import com.project.util.PageUtil;
 
 @Controller
 public class RoomController {
-	
+
 	@Autowired
 	@Qualifier("roomDAO")
 	RoomDAO dao;
-	
+
 	@Autowired
 	@Qualifier("pageUtil")
 	PageUtil pageUtil;
-	
+
 	@Autowired
-	@Qualifier("fileUtil")
-	FileUtil fileUtil;
-	
+	@Qualifier("roomFileUtil")
+	RoomFileUtil roomFileUtil;
+
 	@RequestMapping(value = "/index.action")
 	public ModelAndView index() throws Exception {
-		
-		//http://localhost:8080/meeting/index.action
-		
+
+		// http://localhost:8080/meeting/index.action
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room/index");
-		
+
 		return mav;
-		
+
 	}
-	
-	//전체 방 --------------------------------------------------------------
-	//방 만들기
+
+	// 전체 방 --------------------------------------------------------------
+	// 방 만들기
 	@RequestMapping(value = "/created.action")
 	public ModelAndView created(HttpServletRequest request) throws Exception {
-		
-		//http://localhost:8080/meeting/created.action
-		
-		//로그인 확인
+
+		// http://localhost:8080/meeting/created.action
+
+		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
-		
-		if(info == null) {
-			
+
+		if (info == null) {
+
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("redirect:main.action");
-			
+
 			return mav;
-			
+
 		}
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room/created");
-		
+
 		return mav;
-		
+
 	}
-	
-	@RequestMapping(value = "/created_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String created_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
-		
-		//dao.insertData(dto);
-		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
-		
+
+	@RequestMapping(value = "/created_ok.action", method = { RequestMethod.GET, RequestMethod.POST })
+	public String created_ok(RoomDTO dto, MultipartHttpServletRequest mpRequest) throws Exception {
+
+		// dao.insertData(dto);
+
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
+
 		int size = lists.size();
-		
-		for(int i=0;i<size;i++) {
+
+		for (int i = 0; i < size; i++) {
 			dao.insertData(lists.get(i));
 		}
-		
+
 		return "redirect:/list.action";
-		
+
 	}
-	
-	//방 리스트
-	@RequestMapping(value = "/list.action", method = {RequestMethod.GET,RequestMethod.POST})
+
+	// 방 리스트
+	@RequestMapping(value = "/list.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String list(HttpServletRequest request) throws Exception {
-		
-		//http://localhost:8080/meeting/list.action
-		
+
+		// http://localhost:8080/meeting/list.action
+
 		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
@@ -110,920 +113,957 @@ public class RoomController {
 		if (info == null) {
 			return "redirect:main.action";
 		}
-		
-		//내 메세지 가져오기
+
+		// 내 메세지 가져오기
 		List<msgDTO> msgList = dao.getMsgList(info.getUserId());
-		
-		for(msgDTO abc:msgList) {
+
+		for (msgDTO abc : msgList) {
 			System.out.println(abc.getMsgNum());
 		}
-		
+
 		String cp = request.getContextPath();
-		
+
 		String pageNum = request.getParameter("pageNum");
-		
+
 		int currentPage = 1;
-		
-		if(pageNum!=null) {
+
+		if (pageNum != null) {
 			currentPage = Integer.parseInt(pageNum);
 		}
-		
+
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
-		if(searchValue==null) {
+
+		if (searchValue == null) {
 			searchKey = "subject";
 			searchValue = "";
-		}else {
-			if(request.getMethod().equalsIgnoreCase("GET")) {
+		} else {
+			if (request.getMethod().equalsIgnoreCase("GET")) {
 				searchValue = URLDecoder.decode(searchValue, "UTF-8");
 			}
 		}
-		
+
 		int dataCount = dao.getDataCount(searchKey, searchValue);
-		
+
 		int numPerPage = 5;
 		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
-		
-		if(currentPage>totalPage) {
+
+		if (currentPage > totalPage) {
 			currentPage = totalPage;
 		}
-		
-		int start = (currentPage-1)*numPerPage+1;
-		int end = currentPage*numPerPage;
-		
+
+		int start = (currentPage - 1) * numPerPage + 1;
+		int end = currentPage * numPerPage;
+
 		List<RoomDTO> lists = dao.getLists(start, end, searchKey, searchValue);
 		/*
-		Iterator<RoomDTO> it = lists.iterator();
-		 
-		while(it.hasNext()) {
-		 
-		 	RoomDTO dto = it.next(); 
-		 	
-		 	int roomNum = dto.getRoomNum();
-		 
-		 	List<Map<String,Object>> fileList = dao.selectFileList(roomNum);
-		 
-		 	request.setAttribute("fileList", fileList);
-		  
-		}
-		*/
-		//List<Map<String,Object>> fileList = dao.selectFileList();
-		
-		//param 사용자 정의
+		 * Iterator<RoomDTO> it = lists.iterator();
+		 * 
+		 * while(it.hasNext()) {
+		 * 
+		 * RoomDTO dto = it.next();
+		 * 
+		 * int roomNum = dto.getRoomNum();
+		 * 
+		 * List<Map<String,Object>> fileList = dao.selectFileList(roomNum);
+		 * 
+		 * request.setAttribute("fileList", fileList);
+		 * 
+		 * }
+		 */
+		// List<Map<String,Object>> fileList = dao.selectFileList();
+
+		// param 사용자 정의
 		String param = "";
-		
-		if(!searchValue.equals("")) {
+
+		if (!searchValue.equals("")) {
 			param = "searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
-		//url 사용자 정의
+
+		// url 사용자 정의
 		String listUrl = cp + "/list.action";
-		
-		if(!param.equals("")) {
+
+		if (!param.equals("")) {
 			listUrl += "?" + param;
 		}
-		
-		//페이징
+
+		// 페이징
 		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
-		
-		//article 사용자 정의
+
+		// article 사용자 정의
 		String articleUrl = cp + "/article.action?pageNum=" + currentPage;
-		
-		if(!param.equals("")) {
+
+		if (!param.equals("")) {
 			articleUrl += "&" + param;
 		}
-		
+
 		String imagePath = request.getSession().getServletContext().getRealPath("/resources/upload/");
-		
-		
-		//포워딩할 페이지에 넘길 데이터
+
+		// 포워딩할 페이지에 넘길 데이터
 		request.setAttribute("lists", lists);
 		request.setAttribute("msgList", msgList);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("articleUrl", articleUrl);
-		//request.setAttribute("fileList", fileList);
+		// request.setAttribute("fileList", fileList);
 		request.setAttribute("imagePath", imagePath);
-		
+
 		return "room/list";
-		
+
 	}
-	
-	//방 정보
-	@RequestMapping(value = "/article.action", method = {RequestMethod.GET,RequestMethod.POST})
+
+	// 방 정보
+	@RequestMapping(value = "/article.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String article(HttpServletRequest request) throws Exception {
-		
-		//로그인 확인
+
+		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
-		
-		if(info == null) {
-			
+
+		if (info == null) {
+
 			return "redirect:/main.action";
-			
+
 		}
-		
+
 		String cp = request.getContextPath();
-		
+
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
-		if(searchValue!=null) {
+
+		if (searchValue != null) {
 			searchValue = URLDecoder.decode(searchValue, "UTF-8");
 		}
-		
+
 		RoomDTO dto = dao.getReadData(roomNum);
-		
-		//라인수
+
+		// 라인수
 		int lineSu = dto.getIntroduce().split("\n").length;
-		
+
 		dto.setIntroduce(dto.getIntroduce().replaceAll("\n", "<br/>"));
-		
+
 		String param = "pageNum=" + pageNum;
-		if(searchValue!=null) {
-			param+= "&searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+		if (searchValue != null) {
+			param += "&searchKey=" + searchKey;
+			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
+
 		request.setAttribute("dto", dto);
 		request.setAttribute("params", param);
 		request.setAttribute("lineSu", lineSu);
 		request.setAttribute("pageNum", pageNum);
-		
+
 		return "room/article";
-		
+
 	}
-	
-	//수정할 때 사진파일 등록하기.
-	//파일 수정은 되나 searchkey,searchvalue주고 기존파일 삭제 안됨.
-	
-	//수정할 장소는 방안에서 하기.
-	@RequestMapping(value = "/updated.action", method = {RequestMethod.GET,RequestMethod.POST})
+
+	// 수정할 때 사진파일 등록하기.
+	// 파일 수정은 되나 searchkey,searchvalue주고 기존파일 삭제 안됨.
+
+	// 수정할 장소는 방안에서 하기.
+	@RequestMapping(value = "/updated.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String updated(HttpServletRequest request) throws Exception {
-		
+
 		String cp = request.getContextPath();
-		
-		//javascript:location.href='<%=cp%>/updated.action?roomNum=${dto.roomNum }&${params }';
+
+		// javascript:location.href='<%=cp%>/updated.action?roomNum=${dto.roomNum
+		// }&${params }';
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-				
-		if(searchValue!=null) {
-				
-			if(request.getMethod().equalsIgnoreCase("get")) {
+
+		if (searchValue != null) {
+
+			if (request.getMethod().equalsIgnoreCase("get")) {
 				searchValue = URLDecoder.decode(searchValue, "UTF-8");
 			}
-					
-		}else {
-			searchKey = "subject"; 
-			searchValue = ""; 
+
+		} else {
+			searchKey = "subject";
+			searchValue = "";
 		}
-		
+
 		RoomDTO dto = dao.getReadData(roomNum);
-		
-		if(dto==null) {
+
+		if (dto == null) {
 			return "redirect:/list.action";
 		}
-		
+
 		String param = "pageNum=" + pageNum;
-				
-		if(!searchValue.equals("")) {
-			param+= "&searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+
+		if (!searchValue.equals("")) {
+			param += "&searchKey=" + searchKey;
+			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
+
 		request.setAttribute("dto", dto);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("params", param);
 		request.setAttribute("searchKey", searchKey);
 		request.setAttribute("searchValue", searchValue);
-		
+
 		return "room/updated";
-		
+
 	}
-	
-	@RequestMapping(value = "/updated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String updated_ok(RoomDTO dto,HttpServletRequest request,MultipartHttpServletRequest mpRequest) throws Exception {
-		
+
+	@RequestMapping(value = "/updated_ok.action", method = { RequestMethod.GET, RequestMethod.POST })
+	public String updated_ok(RoomDTO dto, HttpServletRequest request, MultipartHttpServletRequest mpRequest)
+			throws Exception {
+
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
-		List<Map<String, Object>> lists = fileUtil.parseUpdateFileInfo(dto, mpRequest);
-		
+
+		List<Map<String, Object>> lists = roomFileUtil.parseUpdateFileInfo(dto, mpRequest);
+
 		int size = lists.size();
-		
-		for(int i=0;i<size;i++) {
+
+		for (int i = 0; i < size; i++) {
 			dao.updateData(lists.get(i));
 		}
-		
+
 		String param = "pageNum=" + pageNum;
-		
-		if(!searchValue.equals("")) {
+
+		if (!searchValue.equals("")) {
 			param += "&searchKey=" + searchKey;
 			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
+
 		return "redirect:/list.action?" + param;
-		
+
 	}
-	
-	//삭제
-	@RequestMapping(value = "/deleted.action", method = {RequestMethod.GET,RequestMethod.POST})
+
+	// 삭제
+	@RequestMapping(value = "/deleted.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String deleted(HttpServletRequest request) throws Exception {
-		
-		//javascript:location.href='<%=cp%>/deleted.action?roomNum=${dto.roomNum }&${params }';
+
+		// javascript:location.href='<%=cp%>/deleted.action?roomNum=${dto.roomNum
+		// }&${params }';
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
+
 		RoomDTO dto = dao.getReadData(roomNum);
-		
-		fileUtil.parseDeleteFileInfo(dto.getStoredFileName());
-		
+
+		roomFileUtil.parseDeleteFileInfo(dto.getStoredFileName());
+
 		dao.deleteData(roomNum);
-		
+
 		String param = "pageNum=" + pageNum;
-		
-		if(searchValue!=null) {
+
+		if (searchValue != null) {
 			param += "&searchKey=" + searchKey;
 			param += "&searchValue=" + searchValue;
 		}
-		
+
 		return "redirect:/list.action?" + param;
-		
+
 	}
-	
-	
-	
-	//여행 방 --------------------------------------------------------------
+
+	// 여행 방 --------------------------------------------------------------
 	@RequestMapping(value = "/travelCreated.action")
 	public ModelAndView travelCreated(HttpServletRequest request) throws Exception {
-		
-		//로그인 확인
+
+		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
-		
-		if(info == null) {
-			
+
+		if (info == null) {
+
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("redirect:main.action");
-			
+
 			return mav;
-			
+
 		}
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room/travel/travelCreated");
-		
+
 		return mav;
-		
+
 	}
-	
-	@RequestMapping(value = "/travelCreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String travelCreated_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
-		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
-		
+
+	@RequestMapping(value = "/travelCreated_ok.action", method = { RequestMethod.GET, RequestMethod.POST })
+	public String travelCreated_ok(RoomDTO dto, MultipartHttpServletRequest mpRequest) throws Exception {
+
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
+
 		int size = lists.size();
-		
-		for(int i=0;i<size;i++) {
+
+		for (int i = 0; i < size; i++) {
 			dao.insertData(lists.get(i));
 		}
-		
+
 		return "redirect:/travelList.action";
-		
+
 	}
-	
-	@RequestMapping(value = "/travelList.action", method = {RequestMethod.GET,RequestMethod.POST})
+
+	@RequestMapping(value = "/travelList.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String travelList(HttpServletRequest request) throws Exception {
-		
+
 		String cp = request.getContextPath();
-		
+
 		String pageNum = request.getParameter("pageNum");
-		
+
+		// 로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+
+		if (info == null) {
+			return "redirect:main.action";
+		}
+
 		int currentPage = 1;
-		
-		if(pageNum!=null) {
+
+		if (pageNum != null) {
 			currentPage = Integer.parseInt(pageNum);
 		}
-		
+
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
-		if(searchValue==null) {
+
+		if (searchValue == null) {
 			searchKey = "title";
 			searchValue = "";
-		}else {
-			if(request.getMethod().equalsIgnoreCase("GET")) {
+		} else {
+			if (request.getMethod().equalsIgnoreCase("GET")) {
 				searchValue = URLDecoder.decode(searchValue, "UTF-8");
 			}
 		}
-		
+
 		int dataCount = dao.travelDataCount(searchKey, searchValue);
-		
+
 		int numPerPage = 5;
 		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
-		
-		if(currentPage>totalPage) {
+
+		if (currentPage > totalPage) {
 			currentPage = totalPage;
 		}
-		
-		int start = (currentPage-1)*numPerPage+1;
-		int end = currentPage*numPerPage;
-		
+
+		int start = (currentPage - 1) * numPerPage + 1;
+		int end = currentPage * numPerPage;
+
 		List<RoomDTO> lists = dao.travelGetLists(start, end, searchKey, searchValue);
-		
-		//param 사용자 정의
+
+		// param 사용자 정의
 		String param = "";
-		
-		if(!searchValue.equals("")) {
+
+		if (!searchValue.equals("")) {
 			param = "searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
-		//url 사용자 정의
+
+		// url 사용자 정의
 		String listUrl = cp + "/travelList.action";
-		
-		if(!param.equals("")) {
+
+		if (!param.equals("")) {
 			listUrl += "?" + param;
 		}
-		
-		//페이징
+
+		// 페이징
 		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
-		
-		//article 사용자 정의
+
+		// article 사용자 정의
 		String articleUrl = cp + "/travelArticle.action?pageNum=" + currentPage;
-		
-		if(!param.equals("")) {
+
+		if (!param.equals("")) {
 			articleUrl += "&" + param;
 		}
-		
+
 		String imagePath = request.getSession().getServletContext().getRealPath("/resources/upload/");
-		
-		
-		//포워딩할 페이지에 넘길 데이터
+
+		// 내 메세지 가져오기
+		List<msgDTO> msgList = dao.getMsgList(info.getUserId());
+
+		// 포워딩할 페이지에 넘길 데이터
 		request.setAttribute("lists", lists);
+		request.setAttribute("msgList", msgList);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("articleUrl", articleUrl);
 		request.setAttribute("imagePath", imagePath);
-		
+
 		return "room/travel/travelList";
-		
+
 	}
-	
-	@RequestMapping(value = "/travelArticle.action", method = {RequestMethod.GET,RequestMethod.POST})
+
+	@RequestMapping(value = "/travelArticle.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String travelArticle(HttpServletRequest request) throws Exception {
-		
-		//로그인 확인
+
+		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
-		
-		if(info == null) {
-			
+
+		if (info == null) {
+
 			return "redirect:/main.action";
-			
+
 		}
-		
+
 		String cp = request.getContextPath();
-		
+
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
-		if(searchValue!=null) {
+
+		if (searchValue != null) {
 			searchValue = URLDecoder.decode(searchValue, "UTF-8");
 		}
-		
+
 		RoomDTO dto = dao.getReadData(roomNum);
-		
-		//라인수
+
+		// 라인수
 		int lineSu = dto.getIntroduce().split("\n").length;
-		
+
 		dto.setIntroduce(dto.getIntroduce().replaceAll("\n", "<br/>"));
-		
+
 		String param = "pageNum=" + pageNum;
-		if(searchValue!=null) {
-			param+= "&searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+		if (searchValue != null) {
+			param += "&searchKey=" + searchKey;
+			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
+
 		request.setAttribute("dto", dto);
 		request.setAttribute("params", param);
 		request.setAttribute("lineSu", lineSu);
 		request.setAttribute("pageNum", pageNum);
-		
+
 		return "room/travel/travelArticle";
-		
+
 	}
-	
-	
-	
-	//맛집 방 --------------------------------------------------------------
+
+	// 맛집 방 --------------------------------------------------------------
 	@RequestMapping(value = "/foodCreated.action")
 	public ModelAndView foodCreated(HttpServletRequest request) throws Exception {
-		
-		//로그인 확인
+
+		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
-		
-		if(info == null) {
-			
+
+		if (info == null) {
+
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("redirect:main.action");
-			
+
 			return mav;
-			
+
 		}
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room/food/foodCreated");
-		
+
 		return mav;
-		
+
 	}
-	
-	@RequestMapping(value = "/foodCreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String foodCreated_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
-		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
-		
+
+	@RequestMapping(value = "/foodCreated_ok.action", method = { RequestMethod.GET, RequestMethod.POST })
+	public String foodCreated_ok(RoomDTO dto, MultipartHttpServletRequest mpRequest) throws Exception {
+
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
+
 		int size = lists.size();
-		
-		for(int i=0;i<size;i++) {
+
+		for (int i = 0; i < size; i++) {
 			dao.insertData(lists.get(i));
 		}
-		
+
 		return "redirect:/foodList.action";
-		
+
 	}
-	
-	@RequestMapping(value = "/foodList.action", method = {RequestMethod.GET,RequestMethod.POST})
+
+	@RequestMapping(value = "/foodList.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String foodList(HttpServletRequest request) throws Exception {
-		
+
 		String cp = request.getContextPath();
-		
+
 		String pageNum = request.getParameter("pageNum");
-		
+
+		// 로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+
+		if (info == null) {
+			return "redirect:main.action";
+		}
+
 		int currentPage = 1;
-		
-		if(pageNum!=null) {
+
+		if (pageNum != null) {
 			currentPage = Integer.parseInt(pageNum);
 		}
-		
+
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
-		if(searchValue==null) {
+
+		if (searchValue == null) {
 			searchKey = "title";
 			searchValue = "";
-		}else {
-			if(request.getMethod().equalsIgnoreCase("GET")) {
+		} else {
+			if (request.getMethod().equalsIgnoreCase("GET")) {
 				searchValue = URLDecoder.decode(searchValue, "UTF-8");
 			}
 		}
-		
+
 		int dataCount = dao.foodDataCount(searchKey, searchValue);
-		
+
 		int numPerPage = 5;
 		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
-		
-		if(currentPage>totalPage) {
+
+		if (currentPage > totalPage) {
 			currentPage = totalPage;
 		}
-		
-		int start = (currentPage-1)*numPerPage+1;
-		int end = currentPage*numPerPage;
-		
+
+		int start = (currentPage - 1) * numPerPage + 1;
+		int end = currentPage * numPerPage;
+
 		List<RoomDTO> lists = dao.foodGetLists(start, end, searchKey, searchValue);
-		
-		//param 사용자 정의
+
+		// param 사용자 정의
 		String param = "";
-		
-		if(!searchValue.equals("")) {
+
+		if (!searchValue.equals("")) {
 			param = "searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
-		//url 사용자 정의
+
+		// url 사용자 정의
 		String listUrl = cp + "/foodList.action";
-		
-		if(!param.equals("")) {
+
+		if (!param.equals("")) {
 			listUrl += "?" + param;
 		}
-		
-		//페이징
+
+		// 페이징
 		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
-		
-		//article 사용자 정의
+
+		// article 사용자 정의
 		String articleUrl = cp + "/foodArticle.action?pageNum=" + currentPage;
-		
-		if(!param.equals("")) {
+
+		if (!param.equals("")) {
 			articleUrl += "&" + param;
 		}
-		
+
 		String imagePath = request.getSession().getServletContext().getRealPath("/resources/upload/");
-		
-		
-		//포워딩할 페이지에 넘길 데이터
+
+		// 내 메세지 가져오기
+		List<msgDTO> msgList = dao.getMsgList(info.getUserId());
+
+		// 포워딩할 페이지에 넘길 데이터
 		request.setAttribute("lists", lists);
+		request.setAttribute("msgList", msgList);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("articleUrl", articleUrl);
 		request.setAttribute("imagePath", imagePath);
-		
+
 		return "room/food/foodList";
-		
+
 	}
-	
-	@RequestMapping(value = "/foodArticle.action", method = {RequestMethod.GET,RequestMethod.POST})
+
+	@RequestMapping(value = "/foodArticle.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String foodArticle(HttpServletRequest request) throws Exception {
-		
-		//로그인 확인
+
+		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
-		
-		if(info == null) {
-			
+
+		if (info == null) {
+
 			return "redirect:/main.action";
-			
+
 		}
-		
+
 		String cp = request.getContextPath();
-		
+
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
-		if(searchValue!=null) {
+
+		if (searchValue != null) {
 			searchValue = URLDecoder.decode(searchValue, "UTF-8");
 		}
-		
+
 		RoomDTO dto = dao.getReadData(roomNum);
-		
-		//라인수
+
+		// 라인수
 		int lineSu = dto.getIntroduce().split("\n").length;
-		
+
 		dto.setIntroduce(dto.getIntroduce().replaceAll("\n", "<br/>"));
-		
+
 		String param = "pageNum=" + pageNum;
-		if(searchValue!=null) {
-			param+= "&searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+		if (searchValue != null) {
+			param += "&searchKey=" + searchKey;
+			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
+
 		request.setAttribute("dto", dto);
 		request.setAttribute("params", param);
 		request.setAttribute("lineSu", lineSu);
 		request.setAttribute("pageNum", pageNum);
-		
+
 		return "room/food/foodArticle";
-		
+
 	}
-	
-	
-	
-	//운동 방 --------------------------------------------------------------
+
+	// 운동 방 --------------------------------------------------------------
 	@RequestMapping(value = "/sportsCreated.action")
 	public ModelAndView sportsCreated(HttpServletRequest request) throws Exception {
-		
-		//로그인 확인
+
+		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
-		
-		if(info == null) {
-			
+
+		if (info == null) {
+
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("redirect:main.action");
-			
+
 			return mav;
-			
+
 		}
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room/sports/sportsCreated");
-		
+
 		return mav;
-		
+
 	}
-	
-	@RequestMapping(value = "/sportsCreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String sportsCreated_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
-		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
-		
+
+	@RequestMapping(value = "/sportsCreated_ok.action", method = { RequestMethod.GET, RequestMethod.POST })
+	public String sportsCreated_ok(RoomDTO dto, MultipartHttpServletRequest mpRequest) throws Exception {
+
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
+
 		int size = lists.size();
-		
-		for(int i=0;i<size;i++) {
+
+		for (int i = 0; i < size; i++) {
 			dao.insertData(lists.get(i));
 		}
-		
+
 		return "redirect:/sportsList.action";
-		
+
 	}
-	
-	@RequestMapping(value = "/sportsList.action", method = {RequestMethod.GET,RequestMethod.POST})
+
+	@RequestMapping(value = "/sportsList.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String sportsList(HttpServletRequest request) throws Exception {
-		
+
 		String cp = request.getContextPath();
-		
+
 		String pageNum = request.getParameter("pageNum");
-		
+
+		// 로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+
+		if (info == null) {
+			return "redirect:main.action";
+		}
+
 		int currentPage = 1;
-		
-		if(pageNum!=null) {
+
+		if (pageNum != null) {
 			currentPage = Integer.parseInt(pageNum);
 		}
-		
+
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
-		if(searchValue==null) {
+
+		if (searchValue == null) {
 			searchKey = "title";
 			searchValue = "";
-		}else {
-			if(request.getMethod().equalsIgnoreCase("GET")) {
+		} else {
+			if (request.getMethod().equalsIgnoreCase("GET")) {
 				searchValue = URLDecoder.decode(searchValue, "UTF-8");
 			}
 		}
-		
+
 		int dataCount = dao.sportsDataCount(searchKey, searchValue);
-		
+
 		int numPerPage = 5;
 		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
-		
-		if(currentPage>totalPage) {
+
+		if (currentPage > totalPage) {
 			currentPage = totalPage;
 		}
-		
-		int start = (currentPage-1)*numPerPage+1;
-		int end = currentPage*numPerPage;
-		
+
+		int start = (currentPage - 1) * numPerPage + 1;
+		int end = currentPage * numPerPage;
+
 		List<RoomDTO> lists = dao.sportsGetLists(start, end, searchKey, searchValue);
-		
-		//param 사용자 정의
+
+		// param 사용자 정의
 		String param = "";
-		
-		if(!searchValue.equals("")) {
+
+		if (!searchValue.equals("")) {
 			param = "searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
-		//url 사용자 정의
+
+		// url 사용자 정의
 		String listUrl = cp + "/sportsList.action";
-		
-		if(!param.equals("")) {
+
+		if (!param.equals("")) {
 			listUrl += "?" + param;
 		}
-		
-		//페이징
+
+		// 페이징
 		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
-		
-		//article 사용자 정의
+
+		// article 사용자 정의
 		String articleUrl = cp + "/sportsArticle.action?pageNum=" + currentPage;
-		
-		if(!param.equals("")) {
+
+		if (!param.equals("")) {
 			articleUrl += "&" + param;
 		}
-		
+
 		String imagePath = request.getSession().getServletContext().getRealPath("/resources/upload/");
-		
-		
-		//포워딩할 페이지에 넘길 데이터
+
+		// 내메세지 가져오기
+		List<msgDTO> msgList = dao.getMsgList(info.getUserId());
+
+		// 포워딩할 페이지에 넘길 데이터
 		request.setAttribute("lists", lists);
+		request.setAttribute("msgList", msgList);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("articleUrl", articleUrl);
 		request.setAttribute("imagePath", imagePath);
-		
+
 		return "room/sports/sportsList";
-		
+
 	}
-	
-	@RequestMapping(value = "/sportsArticle.action", method = {RequestMethod.GET,RequestMethod.POST})
+
+	@RequestMapping(value = "/sportsArticle.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String sportsArticle(HttpServletRequest request) throws Exception {
-		
-		//로그인 확인
+
+		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
-		
-		if(info == null) {
-			
+
+		if (info == null) {
+
 			return "redirect:/main.action";
-			
+
 		}
-		
+
 		String cp = request.getContextPath();
-		
+
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
-		if(searchValue!=null) {
+
+		if (searchValue != null) {
 			searchValue = URLDecoder.decode(searchValue, "UTF-8");
 		}
-		
+
 		RoomDTO dto = dao.getReadData(roomNum);
-		
-		//라인수
+
+		// 라인수
 		int lineSu = dto.getIntroduce().split("\n").length;
-		
+
 		dto.setIntroduce(dto.getIntroduce().replaceAll("\n", "<br/>"));
-		
+
 		String param = "pageNum=" + pageNum;
-		if(searchValue!=null) {
-			param+= "&searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+		if (searchValue != null) {
+			param += "&searchKey=" + searchKey;
+			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
+
 		request.setAttribute("dto", dto);
 		request.setAttribute("params", param);
 		request.setAttribute("lineSu", lineSu);
 		request.setAttribute("pageNum", pageNum);
-		
+
 		return "room/sports/sportsArticle";
-		
+
 	}
-	
-	
-	
-	//공부 방 --------------------------------------------------------------
+
+	// 공부 방 --------------------------------------------------------------
 	@RequestMapping(value = "/studyCreated.action")
 	public ModelAndView studyCreated(HttpServletRequest request) throws Exception {
-		
-		//로그인 확인
+
+		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
-		
-		if(info == null) {
-			
+
+		if (info == null) {
+
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("redirect:main.action");
-			
+
 			return mav;
-			
+
 		}
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room/study/studyCreated");
-		
+
 		return mav;
-		
+
 	}
-	
-	@RequestMapping(value = "/studyCreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String studyCreated_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
-		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
-		
+
+	@RequestMapping(value = "/studyCreated_ok.action", method = { RequestMethod.GET, RequestMethod.POST })
+	public String studyCreated_ok(RoomDTO dto, MultipartHttpServletRequest mpRequest) throws Exception {
+
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
+
 		int size = lists.size();
-		
-		for(int i=0;i<size;i++) {
+
+		for (int i = 0; i < size; i++) {
 			dao.insertData(lists.get(i));
 		}
-		
+
 		return "redirect:/studyList.action";
-		
+
 	}
-	
-	@RequestMapping(value = "/studyList.action", method = {RequestMethod.GET,RequestMethod.POST})
+
+	@RequestMapping(value = "/studyList.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String studyList(HttpServletRequest request) throws Exception {
-		
+
 		String cp = request.getContextPath();
-		
+
 		String pageNum = request.getParameter("pageNum");
-		
+
+		// 로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+
+		if (info == null) {
+			return "redirect:main.action";
+		}
+
 		int currentPage = 1;
-		
-		if(pageNum!=null) {
+
+		if (pageNum != null) {
 			currentPage = Integer.parseInt(pageNum);
 		}
-		
+
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
-		if(searchValue==null) {
+
+		if (searchValue == null) {
 			searchKey = "title";
 			searchValue = "";
-		}else {
-			if(request.getMethod().equalsIgnoreCase("GET")) {
+		} else {
+			if (request.getMethod().equalsIgnoreCase("GET")) {
 				searchValue = URLDecoder.decode(searchValue, "UTF-8");
 			}
 		}
-		
+
 		int dataCount = dao.studyDataCount(searchKey, searchValue);
-		
+
 		int numPerPage = 5;
 		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
-		
-		if(currentPage>totalPage) {
+
+		if (currentPage > totalPage) {
 			currentPage = totalPage;
 		}
-		
-		int start = (currentPage-1)*numPerPage+1;
-		int end = currentPage*numPerPage;
-		
+
+		int start = (currentPage - 1) * numPerPage + 1;
+		int end = currentPage * numPerPage;
+
 		List<RoomDTO> lists = dao.studyGetLists(start, end, searchKey, searchValue);
-		
-		//param 사용자 정의
+
+		// param 사용자 정의
 		String param = "";
-		
-		if(!searchValue.equals("")) {
+
+		if (!searchValue.equals("")) {
 			param = "searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
-		//url 사용자 정의
+
+		// url 사용자 정의
 		String listUrl = cp + "/studyList.action";
-		
-		if(!param.equals("")) {
+
+		if (!param.equals("")) {
 			listUrl += "?" + param;
 		}
-		
-		//페이징
+
+		// 페이징
 		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
-		
-		//article 사용자 정의
+
+		// article 사용자 정의
 		String articleUrl = cp + "/studyArticle.action?pageNum=" + currentPage;
-		
-		if(!param.equals("")) {
+
+		if (!param.equals("")) {
 			articleUrl += "&" + param;
 		}
-		
+
 		String imagePath = request.getSession().getServletContext().getRealPath("/resources/upload/");
-		
-		
-		//포워딩할 페이지에 넘길 데이터
+
+		// 내메세지 가져오기
+		List<msgDTO> msgList = dao.getMsgList(info.getUserId());
+
+		// 포워딩할 페이지에 넘길 데이터
 		request.setAttribute("lists", lists);
+		request.setAttribute("msgList", msgList);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("articleUrl", articleUrl);
 		request.setAttribute("imagePath", imagePath);
-		
+
 		return "room/study/studyList";
-		
+
 	}
-	
-	@RequestMapping(value = "/studyArticle.action", method = {RequestMethod.GET,RequestMethod.POST})
+
+	@RequestMapping(value = "/studyArticle.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String studyArticle(HttpServletRequest request) throws Exception {
-		
-		//로그인 확인
+
+		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
-		
-		if(info == null) {
-			
+
+		if (info == null) {
+
 			return "redirect:/main.action";
-			
+
 		}
-		
+
 		String cp = request.getContextPath();
-		
+
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
-		if(searchValue!=null) {
+
+		if (searchValue != null) {
 			searchValue = URLDecoder.decode(searchValue, "UTF-8");
 		}
-		
+
 		RoomDTO dto = dao.getReadData(roomNum);
-		
-		//라인수
+
+		// 라인수
 		int lineSu = dto.getIntroduce().split("\n").length;
-		
+
 		dto.setIntroduce(dto.getIntroduce().replaceAll("\n", "<br/>"));
-		
+
 		String param = "pageNum=" + pageNum;
-		if(searchValue!=null) {
-			param+= "&searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+		if (searchValue != null) {
+			param += "&searchKey=" + searchKey;
+			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
+
 		request.setAttribute("dto", dto);
 		request.setAttribute("params", param);
 		request.setAttribute("lineSu", lineSu);
 		request.setAttribute("pageNum", pageNum);
-		
+
 		return "room/study/studyArticle";
-		
+
 	}
-	
-	@RequestMapping(value = "/requestMsg.action"
-					,method = RequestMethod.GET)
-	public ModelAndView roomRequest(HttpServletRequest request) throws Exception{
-		
+
+	@RequestMapping(value = "/requestMsg.action", method = RequestMethod.GET)
+	public ModelAndView roomRequest(HttpServletRequest request) throws Exception {
+
 		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
@@ -1038,33 +1078,33 @@ public class RoomController {
 		}
 
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
-		
+
 		RoomDTO dto = dao.getReadData(roomNum);
-		
+
 		msgDTO msg = new msgDTO();
-		
+
 		msg.setSender(info.getUserId());
 		msg.setRecipient(dto.getManager());
-		msg.setMsg("["+info.getUserName()+"("+info.getUserId()+")"+"] 님이 [" + dto.getTitle() + "] 에 가입 요청을 보냈습니다.");
-		
+		msg.setMsg("[" + info.getUserName() + "(" + info.getUserId() + ")" + "] 님이 [" + dto.getTitle()
+				+ "] 에 가입 요청을 보냈습니다.");
+
 		dao.insertMsg(msg);
-		
-		
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:list.action");
-		
+
 		return mav;
-		
+
 	}
-	@RequestMapping(value = "/modalAccept.action"
-			,method = {RequestMethod.GET})
-	
-	public String modalAccept(HttpServletRequest request, @RequestParam(value="msgNum") String msgNum) throws Exception{
-		
-		//메시지 상태 완료로 바꾸기
+
+	@RequestMapping(value = "/modalAccept.action", method = { RequestMethod.GET })
+
+	public String modalAccept(HttpServletRequest request, @RequestParam(value = "msgNum") String msgNum)
+			throws Exception {
+
+		// 메시지 상태 완료로 바꾸기
 		dao.changeRequestStatus(Integer.parseInt(msgNum));
-		
+
 		return "redirect:list.action";
 	}
 

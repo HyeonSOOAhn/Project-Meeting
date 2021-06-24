@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -98,7 +99,7 @@
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     	<div>
-                    		<h1 class="h3 mb-2 text-gray-800">전체 방 목록</h1>
+                    		<h1 class="h3 mb-2 text-gray-800"><b>전체 방 목록</b></h1>
                     		<p class="mb-4">여러분들이 참여하실 수 있는 모든 방 목록입니다.</p>
                     	</div>
                     	<c:if test="${!empty sessionScope.userInfo.userId }">
@@ -138,9 +139,12 @@
 										<u>${dto.subject }</u><br/>
 										<h2><a href="${articleUrl }&roomNum=${dto.roomNum}">${dto.title }</a></h2><br/>
 										${dto.keyword }<br/>
-										창설일 : ${dto.created }&nbsp;&nbsp;참가자 : ${dto.totalP } / ${dto.currentP } 명
+										창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 : ${dto.currentP } / ${dto.totalP } 명
 									</div>
-									<div class="right"><img src="${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }" width="200" height="200"/></div>
+									<div class="right">
+										<%-- <img src="${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }" width="200" height="200"/> --%>
+										<img src='<spring:url value="/upload/${dto.storedFileName }"/>' width="200" height="200"/>
+									</div>
 								</div>
                             </div>
                            </c:forEach>

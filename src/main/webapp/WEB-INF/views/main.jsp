@@ -35,6 +35,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 </head>
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -235,6 +236,7 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+
 
 </body>
 </html>
