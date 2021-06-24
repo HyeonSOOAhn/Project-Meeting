@@ -31,7 +31,7 @@ public class RecoController {
 	@RequestMapping(value = "/reco_main", method = RequestMethod.GET)
 	public String reco(Model model) throws IOException, InterruptedException {
 
-		return "reco";
+		return "reco/reco";
 	}
 	
 	//서브젝트별 리스트 불러오기
@@ -51,7 +51,7 @@ public class RecoController {
 		model.addAttribute("lists", lists);
 		
 
-		return "reco";
+		return "reco/reco";
 	}
 	
 	
@@ -62,7 +62,7 @@ public class RecoController {
 
 		System.out.println("업데이트 완료");
 		
-		return "redirect:reco_main";
+		return "redirect:reco/reco_main";
 	}
 	
 	//하나의 데이터를 불러와서 그 정보와 지도를 호출
@@ -74,14 +74,14 @@ public class RecoController {
 
 		model.addAttribute("list", list);
 
-		return "showMap";
+		return "reco/showMap";
 
 	}
 	
 	@RequestMapping(value = "/reco_around", method = RequestMethod.GET)
 	public String around(Model model) {
 		
-		return "reco";
+		return "reco/reco";
 	}
 	
 	
