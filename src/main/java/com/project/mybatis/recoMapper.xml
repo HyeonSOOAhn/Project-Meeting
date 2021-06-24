@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.recoMapper">
+
+
+<!-- 데이터 총 갯수 불러오기 -->
+<select id="getMaxNum2" parameterType="String" resultType="int">
+	 
+		select max(rnum)
+		from
+			(select 
+				rownum as rnum, a.* 
+			from 
+				Recommend a 
+			where 
+				subject=#{subject})
+	
+</select>
+
+
+<!-- 서브젝트별 db불러오기 -->
+<select id="getLists2" parameterType="hashmap" resultType="com.project.dto.RecoDTO">
+	
+	select *
+	from
+		(select 
+			rownum as rnum, a.* 
+		from 
+			Recommend a 
+		where 
+			subject=#{subject}
+		<![CDATA[
+		and rownum<=#{pageNum}*100)
+	where
+		(#{pageNum}-1)*100<rnum
+		]]>
+	
+	
+</select>
+
+<!-- dto하나 불러오기 -->
+<select id="getReadData2" parameterType="int" resultType="com.project.dto.RecoDTO">
+select * from Recommend where recoNum=#{recoNum}
+</select>
+
+<!-- 업데이트 -->
+<update id="insertData2" parameterType="com.project.dto.RecoDTO">
+
+	MERGE INTO Recommend
+	USING DUAL ON (recoNum = #{recoNum})
+	WHEN MATCHED THEN
+	UPDATE SET
+	subject = #{subject},keyword = #{keyword},
+	title = #{title, jdbcType=VARCHAR}, introduce = #{introduce, jdbcType=VARCHAR},content = #{content, jdbcType=VARCHAR},
+	location = #{location, jdbcType=VARCHAR},
+	lat = #{lat, jdbcType=VARCHAR},lon = #{lon, jdbcType=VARCHAR}
+	WHEN NOT MATCHED THEN
+	INSERT
+	(recoNum,subject,keyword,title,
+	introduce,content,location,lat,lon)
+	VALUES
+	(#{recoNum},#{subject},#{keyword},
+	#{title, jdbcType=VARCHAR}, #{introduce, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},
+	#{location, jdbcType=VARCHAR},
+	#{lat, jdbcType=VARCHAR},#{lon, jdbcType=VARCHAR})
+</update>
+
+</mapper>
