@@ -149,4 +149,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 	
+	<!-- 요청 메세지 -->
+	<insert id="insertMsg" parameterType="com.project.dto.msgDTO">
+		insert into requestMsg(msgNum,sender,recipient,msg,created,status) 
+		values(msgNum_SEQ.NEXTVAL,#{sender},#{recipient},#{msg},sysdate,0)
+	</insert>
+	<select id="getMsgList" parameterType="map" resultType="com.project.dto.msgDTO">
+		select msgNum,sender,recipient,msg,created,status from requestMsg
+		where recipient = #{recipient} order by created desc
+	</select>
+	<update id="changeRequestStatus" parameterType="map">
+		update requestMsg set status = 1 
+		where msgNum = #{msgNum}
+	</update>
+	
 </mapper>

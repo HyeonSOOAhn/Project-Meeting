@@ -125,7 +125,7 @@ public class MeetingController {
 		
 		session.setAttribute("userInfo", info);
 		
-		session.setMaxInactiveInterval(60*30); //30분
+		session.setMaxInactiveInterval(60 * 30); //30분
 		
 		return "redirect:/main.action";
 	}
@@ -193,6 +193,7 @@ public class MeetingController {
 	@RequestMapping(value="/resetPwd_ok.action",
 			method = {RequestMethod.POST,RequestMethod.GET})
 	public String resetPwd(String email,String userPwd,HttpServletRequest req) throws Exception{
+		
 		dao.resetPwd(email, userPwd);
 		
 		return "/login/login";

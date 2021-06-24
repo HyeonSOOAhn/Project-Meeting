@@ -2,6 +2,7 @@ package com.project.controller;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,12 +15,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.RoomDAO;
 import com.project.dto.RoomDTO;
 import com.project.dto.UserInfo;
+import com.project.dto.msgDTO;
 import com.project.util.FileUtil;
 import com.project.util.PageUtil;
 
@@ -108,6 +111,13 @@ public class RoomController {
 			return "redirect:main.action";
 		}
 		
+		//내 메세지 가져오기
+		List<msgDTO> msgList = dao.getMsgList(info.getUserId());
+		
+		for(msgDTO abc:msgList) {
+			System.out.println(abc.getMsgNum());
+		}
+		
 		String cp = request.getContextPath();
 		
 		String pageNum = request.getParameter("pageNum");
@@ -190,6 +200,7 @@ public class RoomController {
 		
 		//포워딩할 페이지에 넘길 데이터
 		request.setAttribute("lists", lists);
+		request.setAttribute("msgList", msgList);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("articleUrl", articleUrl);
@@ -226,8 +237,6 @@ public class RoomController {
 		}
 		
 		RoomDTO dto = dao.getReadData(roomNum);
-		
-		System.out.println(dto.getMember());
 		
 		//라인수
 		int lineSu = dto.getIntroduce().split("\n").length;
@@ -1011,19 +1020,52 @@ public class RoomController {
 		
 	}
 	
-	@RequestMapping(value = "/request.action"
+	@RequestMapping(value = "/requestMsg.action"
 					,method = RequestMethod.GET)
 	public ModelAndView roomRequest(HttpServletRequest request) throws Exception{
 		
-		String manager = request.getParameter("manager");
+		// 로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+
+		if (info == null) {
+
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("redirect:main.action");
+
+			return mav;
+
+		}
+
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
+		
+		RoomDTO dto = dao.getReadData(roomNum);
+		
+		msgDTO msg = new msgDTO();
+		
+		msg.setSender(info.getUserId());
+		msg.setRecipient(dto.getManager());
+		msg.setMsg("["+info.getUserName()+"("+info.getUserId()+")"+"] 님이 [" + dto.getTitle() + "] 에 가입 요청을 보냈습니다.");
+		
+		dao.insertMsg(msg);
 		
 		
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("room/index");
+		mav.setViewName("redirect:list.action");
 		
 		return mav;
 		
+	}
+	@RequestMapping(value = "/modalAccept.action"
+			,method = {RequestMethod.GET})
+	
+	public String modalAccept(HttpServletRequest request, @RequestParam(value="msgNum") String msgNum) throws Exception{
+		
+		//메시지 상태 완료로 바꾸기
+		dao.changeRequestStatus(Integer.parseInt(msgNum));
+		
+		return "redirect:list.action";
 	}
 
 }
