@@ -7,9 +7,10 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.project.dto.RoomDTO;
+import com.project.dto.msgDTO;
 
 public class RoomDAO {
-	
+
 private SqlSessionTemplate sessionTemplate;
 	
 	//의존성 주입
@@ -217,5 +218,31 @@ private SqlSessionTemplate sessionTemplate;
 		return lists;
 			
 	}
+	// 메세지
+		public void insertMsg(msgDTO dto) {
+
+			sessionTemplate.insert("com.roomMapper.insertMsg", dto);
+
+		}
+
+		public List<msgDTO> getMsgList(String userId) {
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("recipient", userId);
+
+			List<msgDTO> lists = sessionTemplate.selectList("com.roomMapper.getMsgList", map);
+
+			return lists;
+		}
+
+		public void changeRequestAccept(int msgNum) {
+
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("msgNum", msgNum);
+
+			sessionTemplate.update("com.roomMapper.changeRequestAccept", map);
+
+		}
 
 }
+
