@@ -39,9 +39,6 @@
 		
 	}
 
-
-
-
 </script>
 
 </head>
@@ -80,10 +77,11 @@
 												id="InputEmail" name="userId" aria-describedby="emailHelp"
 												placeholder="아이디">
 										</div>
-										
+
 										<div class="form-group">
-											<input type="password" name="userPwd" class="form-control form-control-user"
-												id="InputPassword" placeholder="비밀번호">
+											<input type="password" name="userPwd"
+												class="form-control form-control-user" id="InputPassword"
+												placeholder="비밀번호">
 										</div>
 										<div class="form-group">
 											<div class="custom-control custom-checkbox small">
@@ -92,11 +90,12 @@
 													class="custom-control-label" for="customCheck">자동로그인</label>
 											</div>
 										</div>
-										
-										<input type="button" value="로그인" class="btn btn-primary btn-user btn-block" 
-											onclick="sendIt();"/>
+
+										<input type="button" value="로그인"
+											class="btn btn-primary btn-user btn-block"
+											onclick="sendIt();" />
 										<hr>
-										
+
 									</form>
 									<hr>
 									<div class="text-center">
