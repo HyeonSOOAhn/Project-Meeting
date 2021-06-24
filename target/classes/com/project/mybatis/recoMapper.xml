@@ -70,5 +70,4 @@ select * from Recommend where recoNum=#{recoNum}
 	#{lat, jdbcType=VARCHAR},#{lon, jdbcType=VARCHAR})
 </update>
 
-
 </mapper>
