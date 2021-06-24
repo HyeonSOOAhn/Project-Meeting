@@ -9,8 +9,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.project.dto.RoomDTO;
 
 public class RoomDAO {
-	
-	private SqlSessionTemplate sessionTemplate;
+
+private SqlSessionTemplate sessionTemplate;
 	
 	//의존성 주입
 	public void setSessionTemplate(SqlSessionTemplate sessionTemplate) {

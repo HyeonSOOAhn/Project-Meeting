@@ -1,5 +1,8 @@
 package com.project.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,11 +14,13 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.RegisterDAO;
 import com.project.dto.UserDTO;
 import com.project.dto.UserInfo;
+import com.project.util.UserFileUtil;
 
 @Controller
 public class MeetingController {
@@ -25,6 +30,10 @@ public class MeetingController {
 	
 	@Autowired
 	JavaMailSender mailSender;
+	
+	@Autowired
+	@Qualifier("userFileUtil")
+	UserFileUtil userFileUtil;
 	
 	@RequestMapping(value="/main.action",
 			method = {RequestMethod.GET,RequestMethod.POST})
@@ -59,7 +68,7 @@ public class MeetingController {
 	}
 	
 	@RequestMapping(value="/register_ok.action", method = RequestMethod.POST)
-	public String register_ok(UserDTO dto, HttpServletRequest req) throws Exception{
+	public String register_ok(UserDTO dto,HttpServletRequest req,MultipartHttpServletRequest mpRequest) throws Exception{
 		
 		//값들이 존재하는 값들이 아닌지 구현
 		if(dao.checkId(dto.getUserId()) != 0) {
@@ -71,9 +80,16 @@ public class MeetingController {
 			return "/register/Register";
 		}
 		
-		dao.insertUserData(dto);
+		List<Map<String, Object>> lists = userFileUtil.parseInsertFileInfo(dto, mpRequest);
 		
-		return "redirect:/main.action"; 
+		int size = lists.size();
+		
+		for(int i=0;i<size;i++) {
+			dao.insertUserData(lists.get(i));
+		}
+		
+		return "redirect:/main.action";
+		
 	}
 	
 	@RequestMapping(value="/login.action",
@@ -98,10 +114,10 @@ public class MeetingController {
 	
 	@RequestMapping(value="/login_ok.action",
 			method = RequestMethod.POST)
-	public String login_ok(String userId,String userPwd,String rememberBtn, HttpServletRequest req) throws Exception{
+	public String login_ok(String userId,String userPwd,String email,String rememberBtn, HttpServletRequest req) throws Exception{
 		
 		//아이디 or 이메일 존재하는지 있다면 비밀번호 맞는지 확인하는 거 구현
-		if(dao.checkId(userId) == 0 && dao.checkEmail(userId) == 0) {
+		if(dao.checkId(userId) == 0 && dao.checkEmail(email) == 0) {
 			req.setAttribute("noExistInfo","아이디/이메일이나 비밀번호가 틀렸습니다." );
 			return "/login/login";
 		}
@@ -118,7 +134,7 @@ public class MeetingController {
 		UserInfo info = new UserInfo();
 		
 		info.setUserId(dto.getUserId());
-		info.setUserName(dto.getUserName());
+		info.setUserName(dto.getName());
 		
 		HttpSession session = req.getSession();
 		
@@ -127,6 +143,7 @@ public class MeetingController {
 		session.setMaxInactiveInterval(60*30); //30분
 		
 		return "redirect:/main.action";
+		
 	}
 	
 	@RequestMapping(value="/forgotPwd.action",
@@ -197,6 +214,96 @@ public class MeetingController {
 		return "/login/login";
 	}
 	
+	@RequestMapping(value = "/myPage.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String mypage(HttpServletRequest request) throws Exception {
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "redirect:/login.action";
+			
+		}
+		
+		String cp = request.getContextPath();
+		
+		UserDTO dto = dao.getUserInfo(info.getUserId());
+		
+		request.setAttribute("dto", dto);
+		
+		return "register/myPage";
+		
+	}
 	
+	@RequestMapping(value = "/userUpdated.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String userUpdated(HttpServletRequest request) throws Exception {
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "redirect:/login.action";
+			
+		}
+		
+		String cp = request.getContextPath();
+		
+		UserDTO dto = dao.getUserInfo(info.getUserId());
+		
+		if(dto == null) {
+			return "redirect:/login.action";
+		}
+		
+		request.setAttribute("dto", dto);
+		
+		return "register/userUpdated";
+		
+	}
+	
+	@RequestMapping(value = "/userUpdated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String userUpdated_ok (UserDTO dto,HttpServletRequest request,MultipartHttpServletRequest mpRequest) throws Exception {
+		
+		List<Map<String, Object>> lists = userFileUtil.parseUpdateFileInfo(dto, mpRequest);
+		
+		int size = lists.size();
+		
+		for(int i=0;i<size;i++) {
+			dao.updateUserData(lists.get(i));
+		}
+		
+		return "redirect:/myPage.action";
+		
+	}
+	
+	@RequestMapping(value = "/userDeleted.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String userDeleted(HttpServletRequest request) throws Exception {
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "redirect:/login.action";
+			
+		}
+		
+		String cp = request.getContextPath();
+		
+		UserDTO dto = dao.getUserInfo(info.getUserId());
+		
+		userFileUtil.parseDeleteFileInfo(dto.getUstoredFileName());
+		
+		dao.deleteUserData(dto.getUserId());
+		
+		session.removeAttribute("userInfo");
+		
+		return "redirect:/login.action";
+		
+	}
 
 }

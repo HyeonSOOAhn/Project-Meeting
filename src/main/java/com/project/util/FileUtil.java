@@ -71,7 +71,6 @@ public class FileUtil {
 					listsMap.put("totalP", dto.getTotalP());
 				}
 				listsMap.put("manager",dto.getManager());
-				listsMap.put("member", dto.getMember());
 				
 				listsMap.put("originalFileName", originalFileName);
 				listsMap.put("storedFileName", storedFileName);

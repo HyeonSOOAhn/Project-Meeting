@@ -70,11 +70,28 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <!-- <sup>너와 나의 은밀한 만남</sup> -->
+                <div class="sidebar-brand-text mx-3">방 Ting</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0"><br/>
+            
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                MyPage
+            </div>
+            
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="<%=cp%>/myPage.action">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>마이 페이지</span>
+                </a>
+            </li>
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
 
             <!-- Heading -->
             <div class="sidebar-heading">

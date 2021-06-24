@@ -19,7 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.dao.RoomDAO;
 import com.project.dto.RoomDTO;
 import com.project.dto.UserInfo;
-import com.project.util.FileUtil;
+
+import com.project.util.RoomFileUtil;
 import com.project.util.PageUtil;
 
 @Controller
@@ -34,8 +35,8 @@ public class RoomController {
 	PageUtil pageUtil;
 	
 	@Autowired
-	@Qualifier("fileUtil")
-	FileUtil fileUtil;
+	@Qualifier("roomFileUtil")
+	RoomFileUtil roomFileUtil;
 	
 	@RequestMapping(value = "/index.action")
 	public ModelAndView index() throws Exception {
@@ -81,7 +82,7 @@ public class RoomController {
 		
 		//dao.insertData(dto);
 		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
 		
 		int size = lists.size();
 		
@@ -294,7 +295,7 @@ public class RoomController {
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
 		
-		List<Map<String, Object>> lists = fileUtil.parseUpdateFileInfo(dto, mpRequest);
+		List<Map<String, Object>> lists = roomFileUtil.parseUpdateFileInfo(dto, mpRequest);
 		
 		int size = lists.size();
 		
@@ -325,7 +326,7 @@ public class RoomController {
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
-		fileUtil.parseDeleteFileInfo(dto.getStoredFileName());
+		roomFileUtil.parseDeleteFileInfo(dto.getStoredFileName());
 		
 		dao.deleteData(roomNum);
 		
@@ -369,7 +370,7 @@ public class RoomController {
 	@RequestMapping(value = "/travelCreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String travelCreated_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
 		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
 		
 		int size = lists.size();
 		
@@ -534,7 +535,7 @@ public class RoomController {
 	@RequestMapping(value = "/foodCreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String foodCreated_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
 		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
 		
 		int size = lists.size();
 		
@@ -699,7 +700,7 @@ public class RoomController {
 	@RequestMapping(value = "/sportsCreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String sportsCreated_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
 		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
 		
 		int size = lists.size();
 		
@@ -864,7 +865,7 @@ public class RoomController {
 	@RequestMapping(value = "/studyCreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String studyCreated_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
 		
-		List<Map<String, Object>> lists = fileUtil.parseInsertFileInfo(dto, mpRequest);
+		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
 		
 		int size = lists.size();
 		
