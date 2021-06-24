@@ -78,7 +78,7 @@
 										<div class="form-group">
 											<input type="text" class="form-control form-control-user"
 												id="InputEmail" name="userId" aria-describedby="emailHelp"
-												placeholder="이메일 or 아이디">
+												placeholder="아이디">
 										</div>
 										
 										<div class="form-group">
@@ -93,7 +93,7 @@
 											</div>
 										</div>
 										
-										<input type="button" value="로그인" class="btn btn-primary btn-user btn-block" \
+										<input type="button" value="로그인" class="btn btn-primary btn-user btn-block" 
 											onclick="sendIt();"/>
 										<hr>
 										

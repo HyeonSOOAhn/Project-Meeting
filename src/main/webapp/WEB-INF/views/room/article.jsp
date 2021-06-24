@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -62,12 +63,12 @@
 
                 <div class="card o-hidden border-0 shadow-lg my-5" >
                 	
-                    <div class="card-body p-0" align="left" style="background-size: 920px 900px;background-image: url('${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }');"">
+                	<!-- url('${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }'); -->
+                    <div class="card-body p-0" align="left" style="background-size: 920px 900px;background-image: url('<spring:url value="/upload/${dto.storedFileName }"/>');">
                     	
                     	<br/><br/><br/><br/><br/>
                     	<br/><br/><br/><br/><br/>
                     	<br/><br/><br/><br/><br/>
-                    	<br/>
                     	
                                 <div class="p-5">
                                     <div>
@@ -84,16 +85,20 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                        <p>창설일 : ${dto.created }&nbsp;&nbsp;참가자 : ${dto.totalP } / ${dto.currentP } 명</p><br/>
+                                        <p>창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 : ${dto.currentP } / ${dto.totalP } 명</p><br/>
                                     </div>
                                     
                                     <div class="form-group">
-                                    	<c:if test="${sessionScope.userInfo.userId != dto.manager && dto.member}">
+                                        <p>방장 : ${dto.manager }</p><br/>
+                                    </div>
+                                    
+                                    <div class="form-group"><!-- 마이룸 테이블의 member 가져오기 : dto.manager || dto.member -->
+                                    	<c:if test="${sessionScope.userInfo.userId != dto.manager}">
 		                                    <a href="#" class="btn btn-primary btn-user btn-block">
 		                                        방 참여 신청하기
 		                                    </a>
-	                                    </c:if>
-	                                    <c:if test="${sessionScope.userInfo.userId == dto.manager || dto.member}">
+	                                    </c:if><!-- 마이룸 테이블의 member 가져오기 : dto.manager && dto.member -->
+	                                    <c:if test="${sessionScope.userInfo.userId == dto.manager}">
 		                                    <a href="#" class="btn btn-primary btn-user btn-block">
 		                                        방 참가하기
 		                                    </a>

@@ -14,7 +14,6 @@ public class RoomDTO {
 	private int currentP;
 	
 	private String manager;
-	private String member;
 	
 	//파일 업로드
 	private String originalFileName;
@@ -80,12 +79,6 @@ public class RoomDTO {
 	}
 	public void setManager(String manager) {
 		this.manager = manager;
-	}
-	public String getMember() {
-		return member;
-	}
-	public void setMember(String member) {
-		this.member = member;
 	}
 	public String getOriginalFileName() {
 		return originalFileName;
