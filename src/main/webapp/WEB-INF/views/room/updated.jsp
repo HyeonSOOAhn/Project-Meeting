@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -183,4 +184,5 @@ String cp = request.getContextPath();
 	<script src="js/sb-admin-2.min.js"></script>
 
 </body>
+
 </html>

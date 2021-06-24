@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -121,8 +122,7 @@ div.right {
 							<h6 class="m-0 font-weight-bold text-primary"
 								style="display: inline;">전체 방</h6>
 
-							<br />
-							<br />
+							<br /> <br />
 
 							<div>
 								<form action="" name="searchForm" method="post">

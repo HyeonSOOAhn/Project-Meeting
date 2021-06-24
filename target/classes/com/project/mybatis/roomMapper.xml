@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper
@@ -170,4 +171,163 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.roomMapper">
+	
+	<!-- 전체 방 -->
+	<!-- 
+	<insert id="insertData" parameterType="com.project.dto.RoomDTO"
+	useGeneratedKeys="true" keyProperty="roomNum">
+		<selectKey keyProperty="roomNum" resultType="int" order="BEFORE">
+			select roomNum_SEQ.NEXTVAL from dual
+		</selectKey>
+		insert into wholeRoom(roomNum,subject,title,keyword,introduce,created,
+		totalP,currentP,manager)
+		values (#{roomNum},#{subject},#{title},#{keyword},#{introduce},sysdate,
+		1,1,#{manager})
+	</insert>
+	
+	<insert id="insertFile" parameterType="hashMap">
+		insert into roomFile (fileNum,roomNum,originalFileName,storedFileName,fileSize)
+		values (fileNum_SEQ.NEXTVAL,#{roomNum},#{originalFileName},#{storedFileName},#{fileSize})
+	</insert>
+	
+	fileNum,originalFileName, ,ROUND(fileSize/1024,1) AS fileSize
+	<select id="selectFileList" resultType="hashMap" parameterType="int">
+		select storedFileName from roomFile where roomNum = #{roomNum} and DEL_GB = 'N'
+	</select>
+	 -->
+	<insert id="insertData" parameterType="hashMap">
+		insert into wholeRoom (roomNum,subject,title,keyword,introduce,created,
+		totalP,currentP,manager,originalFileName,storedFileName)
+		values (roomNum_SEQ.NEXTVAL,#{subject},#{title},#{keyword},#{introduce},sysdate,
+		#{totalP},1,#{manager},#{originalFileName},#{storedFileName})
+	</insert>
+	
+	<select id="getDataCount" resultType="int" parameterType="hashMap">
+		select nvl(count(*),0) from wholeRoom
+		where ${searchKey} like '%' || #{searchValue} || '%'
+	</select>
+	
+	<select id="getLists" resultType="com.project.dto.RoomDTO" parameterType="map">
+		select * from (
+		select rownum rnum, data.* from (
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%'
+		order by roomNum desc) data)
+		<![CDATA[
+		where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
+	
+	<select id="getReadData" resultType="com.project.dto.RoomDTO" parameterType="int">
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where roomNum = #{roomNum}
+	</select>
+	
+	<select id="usersReadData" resultType="com.project.dto.RoomDTO" parameterType="int">
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where manager = #{manager}
+	</select>
+	
+	<update id="updateData" parameterType="hashMap">
+		update wholeRoom set title = #{title},keyword = #{keyword},
+		introduce = #{introduce},originalFileName = #{originalFileName},
+		storedFileName = #{storedFileName} where roomNum = #{roomNum}
+	</update>
+	
+	<delete id="deleteData" parameterType="int">
+		delete wholeRoom where roomNum = #{roomNum}
+	</delete>
+	
+	
+	
+	<!-- 여행 방 조회 -->
+	<select id="travelDataCount" resultType="int" parameterType="hashMap">
+		select nvl(count(*),0) from wholeRoom
+		where ${searchKey} like '%' || #{searchValue} || '%' and subject = '여행'
+	</select>
+	
+	<select id="travelGetLists" resultType="com.project.dto.RoomDTO" parameterType="map">
+		select * from (
+		select rownum rnum, data.* from (
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%' and subject = '여행'
+		order by roomNum desc) data)
+		<![CDATA[
+		where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
+	
+	
+	
+	<!-- 맛집 방 조회 -->
+	<select id="foodDataCount" resultType="int" parameterType="hashMap">
+		select nvl(count(*),0) from wholeRoom
+		where ${searchKey} like '%' || #{searchValue} || '%' and subject = '맛집'
+	</select>
+	
+	<select id="foodGetLists" resultType="com.project.dto.RoomDTO" parameterType="map">
+		select * from (
+		select rownum rnum, data.* from (
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%' and subject = '맛집'
+		order by roomNum desc) data)
+		<![CDATA[
+		where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
+	
+	
+	
+	<!-- 운동 방 조회 -->
+	<select id="sportsDataCount" resultType="int" parameterType="hashMap">
+		select nvl(count(*),0) from wholeRoom
+		where ${searchKey} like '%' || #{searchValue} || '%' and subject = '운동'
+	</select>
+	
+	<select id="sportsGetLists" resultType="com.project.dto.RoomDTO" parameterType="map">
+		select * from (
+		select rownum rnum, data.* from (
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%' and subject = '운동'
+		order by roomNum desc) data)
+		<![CDATA[
+		where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
+	
+	
+	
+	<!-- 공부 방 조회 -->
+	<select id="studyDataCount" resultType="int" parameterType="hashMap">
+		select nvl(count(*),0) from wholeRoom
+		where ${searchKey} like '%' || #{searchValue} || '%' and subject = '공부'
+	</select>
+	
+	<select id="studyGetLists" resultType="com.project.dto.RoomDTO" parameterType="map">
+		select * from (
+		select rownum rnum, data.* from (
+		select roomNum,subject,title,keyword,introduce,to_char(created,'YYYY-MM-DD') created,
+		totalP,currentP,manager,originalFileName,storedFileName
+		from wholeRoom where ${searchKey} like '%' || #{searchValue} || '%' and subject = '공부'
+		order by roomNum desc) data)
+		<![CDATA[
+		where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
+	
+>>>>>>> branch 'develop' of https://github.com/DYKIM9866/Project-Meeting.git
 </mapper>

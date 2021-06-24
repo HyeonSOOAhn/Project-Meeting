@@ -1,9 +1,10 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
+String cp = request.getContextPath();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -67,19 +68,27 @@ p {
 					<div class="card-body p-0" align="left"
 						style="background-size: 920px 900px;background-image: url('<spring:url value="/upload/${dto.storedFileName }"/>');">
 
-						<br /><br /><br /><br /><br />
-						<br /><br /><br /><br /><br />
-						<br /><br /><br /><br /><br />
-						
+						<br />
+						<br />
+						<br />
+						<br />
+						<br /> <br />
+						<br />
+						<br />
+						<br />
+						<br /> <br />
+						<br />
+						<br />
+						<br />
+						<br />
+
 
 						<div class="p-5">
 							<div>
 								<h2>${dto.subject}</h2>
-								<br />
-								<br />
+								<br /> <br />
 								<h1>${dto.title }</h1>
-								<br />
-								<br />
+								<br /> <br />
 							</div>
 
 							<div class="form-group">
