@@ -53,18 +53,15 @@
 	            </div>
 	            
 	            <li class="nav-item">
-	            	<div class="nav-link collapsed" style="border:1px solid red;">
-	            		<i class="fas fa-fw fa-wrench"></i>
-	            		<span>게시물 보기</span>
-	            	</div>
 	            	<div class="nav-link collapsed" data-toggle="collapse" href="#" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
 	            		<i class="fas fa-fw fa-wrench"></i>
-	            		<span onclick="javascript:location.href='<%=cp%>/room.action';">게시물 보기</span>
+	            		<span>게시물 보기</span>
 	            	</div>
 	                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
 	                	data-parent="#accordionSidebar">
 	                    <div class="bg-white py-2 collapse-inner rounded">
 	                        <h6 class="collapse-header" id="test">종류:</h6>
+	                        <a class="collapse-item" href="<%=cp%>/rroom.action">전체보기</a>
 	                        <a class="collapse-item" href="<%=cp%>/rnotice.action">공지</a>
 	                        <a class="collapse-item" href="<%=cp%>/rschedule.action">일정</a>
 	                        <a class="collapse-item" href="<%=cp%>/rvote.action">투표</a>
@@ -130,7 +127,15 @@
 								<input type="radio" name="sortBoard" value="vote"/>투표
 							</div>
 							
-							<div id="loadHtml"></div>
+							<form action="<%=cp%>/rcreated_ok.action" method="post">
+								<div id="loadHtml"></div>
+								
+								<div id="footer">
+									<%-- <input type="hidden" value="${roomNum}" name="roomNum"/> --%>
+									<input type="submit" value=" 등록 " class="btn2"/>
+									<input type="button" value=" 취소 " class="btn2" onclick="location.href='<%=cp%>/room.action';"/>
+								</div>
+							</form>
 						</div>
 	                </div>
 	            </div>

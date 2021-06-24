@@ -66,11 +66,11 @@ function getDate(year, month, day, oY, oM, oD) {
 		var day_link = "getDate(" + year + "," + month + "," + i + "," + oY + "," + oM + "," + oD + ");";
 		
 		if(i == oD && year == oY && month == oM) {
-			cal_content += "<dd id='today' style='background-color:#FFFF8F;' onclick='" + day_link + "'><div>" + i + "</div></dd>";
+			cal_content += "<dd id='today' style='font-size:12pt; background-color:#FFFF8F;' onclick='" + day_link + "'><div>" + i + "</div></dd>";
 		} else if(i == day) {
-			cal_content += "<dd id='day_select' style='background-color:#FFE08C;' onclick='" + day_link + "'><div>" + i + "</div></dd>";
+			cal_content += "<dd id='day_select' style='font-size:12pt; background-color:#FFE08C;' onclick='" + day_link + "'><div>" + i + "</div></dd>";
 		} else {
-			cal_content += "<dd id='day_not_select' onclick='" + day_link + "'><div>" + i + "</div></dd>";
+			cal_content += "<dd id='day_not_select' style='font-size:12pt;' onclick='" + day_link + "'><div>" + i + "</div></dd>";
 		}
 		
 		cal_count++;

@@ -30,70 +30,111 @@
 	</head>
 	<body>
 		<div id="frame">
-			<form action="<%=cp%>/created_ok.action" name="myForm" method="post">
-				<div id="title_container">
-					<div id="title">
-						<dl>
-							<dt>제목</dt>
-							<dd><input type="text" name="boardTitle" value="" size="65" maxlength="100" class="boxTF"/></dd>
-						</dl>
-					</div>
+			<div id="title_container">
+				<div id="title">
+					<dl>
+						<dt>제목</dt>
+						<dd><input type="text" name="boardTitle" value="" size="65" maxlength="100" class="boxTF"/></dd>
+					</dl>
 				</div>
-				
-				<div style="height:30px;"></div>
-				
-				<div id="container">
-					<div id="bottomLine">
-						<dl>
-							<dt>내용1</dt>
-							<dd><input type="text" name="member1" value="" size="65" maxlength="100" class="boxTF"/></dd>
-						</dl>
-					</div>
-					<div id="bottomLine">
-						<dl>
-							<dt>내용2</dt>
-							<dd><input type="text" name="member2" value="" size="65" maxlength="100" class="boxTF"/></dd>
-						</dl>
-					</div>
+			</div>
+			
+			<div style="height:30px;"></div>
+			
+			<div id="container">
+				<div id="bottomLine">
+					<dl>
+						<dt>내용1</dt>
+						<dd><input type="text" name="contents1" value="" size="65" maxlength="100" class="boxTF" onchange="addVote();"/></dd>
+					</dl>
 				</div>
-				
-				<div id="memberManager">
-					<input type="button" value=" 내용추가 " class="btn2" onclick="addMember();"/>
-					<input type="button" value=" 내용제거 " class="btn2" onclick="removeMember();"/>
+				<div id="bottomLine">
+					<dl>
+						<dt>내용2</dt>
+						<dd><input type="text" name="contents2" value="" size="65" maxlength="100" class="boxTF" onchange="addVote();"/></dd>
+					</dl>
 				</div>
-				
-				<div id="footer">
-					<input type="hidden" name="mode1" value="vote"/>
-					<input type="submit" value=" 등록 " class="btn2"/>
-					<input type="button" value=" 취소 " class="btn2" onclick="location.href='<%=cp%>/room.action';"/>
-				</div>
-			</form>
+			</div>
+			
+			<div id="contentsManager">
+				<input type="button" value=" 내용추가 " class="btn2" onclick="addContents();"/>
+				<input type="button" value=" 내용제거 " class="btn2" onclick="removeContents();"/>
+			</div>
+			
+			<input type="hidden" name="mode1" value="vote"/>
+			<!-- <input type="hidden" name="boardContent" value=""/> -->
+			<input type="text" name="boardContent" value="asd"/>
 		</div>
 		
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript">
 		
-			function addMember() {
+			function addContents() {
 				
-				var arrayMember = document.getElementById("container").children;
-				var countMember = arrayMember.length + 1;
-				var memberName = "member" + countMember;
+				var arrayContents = document.getElementById("container").children;
+				var countContents = arrayContents.length + 1;
+				var contentsName = "contents" + countContents;
 				
-				$("#container").append( "<div id='bottomLine'><dl><dt>내용" + countMember + "</dt><dd><input type='text' name=\"" + memberName + "\" value='' size='65' maxlength='100' class='boxTF'/></dd></dl></div>");
+				$("#container").append( "<div id='bottomLine'><dl><dt>내용" + countContents + "</dt><dd><input type='text' name=\"" + contentsName + "\" value='' size='65' maxlength='100' class='boxTF' onchange='addVote();'/></dd></dl></div>");
 			}
 			
-			function removeMember() {
+			function removeContents() {
 				
 				var container = document.getElementById("container");
-				var arrayMember = container.children;
+				var arrayContents = container.children;
 				
-				if(arrayMember.length <= 2) {
+				if(arrayContents.length <= 2) {
 					
 					alert("투표에는 최소 2개의 선택지가 필요합니다.")
 					return;
 				}
 				
 				container.removeChild(container.lastElementChild);
+			}
+		    
+			function addVote() {
+				
+				var arrayContents = document.getElementById("container").children;
+				var str = "";
+				
+				for(var i=1; i<=arrayContents.length; i++) {
+					
+					if($("input[name=contents" + i + "]").val() != null && $("input[name=contents" + i + "]").val() != "") {
+						
+						str += $("input[name=contents" + i + "]").val() + "&sep&";
+					}
+				}
+				
+				var newStr = check(str);
+				
+				$("input[name=boardContent]").get()[0].value = newStr;
+			}
+			
+			function check(str) {
+				
+				var strTrim = str.trim();
+				var strArray = strTrim.split("&sep&");
+				
+				for(var i=0; i<strArray; i++) {
+					
+					if(strArray[i] == null || strArray[i] == "") {
+						
+						strArray.splice(i, 1);
+						
+						i--;
+					}
+				}
+				
+				var newStr = "";
+				
+				for(var i=0; i<strArray; i++) {
+					
+					newStr += strArray[i];
+					
+					if(i != strArray - 1) newStr += "&sep&";
+				}
+				
+				return newStr;
 			}
 		
 		</script>

@@ -71,21 +71,18 @@
 	            </div>
 	            
 	            <li class="nav-item">
-	            	<div class="nav-link collapsed" style="border:1px solid red;">
-	            		<i class="fas fa-fw fa-wrench"></i>
-	            		<span>게시물 보기</span>
-	            	</div>
 	            	<div class="nav-link collapsed" data-toggle="collapse" href="#" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
 	            		<i class="fas fa-fw fa-wrench"></i>
-	            		<span onclick="javascript:location.href='<%=cp%>/room.action';">게시물 보기</span>
+	            		<span>게시물 보기</span>
 	            	</div>
 	                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
 	                	data-parent="#accordionSidebar">
 	                    <div class="bg-white py-2 collapse-inner rounded">
 	                        <h6 class="collapse-header" id="test">종류:</h6>
-	                        <a class="collapse-item" href="<%=cp%>/notice.action">공지</a>
-	                        <a class="collapse-item" href="<%=cp%>/schedule.action">일정</a>
-	                        <a class="collapse-item" href="<%=cp%>/vote.action">투표</a>
+	                        <a class="collapse-item" href="<%=cp%>/rroom.action">전체보기</a>
+	                        <a class="collapse-item" href="<%=cp%>/rroom.action?mode1=notice">공지</a>
+	                        <a class="collapse-item" href="<%=cp%>/rschedule.action">일정</a>
+	                        <a class="collapse-item" href="<%=cp%>/rvote.action">투표</a>
 	                    </div>
 	                </div>
 	            </li>
@@ -143,7 +140,11 @@
 	
 	                    <!-- Page Heading -->
 	                    <h1 class="h3 mb-2 text-gray-800">방이름</h1>
-	                    <p class="mb-4">방 소개글</p>
+	                    
+	                    <p class="mb-4">
+	                    	<span>방 소개글</span>
+	                    	<span style="float:right;"><input type="button" value=" 게시물 작성 " onclick="location.href='<%=cp%>/rcreated.action?roomNum=${roomNum}';"/></span>
+                    	</p>
 	
 	                    <!-- DataTales Example -->
 	                    <div class="card shadow mb-4">
@@ -160,28 +161,28 @@
 	                                            <th>제목</th>
 	                                            <th>내용</th>
 	                                            <th>등록날짜</th>
-	                                            <th>비고1</th>
-	                                            <th>비고2</th>
+	                                            <th>타입</th>
 	                                        </tr>
 	                                    </thead>
 	                                    
 	                                    <!-- 데이터 불러와서 for문으로 입력하기 -->
 	                                    <c:if test="${!empty lists}">
-	                                    	<tbody>
-		                                        <tr>
-		                                            <td>Tiger Nixon</td>
-		                                            <td>System Architect</td>
-		                                            <td>Edinburgh</td>
-		                                            <td>61</td>
-		                                            <td>2011/04/25</td>
-		                                            <td>$320,800</td>
-		                                        </tr>
-		                                    </tbody>
+	                                    	<c:forEach var="dto" items="${lists}">
+	                                    		<tbody>
+			                                        <tr>
+			                                            <td>${dto.userId}</td>
+			                                            <td>${dto.boardTitle}</td>
+			                                            <td>${dto.boardContent}</td>
+			                                            <td>${dto.created}</td>
+			                                            <td>${dto.mode1}</td>
+			                                        </tr>
+			                                    </tbody>
+	                                    	</c:forEach>
 	                                    </c:if>
 	                                    <c:if test="${empty lists}">
 	                                    	<tbody>
 	                                    		<tr>
-	                                    			<td colspan="6" align="center">데이터가 없습니다.</td>
+	                                    			<td colspan="5" align="center">데이터가 없습니다.</td>
 	                                    		</tr>
 	                                    	</tbody>
 	                                    </c:if>

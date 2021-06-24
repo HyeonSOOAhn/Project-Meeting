@@ -20,31 +20,25 @@
 		<div>
 			<div id="cal_frame"></div>
 			
-			<form action="<%=cp%>/created_ok.action" method="post">
-				<div id="select_cal">
-					<dl>
-						<dd class="select_category">선택 날짜 : </dd>
-						<dd id="select_day"><input id="day" type="text" readonly="readonly" name="selectDay"/></dd>
-					</dl>
-					
-					<dl>
-						<dd class="select_category">내용 : </dd>
-						<dd><textarea rows="1" cols="30" name="boardContent"></textarea></dd>
-					</dl>
-					
-					<dl>
-						<dd class="select_category adst">참석여부 요청 : </dd>
-						<dd><img id="adst" src="img/checkbox_outline.png"></dd>
-						<dd><input id="hidden_adst" type="hidden" name="adst" value="N"/></dd>
-					</dl>
-				</div>
+			<div id="select_cal">
+				<dl>
+					<dd class="select_category">선택 날짜 : </dd>
+					<dd id="select_day"><input id="day" type="text" readonly="readonly" name="selectDay"/></dd>
+				</dl>
 				
-				<div id="act_schedule">
-					<input type="hidden" name="mode1" value="schedule"/>
-					<input type="submit" value=" 등록 "/>
-					<input type="button" value=" 취소 " onclick="location.href='<%=cp%>/room.action';"/>
-				</div>
-			</form>
+				<dl>
+					<dd class="select_category">내용 : </dd>
+					<dd><textarea rows="1" cols="30" name="boardContent"></textarea></dd>
+				</dl>
+				
+				<dl>
+					<dd class="select_category adst">참석여부 요청 : </dd>
+					<dd><img id="adst" src="img/checkbox_outline.png"></dd>
+					<dd><input id="hidden_adst" type="hidden" name="adst" value="N"/></dd>
+				</dl>
+			</div>
+			
+			<input type="hidden" name="mode1" value="schedule"/>
 		</div>
 		
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>

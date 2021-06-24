@@ -33,6 +33,17 @@ public class RoomInfoDAO {
 		return lists;
 	}
 	
+	public List<RoomInfoDTO> getSoltBoard(int roomNum, String mode1) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("roomNum", roomNum);
+		map.put("mode1", mode1);
+		
+		List<RoomInfoDTO> lists = sessionTemplate.selectList("project.RoomInfoMapper.getSoltBoard", map);
+		
+		return lists;
+	}
+	
 	public RoomDTO getRoomData(int roomNum) {
 		
 		RoomDTO dto = sessionTemplate.selectOne("project.RoomInfoMapper.getRoomData", roomNum);

@@ -30,28 +30,23 @@
 	</head>
 	<body>
 		<div id="frame">
-			<form action="<%=cp%>/created_ok.action" method="post">
-				<div id="container">
-					<div id="bottomLine">
-						<dl>
-							<dt>제 목</dt>
-							<dd><input type="text" name="boardTitle" size="65" maxlength="100" class="boxTF"/></dd>
-						</dl>
-					</div>
-					<div id="contents">
-						<dl>
-							<dt>내 용</dt>
-							<dd><textarea rows="12" cols="63" name="boardContent" class="boxTA"></textarea></dd>
-						</dl>
-					</div>
+			<div id="container">
+				<div id="bottomLine">
+					<dl>
+						<dt>제 목</dt>
+						<dd><input type="text" name="boardTitle" size="65" maxlength="100" class="boxTF"/></dd>
+					</dl>
 				</div>
 				
-				<div id="footer">
-					<input type="hidden" name="mode1" value="notice"/>
-					<input type="submit" value=" 등록 " class="btn2"/>
-					<input type="button" value=" 취소 " class="btn2" onclick="location.href='<%=cp%>/room.action';"/>
+				<div id="contents">
+					<dl>
+						<dt>내 용</dt>
+						<dd><textarea rows="12" cols="63" name="boardContent" class="boxTA"></textarea></dd>
+					</dl>
 				</div>
-			</form>
+			</div>
+			
+			<input type="hidden" name="mode1" value="notice"/>
 		</div>
 	</body>
 </html>
