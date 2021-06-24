@@ -67,19 +67,10 @@ p {
 					<div class="card-body p-0" align="left"
 						style="background-size: 920px 900px;background-image: url('<spring:url value="/upload/${dto.storedFileName }"/>');">
 
-						<br />
-						<br />
-						<br />
-						<br />
-						<br /> <br />
-						<br />
-						<br />
-						<br />
-						<br /> <br />
-						<br />
-						<br />
-						<br />
-						<br />
+						<br /><br /><br /><br /><br />
+						<br /><br /><br /><br /><br />
+						<br /><br /><br /><br /><br />
+						
 
 						<div class="p-5">
 							<div>

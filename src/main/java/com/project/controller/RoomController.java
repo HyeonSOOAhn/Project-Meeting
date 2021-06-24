@@ -1098,14 +1098,14 @@ public class RoomController {
 	}
 
 	@RequestMapping(value = "/modalAccept.action", method = { RequestMethod.GET })
-
-	public String modalAccept(HttpServletRequest request, @RequestParam(value = "msgNum") String msgNum)
+	public String modalReject(HttpServletRequest request, @RequestParam(value = "msgNum") String msgNum)
 			throws Exception {
 
-		// 메시지 상태 완료로 바꾸기
-		dao.changeRequestStatus(Integer.parseInt(msgNum));
+		// 메시지 상태 수락으로 바꾸기
+		dao.changeRequestAccept(Integer.parseInt(msgNum));
 
 		return "redirect:list.action";
 	}
+	
 
 }

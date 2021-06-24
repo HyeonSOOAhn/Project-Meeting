@@ -231,12 +231,12 @@ public class RoomDAO {
 		return lists;
 	}
 
-	public void changeRequestStatus(int msgNum) {
+	public void changeRequestAccept(int msgNum) {
 
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("msgNum", msgNum);
 
-		sessionTemplate.update("com.roomMapper.changeRequestStatus", map);
+		sessionTemplate.update("com.roomMapper.changeRequestAccept", map);
 
 	}
 
