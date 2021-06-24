@@ -64,59 +64,40 @@
 									<div class="col-sm-8">
 										<input type="text" name="name"
 											class="form-control form-control-user btn-active"
-											id="userName" placeholder="이름">
+											id="userName" placeholder="이름" value="${dto.name }">
 									</div>
 
 									<div class="col-sm-4 "
 										style="vertical-align: middle; text-align: left;">
+										
+										<c:if test="${dto.gender == 1}">
 										<input type="radio" id="man" value=1 name="gender"
-											style="display: none;"> <label for="man"
-											class="genderLabel"><span>남</span></label> 
+											style="display: none;" checked="checked"> <label for="man"
+											class="genderLabel"><span>남</span></label>
+										</c:if>
+										
+										<c:if test="${dto.gender == 2}">
 										<input
 											type="radio" id="woman" value=2 name="gender"
-											style="display: none;"> <label for="woman"
+											style="display: none;" checked="checked"> <label for="woman"
 											class="genderLabel"><span>여</span></label>
+										</c:if>
+											
 									</div>
 
-								</div>
-
-								<c:choose>
-									<c:when test="${!empty requestScope.existId}">
-										<div class="form-group">
-											<span class="errorMessage">${existId}</span>
-										</div>
-									</c:when>
-								</c:choose>
-
-								<div class="form-group">
-									<span class="errorMessage idCon hide"></span>
 								</div>
 
 								<div class="form-group row">
 									<div class="col-sm-8">
-										<input type="text" name="userId"
-											class="form-control form-control-user btn-active" id="userId"
-											placeholder="아이디">
+										${dto.userId }
 									</div>
-								</div>
-
-								<c:choose>
-									<c:when test="${!empty requestScope.existEmail}">
-										<div class="form-group">
-											<span class="errorMessage">${existEmail}</span>
-										</div>
-									</c:when>
-								</c:choose>
-
-								<div class="form-group">
-									<span class="errorMessage emailCon hide"></span>
 								</div>
 								
 								<!-- type="email" -->
 								<div class="form-group">
 									<input type="text" name="email"
 										class="form-control form-control-user btn-active"
-										id="InputEmail" placeholder="이메일">
+										id="InputEmail" placeholder="이메일" value="${dto.email }">
 								</div>
 
 
@@ -144,7 +125,7 @@
 								<div class="form-group">
 									<input type="text" name="tel"
 										class="form-control form-control-user btn-active" id="tel"
-										placeholder="전화번호">
+										placeholder="전화번호" value="${dto.tel }">
 								</div>
 								
 								<div class="form-group">
@@ -152,22 +133,22 @@
                                     <button type="button" class="btn btn-primary btn-user btn-block" id="btn"
                                     style="font-size: 0.8rem; border-radius: 10rem; padding: 0.75rem 1rem;">Profile Image</button>
                                 </div>
+                                
+                                <input type="hidden" name="userId" value="${dto.userId }">
 								
-								<input type="button" value="Register Account"
-									disabled="disabled"
+								<input type="button" value="수 정 하 기"
 									class="btn btn-primary registerBtn btn-user btn-block"
 									onclick="sendIt();" />
+								
+								<input type="button" value="수 정 취 소"
+									class="btn btn-primary registerBtn btn-user btn-block"
+									onclick="javascript:location.href='<%=cp%>/myPage.action';" />
+									
 								<hr>
 
 							</form>
-							<hr>
-							<div class="text-center">
-								<a class="small" href="forgot-password.html">Forgot
-									Password?</a>
-							</div>
-							<div class="text-center">
-								<a class="small" href="login.html">Already have an account?
-									Login!</a>
+							<div align="center">
+								<p>비밀번호를 입력하셔야 회원정보 수정이 가능합니다!!</p>
 							</div>
 						</div>
 					</div>
@@ -192,7 +173,7 @@
 	<script type="text/javascript">
 	
 		function sendIt() {
-			f.action = "<%=cp%>/register_ok.action";
+			f.action = "<%=cp%>/userUpdated_ok.action";
 			f.submit();
 		}
 		

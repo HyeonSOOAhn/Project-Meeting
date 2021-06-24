@@ -5,11 +5,17 @@ public class UserDTO {
 	private int userNum;
 	private String userId;
 	private String userPwd;
-	private String userName;
+	private String name;
 	private int gender;
 	private String email;
 	private String tel;
 	private int right;
+	
+	//파일 업로드
+	private String uoriginalFileName;
+	private String ustoredFileName;
+	
+	
 	public int getUserNum() {
 		return userNum;
 	}
@@ -28,11 +34,11 @@ public class UserDTO {
 	public void setUserPwd(String userPwd) {
 		this.userPwd = userPwd;
 	}
-	public String getUserName() {
-		return userName;
+	public String getName() {
+		return name;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public int getGender() {
 		return gender;
@@ -58,7 +64,17 @@ public class UserDTO {
 	public void setRight(int right) {
 		this.right = right;
 	}
+	public String getUoriginalFileName() {
+		return uoriginalFileName;
+	}
+	public void setUoriginalFileName(String uoriginalFileName) {
+		this.uoriginalFileName = uoriginalFileName;
+	}
+	public String getUstoredFileName() {
+		return ustoredFileName;
+	}
+	public void setUstoredFileName(String ustoredFileName) {
+		this.ustoredFileName = ustoredFileName;
+	}
 	
-	
-
 }

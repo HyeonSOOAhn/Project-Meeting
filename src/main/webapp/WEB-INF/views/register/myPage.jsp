@@ -15,57 +15,35 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>운동 방 목록</title>
+    <title>마이 페이지</title>
 
-    <!-- Custom fonts for this template -->
+    <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template -->
+    <!-- Custom styles for this template-->
     <link href="css/room.css" rel="stylesheet">
-
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     
     <script type="text/javascript">
-
-		function sendIt() {
-			
-			var f = document.searchForm;
-			
-			f.action = "<%=cp%>/sportsList.action";
-			f.submit();
-			
-		}
-
-	</script>
+    
+	    function removeCheck() {
 	
-	<style>
+	    	 if (confirm("정말 탈퇴하시겠습니까?") == true){//확인
 	
-	    div.ok {
-	    	
-	        width: 100%;
-	        height: 200px;
-
+	    	     document.remove.action = "<%=cp%>/userDeleted.action";
+	    	     document.remove.submit();
+	
+	    	 }else{//취소
+	
+	    	     return false;
+	
+	    	 }
+	
 	    }
-	    
-	    div.left {
-	        width: 70%;
-	        float: left;
-	        box-sizing: border-box;
-
-	    }
-	    
-	    div.right {
-	        width: 30%;
-	        float: right;
-	        box-sizing: border-box;
-
-	    }
-	    
-    </style>
+    
+    </script>
 
 </head>
 
@@ -82,6 +60,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
+                <!-- <sup>너와 나의 은밀한 만남</sup> -->
                 <div class="sidebar-brand-text mx-3">방 Ting</div>
             </a>
 
@@ -131,7 +110,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- 사이드바 공간1 -->
+           	<!-- 사이드바 공간1 -->
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -151,11 +130,9 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <form class="form-inline">
-                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                            <i class="fa fa-bars"></i>
-                        </button>
-                    </form>
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
 
                     <!-- Topbar Search -->
                     <form
@@ -356,72 +333,191 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                    <!-- Page Heading -->
+                    
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    	<div>
-                    		<h1 class="h3 mb-2 text-gray-800"><b>운동 방 목록</b></h1>
-                    		<p class="mb-4">여러가지 운동을 다양한 사람들과 함께 즐겨봐요!</p>
-                    	</div>
-                    	<c:if test="${!empty sessionScope.userInfo.userId }">
-	                    	<a href="<%=cp%>/sportsCreated.action" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> 운동 방 만들기</a>
-                        </c:if>
-                        <c:if test="${empty sessionScope.userInfo.userId }">
-	                        <p style="font-style: oblique;font-weight: bold;font-size: 15px;color: #4D71DB;">로그인을 하셔야 운동 방 만들기가 가능합니다.</p>
-                        </c:if>
+                        <h1 class="h3 mb-0 text-gray-800"><b>마이 페이지</b></h1>
                     </div>
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                    
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary" style="display: inline;">운동 방</h6>
-	               
-                            <br/><br/>
-                            
-                            <div>
-								<form action="" name="searchForm" method="post">
-									<select name="searchKey" class="custom-select custom-select-sm form-control form-control-sm" style="width: 10%;display: inline;">
-										<option value="title">방 이름</option>
-										<option value="keyword">키워드</option>
-									</select>
-									<input type="text" name="searchValue" class="form-control form-control-sm" style="width: 20%;display: inline;"/>
-									<input type="button" value=" 검 색 " class="btn btn-primary btn-user btn-block" onclick="sendIt()" style="width: 10%;display: inline;"/>
-								</form>
-								<br/>
-							</div>
-                            
-                            <c:forEach var="dto" items="${lists }">
-                            <div class="card-header py-3 card shadow mb-4">
-                            	<div class="ok">
-									<div class="left">
-										<u>${dto.subject }</u><br/>
-										<h2><a href="${articleUrl }&roomNum=${dto.roomNum}">${dto.title }</a></h2><br/>
-										${dto.keyword }<br/>
-										창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 : ${dto.currentP } / ${dto.totalP } 명
-									</div>
-									<div class="right">
-										<img src='<spring:url value="/upload/${dto.storedFileName }"/>' width="200" height="200"/>
-									</div>
-								</div>
+                    <div class="row">
+
+                        <div class="col-lg-6">
+
+                            <!-- Basic Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">내 정보</h6>
+                                </div>
+                                <div class="card-body">
+                                
+                                	<div class="card shadow mb-4" align="center" style="display: block;padding-top: 1.5em;">
+                                		<img src='<spring:url value="/image/${dto.ustoredFileName }"/>' width="300" height="300"/><br/><br/>
+                                	</div>
+                                	
+                                	<div class="card border-left-primary shadow h-100 py-2">
+                                		<div class="card-body">
+                                   			 <div class="row no-gutters align-items-center">
+                                       			 <div class="col mr-2">
+                                          			<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                		아이디
+                                                	</div>
+													<div class="h5 mb-0 font-weight-bold text-gray-800">
+															<h2>${dto.userId }</h2>
+													</div>
+                                        		</div>
+                                    		</div>
+                                		</div>
+                            		</div>
+                            		
+                            		<br/>
+                            		
+                            		<div class="card border-left-primary shadow h-100 py-2">
+                                		<div class="card-body">
+                                   			 <div class="row no-gutters align-items-center">
+                                       			 <div class="col mr-2">
+                                          			<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                		이름
+                                                	</div>
+													<div class="h5 mb-0 font-weight-bold text-gray-800">
+														<h2>${dto.name }</h2>
+													</div>
+                                        		</div>
+                                    		</div>
+                                		</div>
+                            		</div>
+                            		
+                            		<br/>
+                            		
+                            		<div class="card border-left-primary shadow h-100 py-2">
+                                		<div class="card-body">
+                                   			 <div class="row no-gutters align-items-center">
+                                       			 <div class="col mr-2">
+                                          			<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                		성별
+                                                	</div>
+													<div class="h5 mb-0 font-weight-bold text-gray-800">
+														<h2>
+															<c:if test="${dto.gender == 1}">
+																남
+															</c:if>
+															<c:if test="${dto.gender == 2}">
+																여
+															</c:if>
+														</h2>
+													</div>
+                                        		</div>
+                                    		</div>
+                                		</div>
+                            		</div>
+                            		
+                            		<br/>
+                            		
+                            		<div class="card border-left-primary shadow h-100 py-2">
+                                		<div class="card-body">
+                                   			 <div class="row no-gutters align-items-center">
+                                       			 <div class="col mr-2">
+                                          			<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                		Email 주소
+                                                	</div>
+													<div class="h5 mb-0 font-weight-bold text-gray-800">
+														<h2>${dto.email }</h2>
+													</div>
+                                        		</div>
+                                    		</div>
+                                		</div>
+                            		</div>
+                            		
+                            		<br/>
+                            		
+                            		<div class="card border-left-primary shadow h-100 py-2">
+                                		<div class="card-body">
+                                   			 <div class="row no-gutters align-items-center">
+                                       			 <div class="col mr-2">
+                                          			<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                		휴대전화
+                                                	</div>
+													<div class="h5 mb-0 font-weight-bold text-gray-800">
+														<h2>${dto.tel }</h2>
+													</div>
+                                        		</div>
+                                    		</div>
+                                		</div>
+                            		</div>
+                            		
+                            		<br/>
+                            		
+                            		<div>
+                            			<input type="button" class="btn btn-primary btn-user btn-block" value=" 회원정보 수정 " onclick="javascript:location.href='<%=cp%>/userUpdated.action';"/>
+                            		</div>
+                            		
+                            		<br/>
+                            		
+                            		<div>
+                            			<form action="" name="remove">
+                            				<input type="button" class="btn btn-primary btn-user btn-block" value=" 회원 탈퇴하기 " onclick="removeCheck();"/>
+                            			</form>
+                            		</div>
+                                    
+                                </div>
                             </div>
-                           </c:forEach>
+
                         </div>
-                        
-                        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate" align="center">
-                        	
-                        	<ul class="pagination">
-	                        
-								<c:if test="${dataCount!=0 }">
-									${pageIndexList }
-								</c:if>
-								<c:if test="${dataCount==0 }">
-									등록된 게시물이 없습니다.
-								</c:if>
-							
-							</ul>
-							
-						</div>
-                        
+
+                        <div class="col-lg-6">
+
+                            <!-- Collapsable Card Example -->
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Accordion -->
+                                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                    <h6 class="m-0 font-weight-bold text-primary">참여한 방 목록</h6>
+                                </a>
+                                <!-- Card Content - Collapse -->
+                                <div class="collapse show" id="collapseCardExample">
+                                    <div class="card-body">
+                                        This is a collapsable card example using Bootstrap's built in collapse
+                                        functionality. <strong>Click on the card header</strong> to see the card body
+                                        collapse and expand!
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Collapsable Card Example -->
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Accordion -->
+                                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                    <h6 class="m-0 font-weight-bold text-primary">관리하는 방 목록</h6>
+                                </a>
+                                <!-- Card Content - Collapse -->
+                                <div class="collapse show" id="collapseCardExample">
+                                    <div class="card-body">
+                                        This is a collapsable card example using Bootstrap's built in collapse
+                                        functionality. <strong>Click on the card header</strong> to see the card body
+                                        collapse and expand!
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Collapsable Card Example -->
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Accordion -->
+                                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                    <h6 class="m-0 font-weight-bold text-primary">방 신청 목록</h6>
+                                </a>
+                                <!-- Card Content - Collapse -->
+                                <div class="collapse show" id="collapseCardExample">
+                                    <div class="card-body">
+                                        This is a collapsable card example using Bootstrap's built in collapse
+                                        functionality. <strong>Click on the card header</strong> to see the card body
+                                        collapse and expand!
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </div>
@@ -480,13 +576,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 </html>
