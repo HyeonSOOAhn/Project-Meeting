@@ -44,23 +44,23 @@ public class RoomInfoDAO {
 		return lists;
 	}
 	
-	public RoomDTO getRoomData(int roomNum) {
+	public int getMaxBoardNum() {
 		
-		RoomDTO dto = sessionTemplate.selectOne("project.RoomInfoMapper.getRoomData", roomNum);
+		return sessionTemplate.selectOne("project.RoomInfoMapper.getMaxBoardNum");
+	}
+	
+	public RoomInfoDTO getBoardData(int boardNum) {
+		
+		RoomInfoDTO dto = sessionTemplate.selectOne("project.RoomInfoMapper.getBoardData", boardNum);
 		
 		return dto;
 	}
 	
-	public List<RoomInfoDTO> getSolt(Map<String, Object> map) {
+	public RoomDTO getRoomData(int roomNum) {
+
+		RoomDTO dto = sessionTemplate.selectOne("project.RoomInfoMapper.getRoomData", roomNum);
 		
-		List<RoomInfoDTO> lists = sessionTemplate.selectList("project.RoomInfoMapper.getSolt", map);
-		
-		return lists;
-	}
-	
-	public int getMaxBoardNum() {
-		
-		return sessionTemplate.selectOne("project.RoomInfoMapper.getMaxBoardNum");
+		return dto;
 	}
 	
 //	삭제

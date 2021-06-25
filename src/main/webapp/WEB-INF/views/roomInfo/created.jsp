@@ -62,7 +62,7 @@
 	                    <div class="bg-white py-2 collapse-inner rounded">
 	                        <h6 class="collapse-header" id="test">종류:</h6>
 	                        <a class="collapse-item" href="<%=cp%>/rroom.action">전체보기</a>
-	                        <a class="collapse-item" href="<%=cp%>/rnotice.action">공지</a>
+	                        <a class="collapse-item" href="<%=cp%>/rroom.action?mode1=notice">공지</a>
 	                        <a class="collapse-item" href="<%=cp%>/rschedule.action">일정</a>
 	                        <a class="collapse-item" href="<%=cp%>/rvote.action">투표</a>
 	                    </div>

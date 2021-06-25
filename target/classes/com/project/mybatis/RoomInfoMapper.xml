@@ -22,8 +22,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getSoltBoard" resultType="com.project.dto.RoomInfoDTO" parameterType="map">
-		select roomNum, boardNum, userId, boardTitle, boardContent, selectDay, adst, selectDay, to_char(created, 'YYYY-MM-DD') created, mode1 from roomBoard
+		select roomNum, boardNum, userId, boardTitle, boardContent, selectDay, adst, to_char(created, 'YYYY-MM-DD') created, mode1 from roomBoard
 			where roomNum = #{roomNum} and mode1 = #{mode1} order by created desc
+	</select>
+	
+	<select id="getBoardData" resultType="com.project.dto.RoomInfoDTO" parameterType="int">
+		select roomNum, boardNum, userId, boardTitle, boardContent, selectDay, adst, to_char(created, 'YYYY-MM-DD') created, mode1 from roomBoard
+			where boardNum = #{boardNum}
 	</select>
 	
 	<select id="getRoomData" resultType="com.project.dto.RoomInfoDTO" parameterType="int">
@@ -31,11 +36,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				totalP, currentP, manager, originalFileName, storedFileName
 			from wholeRoom
 			where roomNum = #{roomNum}
-	</select>
-	
-	<select id="getSolt" resultType="com.project.dto.RoomInfoDTO" parameterType="map">
-		select roomNum, boardNum, userId, boardName, boardTitle, boardContent, selectDay, adst, selectDay, to_char(created, 'YYYY-MM-DD') created, mode1 from roomBoard
-			where roomNum = #{roomNum} and mode1 = #{mode1} order by created desc
 	</select>
 	
 	<delete id="deleteRoomBoard" parameterType="int">

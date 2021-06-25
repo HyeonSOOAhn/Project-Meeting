@@ -77,6 +77,20 @@ public class RoomInfoController {
 		return mav;
 	}
 	
+	
+	@RequestMapping(value="/rarticle.action", method= {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView article(HttpServletRequest request) throws Exception {
+		
+//		int boardNum = Integer.parseInt(request.getParameter(""));
+//		RoomInfoDTO dto = dao.getBoardData(boardNum);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("roomInfo/article");
+//		mav.addObject("dto", dto);
+		
+		return mav;
+	}
+	
 //	게시판 등록
 	@RequestMapping(value="/rcreated.action", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView created(HttpServletRequest request) throws Exception {
@@ -121,7 +135,7 @@ public class RoomInfoController {
 		System.out.println("rcreated 호출");
 		
 		dto.setRoomNum(3);
-//		dto.setBoardNum(dao.getMaxBoardNum());
+		dto.setBoardNum(dao.getMaxBoardNum());
 		dto.setUserId("suzisuzi");
 		
 		String mode = dto.getMode1();
@@ -131,7 +145,7 @@ public class RoomInfoController {
 //			System.out.println("boardTitle : " + dto.getBoardTitle());
 //			System.out.println("boardContent : " + dto.getBoardContent());
 			System.out.println(("notice 호출"));
-//			dto.setBoardContent(dto.getBoardContent().replaceAll("\r\n", "<br/>"));
+			dto.setBoardContent(dto.getBoardContent().replaceAll("\r\n", "<br/>"));
 			
 		} else if(mode == "schedule" || mode.equals("schedule")) {
 			
