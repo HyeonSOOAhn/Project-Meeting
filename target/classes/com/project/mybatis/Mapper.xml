@@ -30,10 +30,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<select id="getUserInfo" parameterType="map" resultType="com.project.dto.UserDTO">
-
 		select userNum,userId,userPwd,name,gender,email,tel,right,uoriginalFileName,ustoredFileName
 		from users where userId = #{userId}
-
 	</select>
 	
 	<update id="updateUserData" parameterType="hashMap">

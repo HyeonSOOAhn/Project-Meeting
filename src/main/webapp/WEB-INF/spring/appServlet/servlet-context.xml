@@ -54,6 +54,14 @@
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
 	
+	<beans:bean id="teeingDAO" class="com.project.dao.TeeingDAO">
+		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
+	</beans:bean>
+	
+	<beans:bean id="teeingCommentDAO" class="com.project.dao.TeeingCommentDAO">
+		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
+	</beans:bean>
+	
 	<!-- MyBatis DB연결 -->
 	<beans:bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg ref="sessionFactory"/>
