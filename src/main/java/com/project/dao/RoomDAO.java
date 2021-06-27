@@ -243,6 +243,31 @@ private SqlSessionTemplate sessionTemplate;
 			sessionTemplate.update("com.roomMapper.changeRequestAccept", map);
 
 		}
+		public int existMsg(int roomNum,String userId) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("sender", userId);
+			map.put("roomNum", roomNum);
+			
+			return sessionTemplate.selectOne("com.roomMapper.existMsg",map);
+			
+		}
+		
+		public void addMember(String userId,int roomNum) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("userId", userId);
+			map.put("roomNum", roomNum);
+			map.put("position", "멤버");
+			
+			sessionTemplate.insert("com.roomMapper.addMember",map);
+		}
+		public void changeRequestReject(int msgNum) {
+
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("msgNum", msgNum);
+
+			sessionTemplate.update("com.roomMapper.changeRequestReject", map);
+
+		}
 
 }
 

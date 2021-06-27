@@ -2,11 +2,14 @@ package com.project.dao;
 
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.project.dto.RoomDTO;
 import com.project.dto.UserDTO;
+import com.project.dto.msgDTO;
 
 public class RegisterDAO {
 
@@ -81,6 +84,16 @@ public class RegisterDAO {
 
 		sessionTemplate.delete("com.Mapper.deleteUserData", userId);
 
+	}
+	//myPage
+	public List<RoomDTO> getManageList(String manager){
+		return sessionTemplate.selectList("com.Mapper.getManageList",manager);
+	}
+	public List<msgDTO> getRequestList(String sender){
+		return sessionTemplate.selectList("com.Mapper.getRequestList",sender);
+	}
+	public List<RoomDTO> getParticipateList(String userId){
+		return sessionTemplate.selectList("com.Mapper.getParticipateList",userId);
 	}
 
 }

@@ -45,5 +45,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteUserData" parameterType="String">
 		delete users where userId = #{userId}
 	</delete>
+	
+	<!-- myPage -->
+	<select id="getParticipateList" parameterType="String" resultType="com.project.dto.RoomDTO">
+		select A.roomNum,A.subject,A.title,A.created,A.totalP,A.currentP from wholeRoom A, roomMember B
+		where B.userId = #{userId} and B.roomNum = A.roomNum
+	</select>
+	<select id="getManageList" parameterType="String" resultType="com.project.dto.RoomDTO">
+		select roomNum,subject,title,created,totalP,currentP from wholeRoom
+		where manager = #{manager}
+	</select>
+	<select id="getRequestList" parameterType="String" resultType="com.project.dto.msgDTO">
+		select msg,created,status,introduce from requestMsg
+		where sender = #{sender}
+	</select>
 
 </mapper>

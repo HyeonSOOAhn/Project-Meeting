@@ -3,11 +3,13 @@ package com.project.dto;
 public class msgDTO {
 
 	private int msgNum;
+	private int roomNum;
 	private String sender;
 	private String recipient;
 	private String msg;
+	private String introduce;
 	private String created;
-	private int status;
+	private int status; 
 
 	public String getSender() {
 		return sender;
@@ -55,6 +57,22 @@ public class msgDTO {
 
 	public void setMsgNum(int msgNum) {
 		this.msgNum = msgNum;
+	}
+
+	public int getRoomNum() {
+		return roomNum;
+	}
+
+	public void setRoomNum(int roomNum) {
+		this.roomNum = roomNum;
+	}
+
+	public String getIntroduce() {
+		return introduce;
+	}
+
+	public void setIntroduce(String introduce) {
+		this.introduce = introduce;
 	}
 
 }

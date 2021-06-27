@@ -11,9 +11,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -1001,50 +1003,67 @@ public class RoomController {
 		return "room/study/studyArticle";
 		
 	}
-	@RequestMapping(value = "/requestMsg.action", method = RequestMethod.GET)
-	public ModelAndView roomRequest(HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/requestMsg.action", method = RequestMethod.POST)
+	public @ResponseBody String roomRequest(HttpServletRequest request, String roomNum,String introduce) throws Exception {
 
-		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		int rNum = Integer.parseInt(roomNum);
 
-		if (info == null) {
-
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("redirect:main.action");
-
-			return mav;
-
-		}
-
-		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
-
-		RoomDTO dto = dao.getReadData(roomNum);
+		RoomDTO dto = dao.getReadData(rNum);
 
 		msgDTO msg = new msgDTO();
 
+		msg.setRoomNum(rNum);
 		msg.setSender(info.getUserId());
 		msg.setRecipient(dto.getManager());
 		msg.setMsg("[" + info.getUserName() + "(" + info.getUserId() + ")" + "] 님이 [" + dto.getTitle()
 				+ "] 에 가입 요청을 보냈습니다.");
+		msg.setIntroduce(introduce);
 
 		dao.insertMsg(msg);
 
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:list.action");
-
-		return mav;
+		return "success";
 
 	}
-
-	@RequestMapping(value = "/modalAccept.action", method = { RequestMethod.GET })
-	public String modalReject(HttpServletRequest request, @RequestParam(value = "msgNum") String msgNum)
+	
+	@RequestMapping(value = "/msgConfirm.action", method = { RequestMethod.POST })
+	public @ResponseBody String msgConfirm(HttpServletRequest request, String roomNum)
 			throws Exception {
+		
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		
+		if(dao.existMsg(Integer.parseInt(roomNum), info.getUserId()) !=0 ) {
+			return "exist";
+		}
+				
+		return "noexist";
+	}
+
+	@RequestMapping(value = "/modalAccept.action", method = { RequestMethod.POST})
+	public @ResponseBody String modalAccept(HttpServletRequest request,String msgNum,String sender,String roomNum)
+			throws Exception {
+		
 
 		// 메시지 상태 수락으로 바꾸기
 		dao.changeRequestAccept(Integer.parseInt(msgNum));
+		//멤버 추가
+		dao.addMember(sender, Integer.parseInt(roomNum));
 
-		return "redirect:list.action";
+		return "success";
+	}
+	
+	@RequestMapping(value = "/modalReject.action", method = { RequestMethod.POST})
+	public @ResponseBody String modalReject(HttpServletRequest request,String msgNum,String sender,String roomNum)
+			throws Exception {
+		
+		// 메시지 상태 거절로 바꾸기
+		dao.changeRequestReject(Integer.parseInt(msgNum));
+		
+		return "success";
 	}
 	
 
