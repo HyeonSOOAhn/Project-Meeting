@@ -65,16 +65,20 @@ public class RoomController {
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
 		
 		if(info == null) {
-			
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("login/login");
 			
 			return mav;
-			
 		}
+		
+		String subject = request.getParameter("subject");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("room/created");
+		
+		if(subject!=null && !subject.equals("")) {
+			mav.addObject("subject", subject);
+		}
 		
 		return mav;
 		
@@ -102,6 +106,8 @@ public class RoomController {
 	public String list(HttpServletRequest request) throws Exception {
 		
 		//http://localhost:8080/meeting/list.action
+		
+		String subject = request.getParameter("subject");
 		
 		String cp = request.getContextPath();
 		
@@ -137,7 +143,21 @@ public class RoomController {
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
 		
-		List<RoomDTO> lists = dao.getLists(start, end, searchKey, searchValue);
+		List<RoomDTO> lists = null;
+		
+		if(subject == null) {
+			lists = dao.getLists(start, end, searchKey, searchValue);
+		}else if(subject.equals("여행")) {
+			lists = dao.travelGetLists(start, end, searchKey, searchValue);
+		}else if(subject.equals("맛집")) {
+			lists = dao.foodGetLists(start, end, searchKey, searchValue);
+		}else if(subject.equals("운동")) {
+			lists = dao.sportsGetLists(start, end, searchKey, searchValue);
+		}else if(subject.equals("공부")) {
+			lists = dao.studyGetLists(start, end, searchKey, searchValue);
+		}
+		
+		
 		/*
 		Iterator<RoomDTO> it = lists.iterator();
 		 
@@ -155,20 +175,26 @@ public class RoomController {
 		*/
 		//List<Map<String,Object>> fileList = dao.selectFileList();
 		
-		//param 사용자 정의
+		//param,url 사용자 정의
 		String param = "";
-		
+		String listUrl = "";
 		if(!searchValue.equals("")) {
 			param = "searchKey=" + searchKey;
 			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
 		
-		//url 사용자 정의
-		String listUrl = cp + "/list.action";
-		
-		if(!param.equals("")) {
-			listUrl += "?" + param;
+		if(subject!=null && !subject.equals("")) {
+			listUrl = cp + "/list.action?subject="+subject;
+			if(!param.equals("")) {
+				listUrl += "&" + param;
+			}
+		}else {
+			listUrl = cp + "/list.action";
+			if(!param.equals("")) {
+				listUrl += "?" + param;
+			}
 		}
+		
 		
 		//페이징
 		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
@@ -187,6 +213,7 @@ public class RoomController {
 		request.setAttribute("lists", lists);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
+		request.setAttribute("subject", subject);
 		request.setAttribute("articleUrl", articleUrl);
 		//request.setAttribute("fileList", fileList);
 		request.setAttribute("imagePath", imagePath);

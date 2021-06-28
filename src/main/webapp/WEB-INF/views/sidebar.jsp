@@ -74,10 +74,10 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header"><a class="small" href="<%=cp%>/index.action">방 카테고리</a></h6>
                         <a class="collapse-item" href="<%=cp%>/list.action">전체</a>
-                        <a class="collapse-item" href="<%=cp%>/travelList.action">여행</a>
-                        <a class="collapse-item" href="<%=cp%>/foodList.action">맛집</a>
-                        <a class="collapse-item" href="<%=cp%>/sportsList.action">운동</a>
-                        <a class="collapse-item" href="<%=cp%>/studyList.action">공부</a>
+                        <a class="collapse-item" href="<%=cp%>/list.action?subject=여행">여행</a>
+                        <a class="collapse-item" href="<%=cp%>/list.action?subject=맛집">맛집</a>
+                        <a class="collapse-item" href="<%=cp%>/list.action?subject=운동">운동</a>
+                        <a class="collapse-item" href="<%=cp%>/list.action?subject=공부">공부</a>
                     </div>
                 </div>
             </li>
