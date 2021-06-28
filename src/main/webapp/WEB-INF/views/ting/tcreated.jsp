@@ -16,7 +16,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Teeing 만들기</title>
+<title>Ting 만들기</title>
 
 <!-- Custom fonts for this template-->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -42,7 +42,7 @@
 		str = f.title.value;
 		str = str.trim();
 		if(!str) {
-			alert("\nTeeing 제목을 입력하세요!");
+			alert("\nTing 제목을 입력하세요!");
 			f.title.focus();
 			return;
 		}
@@ -52,7 +52,7 @@
 		str = f.content.value;
 		str = str.trim();
 		if(!str) {
-			alert("\nTeeing 소개를 입력하세요!");
+			alert("\nTing 소개를 입력하세요!");
 			f.content.focus();
 			return;
 		}
@@ -60,7 +60,7 @@
 		
 		
 		//가상경로
-		f.action = "<%=cp%>/tcreated_ok.action";
+		f.action = "<%=cp%>/tcreated_ok.action?roomNum=" + ${roomNum};
 		f.submit();
 		
 	}
@@ -82,7 +82,7 @@
 						<div class="p-5">
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">
-									<b>Teeing 만들기</b>
+									<b>Ting 만들기</b>
 								</h1>
 							</div>
 							<form action="" name="myForm" class="user" method="post">
@@ -101,12 +101,12 @@
 								<div class="form-group">
 									<input name="title" type="text"
 										class="form-control form-control-user" id="exampleInputEmail"
-										placeholder="Teeing 제목">
+										placeholder="Ting 제목">
 								</div>
 
 								<div>
 									<textarea name="content" rows="12" cols="63"
-										placeholder="Teeing을 소개해주세요. (날짜,장소,일정 등)"
+										placeholder="Ting을 소개해주세요. (날짜,장소,일정 등)"
 										class="form-control"></textarea>
 								</div>
 								<br />
@@ -125,7 +125,7 @@
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div> -->
 							<div class="text-center">
-								<a class="small" href="<%=cp%>/tmain.action">Teeing 목록으로 돌아가기</a>
+								<a class="small" href="<%=cp%>/tmain.action?roomNum=${roomNum}">Ting 목록으로 돌아가기</a>
 							</div>
 						</div>
 					</div>

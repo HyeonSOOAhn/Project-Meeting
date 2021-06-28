@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.project.dao.RegisterDAO;
 import com.project.dao.RoomDAO;
-import com.project.dao.TeeingDAO;
+import com.project.dao.TingDAO;
 import com.project.dto.RoomDTO;
-import com.project.dto.TeeingDTO;
+import com.project.dto.TingDTO;
 import com.project.dto.UserDTO;
 import com.project.dto.UserInfo;
 import com.project.util.PageUtil;
 
 @Controller
-public class TeeingController {
+public class TingController {
 	
 	@Autowired
-	@Qualifier("teeingDAO")
-	TeeingDAO dao;
+	@Qualifier("tingDAO")
+	TingDAO dao;
 	
 	@Autowired
 	RegisterDAO dao2;
@@ -67,16 +67,18 @@ public class TeeingController {
 		request.setAttribute("email", dto.getEmail());
 		request.setAttribute("ustoredFileName", dto.getUstoredFileName());
 		
-		return "teeing/tcreated";
+		return "ting/tcreated";
 		
 	}
 	
 	@RequestMapping(value = "/tcreated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String tcreated_ok(TeeingDTO dto,HttpServletRequest request) throws Exception {
+	public String tcreated_ok(TingDTO dto,HttpServletRequest request) throws Exception {
 		
-		dao.insertTeeingData(dto);
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		
-		return "redirect:/tmain.action";
+		dao.insertTingData(dto);
+		
+		return "redirect:/tmain.action?roomNum=" + roomNum;
 		
 	}
 	
@@ -91,6 +93,8 @@ public class TeeingController {
 		RoomDTO dto = new RoomDTO();
 		dto = dao3.getReadData(roomNum);
 		
+		dto.setIntroduce(dto.getIntroduce().replaceAll("\n","<br/>"));
+		
 		int currentPage = 1;
 		
 		if(pageNum!=null) {
@@ -101,7 +105,7 @@ public class TeeingController {
 		String searchValue = request.getParameter("searchValue");
 		
 		if(searchValue==null) {
-			searchKey = "subject";
+			searchKey = "userId";
 			searchValue = "";
 		}else {
 			if(request.getMethod().equalsIgnoreCase("GET")) {
@@ -109,7 +113,7 @@ public class TeeingController {
 			}
 		}
 		
-		int dataCount = dao.teeingDataCount(searchKey, searchValue);
+		int dataCount = dao.tingDataCount(searchKey, searchValue);
 		
 		int numPerPage = 5;
 		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
@@ -121,7 +125,7 @@ public class TeeingController {
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
 		
-		List<TeeingDTO> lists = dao.getTeeingLists(start, end, searchKey, searchValue);
+		List<TingDTO> lists = dao.getTingLists(start, end, searchKey, searchValue);
 		
 		//param 사용자 정의
 		String param = "";
@@ -132,7 +136,7 @@ public class TeeingController {
 		}
 		
 		//url 사용자 정의
-		String listUrl = cp + "/list.action";
+		String listUrl = cp + "/tmain.action";
 		
 		if(!param.equals("")) {
 			listUrl += "?" + param;
@@ -152,7 +156,7 @@ public class TeeingController {
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
 		
-		return "teeing/tmain";
+		return "ting/tmain";
 		
 	}
 	
@@ -162,7 +166,7 @@ public class TeeingController {
 		
 		String cp = request.getContextPath();
 		
-		int teeingNum = Integer.parseInt(request.getParameter("teeingNum"));
+		int tingNum = Integer.parseInt(request.getParameter("tingNum"));
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
@@ -174,11 +178,11 @@ public class TeeingController {
 			}
 					
 		}else {
-			searchKey = "subject"; 
+			searchKey = "userId"; 
 			searchValue = ""; 
 		}
 		
-		TeeingDTO dto = dao.teeingReadData(teeingNum);
+		TingDTO dto = dao.tingReadData(tingNum);
 		
 		if(dto==null) {
 			return "redirect:/tmain.action";
@@ -197,18 +201,18 @@ public class TeeingController {
 		request.setAttribute("searchKey", searchKey);
 		request.setAttribute("searchValue", searchValue);
 		
-		return "teeing/tupdated";
+		return "ting/tupdated";
 		
 	}
 	
 	@RequestMapping(value = "/tupdated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String tupdated_ok(TeeingDTO dto,HttpServletRequest request) throws Exception {
+	public String tupdated_ok(TingDTO dto,HttpServletRequest request) throws Exception {
 		
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
 		
-		dao.updateTeeingData(dto);
+		dao.updateTingData(dto);
 		
 		String param = "pageNum=" + pageNum;
 		
@@ -224,12 +228,12 @@ public class TeeingController {
 	@RequestMapping(value = "/tdeleted.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String tdeleted(HttpServletRequest request) throws Exception {
 		
-		int teeingNum = Integer.parseInt(request.getParameter("teeingNum"));
+		int tingNum = Integer.parseInt(request.getParameter("tingNum"));
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
 		
-		dao.deleteTeeingData(teeingNum);
+		dao.deleteTingData(tingNum);
 		
 		String param = "pageNum=" + pageNum;
 		

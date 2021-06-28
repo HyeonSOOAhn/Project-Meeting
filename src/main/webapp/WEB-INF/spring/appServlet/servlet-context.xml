@@ -54,11 +54,11 @@
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
 	
-	<beans:bean id="teeingDAO" class="com.project.dao.TeeingDAO">
+	<beans:bean id="tingDAO" class="com.project.dao.TingDAO">
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
 	
-	<beans:bean id="teeingCommentDAO" class="com.project.dao.TeeingCommentDAO">
+	<beans:bean id="tingCommentDAO" class="com.project.dao.TingCommentDAO">
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
 	

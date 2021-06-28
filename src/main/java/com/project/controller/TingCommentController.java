@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.RegisterDAO;
-import com.project.dao.TeeingCommentDAO;
-import com.project.dto.TeeingCommentDTO;
+import com.project.dao.TingCommentDAO;
+import com.project.dto.TingCommentDTO;
 import com.project.dto.UserDTO;
 import com.project.dto.UserInfo;
 import com.project.util.PageUtil;
 
 @Controller
-public class TeeingCommentController {
+public class TingCommentController {
 	
 	@Autowired
-	@Qualifier("teeingCommentDAO")
-	TeeingCommentDAO dao;
+	@Qualifier("tingCommentDAO")
+	TingCommentDAO dao;
 	
 	@Autowired
 	RegisterDAO dao2;
@@ -35,7 +35,7 @@ public class TeeingCommentController {
 	PageUtil pageUtil;
 	
 	@RequestMapping(value = "/comment.action")
-	public String comment(TeeingCommentDTO dto,HttpServletRequest request) throws Exception {
+	public String comment(TingCommentDTO dto,HttpServletRequest request) throws Exception {
 		
 		//로그인 확인
 		HttpSession session = request.getSession();
@@ -53,7 +53,7 @@ public class TeeingCommentController {
 		dto.setUserId(dto1.getUserId());
 		dto.setName(dto1.getName());
 		
-		dao.insertTeeingCommentData(dto);
+		dao.insertTingCommentData(dto);
 		
 		return tclist(request);
 		
@@ -72,7 +72,7 @@ public class TeeingCommentController {
 			currentPage = Integer.parseInt(pageNum);
 		}
 		
-		int dataCount = dao.teeingCommentDataCount();
+		int dataCount = dao.tingCommentDataCount();
 		
 		int numPerPage = 5;
 		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
@@ -84,14 +84,14 @@ public class TeeingCommentController {
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
 		
-		List<TeeingCommentDTO> lists = dao.getTeeingCommentLists(start, end);
+		List<TingCommentDTO> lists = dao.getTingCommentLists(start, end);
 		
 		int listNum, n = 0;
 		
-		Iterator<TeeingCommentDTO> it = lists.iterator();
+		Iterator<TingCommentDTO> it = lists.iterator();
 		while(it.hasNext()) {
 			
-			TeeingCommentDTO vo = it.next();
+			TingCommentDTO vo = it.next();
 			listNum = dataCount - (start + n - 1);
 			vo.setListNum(listNum);
 			vo.setComments(vo.getComments().replaceAll("\n", "<br/>"));
@@ -106,7 +106,7 @@ public class TeeingCommentController {
 		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("pageNum", currentPage);
 		
-		return "teeing/tclist";
+		return "ting/tclist"; //tmain인지 확인하기
 		
 	}
 	
@@ -116,7 +116,7 @@ public class TeeingCommentController {
 		int commentNum = Integer.parseInt(request.getParameter("commentNum"));
 		String pageNum = request.getParameter("pageNum");
 		
-		dao.deleteTeeingCommentData(commentNum);
+		dao.deleteTingCommentData(commentNum);
 		
 		request.setAttribute("pageNum", pageNum);
 		

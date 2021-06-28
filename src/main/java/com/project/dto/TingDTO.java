@@ -1,8 +1,8 @@
 package com.project.dto;
 
-public class TeeingDTO {
+public class TingDTO {
 	
-	private int teeingNum;
+	private int tingNum;
 	private int roomNum;
 	private String userId;
 	private String name;
@@ -13,11 +13,11 @@ public class TeeingDTO {
 	private String created;
 	
 	
-	public int getTeeingNum() {
-		return teeingNum;
+	public int getTingNum() {
+		return tingNum;
 	}
-	public void setTeeingNum(int teeingNum) {
-		this.teeingNum = teeingNum;
+	public void setTingNum(int tingNum) {
+		this.tingNum = tingNum;
 	}
 	public int getRoomNum() {
 		return roomNum;

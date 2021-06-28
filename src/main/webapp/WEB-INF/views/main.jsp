@@ -64,7 +64,7 @@
                 	메인페이지
 	<a href="<%=cp%>/index.action">방 카테고리</a>
 	<form action="logout.action" method="post">
-		<input type="submit" value="로그아웃"> <a href="list.action">방리스트</a> <a href="<%=cp%>/tcreated.action">Teeing 만들기</a>
+		<input type="submit" value="로그아웃"> <a href="list.action">방리스트</a>
 	</form>
 	-------------------------------------------------------------------<br>
 

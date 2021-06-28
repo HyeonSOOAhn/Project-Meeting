@@ -1,11 +1,11 @@
 package com.project.dto;
 
-public class TeeingCommentDTO {
+public class TingCommentDTO {
 	
 	private int listNum;
 	
 	private int commentNum;
-	private int teeingNum;
+	private int tingNum;
 	private String userId;
 	private String name;
 	private String comments;
@@ -24,11 +24,11 @@ public class TeeingCommentDTO {
 	public void setCommentNum(int commentNum) {
 		this.commentNum = commentNum;
 	}
-	public int getTeeingNum() {
-		return teeingNum;
+	public int getTingNum() {
+		return tingNum;
 	}
-	public void setTeeingNum(int teeingNum) {
-		this.teeingNum = teeingNum;
+	public void setTingNum(int tingNum) {
+		this.tingNum = tingNum;
 	}
 	public String getUserId() {
 		return userId;

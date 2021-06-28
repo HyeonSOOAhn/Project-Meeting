@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tingCommentMapper">
+
+	<insert id="insertTingCommentData" parameterType="com.project.dto.TingCommentDTO">
+		insert into tingComment (commentNum,tingNum,userId,name,comments,created)
+		values (commentNum_SEQ.nextval,#{tingNum},#{userId},#{name},#{comments},sysdate)
+	</insert>
+	
+	<select id="tingCommentDataCount" resultType="int">
+		select nvl(count(*),0) from tingComment
+	</select>
+	
+	<select id="getTingCommentLists" resultType="com.project.dto.TingCommentDTO" parameterType="map">
+		select * from (
+		select rownum rnum, data.* from (
+		select commentNum,tingNum,userId,name,comments,to_char(created,'YYYY-MM-DD') created
+		from tingComment order by commentNum desc) data)
+		<![CDATA[
+		where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
+	
+	<delete id="deleteTingCommentData" parameterType="int">
+		delete tingComment where commentNum = #{commentNum}
+	</delete>
+
+</mapper>
