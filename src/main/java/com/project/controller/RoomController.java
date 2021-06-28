@@ -1057,9 +1057,9 @@ public class RoomController {
 	}
 	
 	@RequestMapping(value = "/modalReject.action", method = { RequestMethod.POST})
-	public @ResponseBody String modalReject(HttpServletRequest request,String msgNum,String sender,String roomNum)
+	public @ResponseBody String modalReject(HttpServletRequest request,String msgNum)
 			throws Exception {
-		
+		System.out.println(msgNum +"아아아아아아아아아");
 		// 메시지 상태 거절로 바꾸기
 		dao.changeRequestReject(Integer.parseInt(msgNum));
 		

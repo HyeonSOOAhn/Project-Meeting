@@ -167,9 +167,12 @@
 		}
     	function requestReject(){
     		
+    		var sendData = "msgNum=" + msgNum;
+    		
     		$.ajax({
     			url: "modalReject.action",
     			type:'POST',
+    			data:sendData,
     			success:function(data){
     				window.location.reload();
     			}
