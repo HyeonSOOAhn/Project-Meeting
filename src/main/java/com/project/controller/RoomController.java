@@ -13,12 +13,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.RoomDAO;
 import com.project.dto.RoomDTO;
 import com.project.dto.UserInfo;
+import com.project.dto.msgDTO;
 import com.project.util.RoomFileUtil;
 import com.project.util.PageUtil;
 
@@ -999,5 +1001,52 @@ public class RoomController {
 		return "room/study/studyArticle";
 		
 	}
+	@RequestMapping(value = "/requestMsg.action", method = RequestMethod.GET)
+	public ModelAndView roomRequest(HttpServletRequest request) throws Exception {
+
+		// 로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+
+		if (info == null) {
+
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("redirect:main.action");
+
+			return mav;
+
+		}
+
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
+
+		RoomDTO dto = dao.getReadData(roomNum);
+
+		msgDTO msg = new msgDTO();
+
+		msg.setSender(info.getUserId());
+		msg.setRecipient(dto.getManager());
+		msg.setMsg("[" + info.getUserName() + "(" + info.getUserId() + ")" + "] 님이 [" + dto.getTitle()
+				+ "] 에 가입 요청을 보냈습니다.");
+
+		dao.insertMsg(msg);
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:list.action");
+
+		return mav;
+
+	}
+
+	@RequestMapping(value = "/modalAccept.action", method = { RequestMethod.GET })
+	public String modalReject(HttpServletRequest request, @RequestParam(value = "msgNum") String msgNum)
+			throws Exception {
+
+		// 메시지 상태 수락으로 바꾸기
+		dao.changeRequestAccept(Integer.parseInt(msgNum));
+
+		return "redirect:list.action";
+	}
+	
 
 }
+

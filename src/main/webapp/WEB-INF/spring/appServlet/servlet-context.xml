@@ -10,7 +10,7 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<annotation-driven/>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
@@ -30,14 +30,12 @@
 	
 	<!-- 어노테이션 설정 -->
 	<context:component-scan base-package="com.project.controller,com.project.util" />
-	
-	
+
 	<!-- commons multipart resolver -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
 		<beans:property name="maxUploadSize" value="100000000" /> 
 		<beans:property name="maxInMemorySize" value="100000000" /> 
 	</beans:bean>
-	
 	
 	<!-- DAO -->
 	<beans:bean id="registerDAO" class="com.project.dao.RegisterDAO">
@@ -48,6 +46,21 @@
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
 	
+	<beans:bean id="roomInfoDAO" class="com.project.dao.RoomInfoDAO">
+		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
+	</beans:bean>
+	
+	<beans:bean id="recoDAO" class="com.project.dao.RecoDAO">
+		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
+	</beans:bean>
+	
+	<beans:bean id="teeingDAO" class="com.project.dao.TeeingDAO">
+		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
+	</beans:bean>
+	
+	<beans:bean id="teeingCommentDAO" class="com.project.dao.TeeingCommentDAO">
+		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
+	</beans:bean>
 	
 	<!-- MyBatis DB연결 -->
 	<beans:bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
@@ -65,6 +78,4 @@
 		<beans:property name="username" value="suzi"/>
 		<beans:property name="password" value="a123"/>
 	</beans:bean>
-
-	
 </beans:beans>

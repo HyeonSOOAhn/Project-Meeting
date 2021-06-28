@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeingCommentMapper">
+
+	<insert id="insertTeeingCommentData" parameterType="com.project.dto.TeeingCommentDTO">
+		insert into teeingComment (commentNum,teeingNum,userId,name,comment,created)
+		values (commentNum_SEQ.nextval,#{teeingNum},#{userId},#{name},#{comment},sysdate)
+	</insert>
+	
+	<select id="teeingCommentDataCount" resultType="int">
+		select nvl(count(*),0) from teeingComment
+	</select>
+	
+	<select id="getTeeingCommentLists" resultType="com.project.dto.TeeingCommentDTO" parameterType="map">
+		select * from (
+		select rownum rnum, data.* from (
+		select commentNum,teeingNum,userId,name,comment,to_char(created,'YYYY-MM-DD') created
+		from teeingComment order by commentNum desc) data)
+		<![CDATA[
+		where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
+	
+	<delete id="deleteTeeingCommentData" parameterType="int">
+		delete teeingComment where commentNum = #{commentNum}
+	</delete>
+
+</mapper>
