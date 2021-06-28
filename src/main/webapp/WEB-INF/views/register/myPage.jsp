@@ -27,6 +27,7 @@
 
 <!-- Custom styles for this template-->
 <link href="css/room.css" rel="stylesheet">
+<link href="css/myPage.css" rel="stylesheet">
 
 <script type="text/javascript">
     
@@ -44,9 +45,27 @@
 	    	 }
 	
 	    }
+	    
+	 
     
     </script>
 
+<style type="text/css">
+
+.myInfo{
+	min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #e3e6f0;
+    border-radius: 0.35rem;
+}
+
+.myInfoBody{
+	padding: 5px;
+}
+
+</style>
 </head>
 
 <body id="page-top">
@@ -90,119 +109,123 @@
 								</div>
 								<div class="card-body">
 
-									<div class="card shadow mb-4" align="center"
-										style="display: block; padding-top: 1.5em;">
-										<img
+									<div style="text-align: center;">
+										<img style="border-radius: 100%;"
 											src='<spring:url value="/image/${dto.ustoredFileName }"/>'
-											width="300" height="300" /><br /> <br />
+											width="200" height="200" /><br /> <br />
 									</div>
 
-									<div class="card border-left-primary shadow h-100 py-2">
-										<div class="card-body">
-											<div class="row no-gutters align-items-center">
-												<div class="col mr-2">
-													<div
+									
+									<div class="row">
+										<div class="myInfo border-left-primary col-sm-5 ">
+											<div class="myInfoBody">
+												<div class="row align-items-center">
+													<div class="col mr-2">
+														<div
 														class="text-xs font-weight-bold text-primary text-uppercase mb-1">
 														아이디</div>
-													<div class="h5 mb-0 font-weight-bold text-gray-800">
-														<h2>${dto.userId }</h2>
+														<div class="h5 mb-0 font-weight-bold text-gray-800">
+														${dto.userId }
+													</div>
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-
-									<br />
-
-									<div class="card border-left-primary shadow h-100 py-2">
-										<div class="card-body">
-											<div class="row no-gutters align-items-center">
-												<div class="col mr-2">
-													<div
+										<div class="col-sm-1">
+										
+										</div>
+										<div class="myInfo border-left-primary col-sm-5 ">
+											<div class="myInfoBody">
+												<div class="row align-items-center">
+													<div class="col mr-2">
+														<div
 														class="text-xs font-weight-bold text-primary text-uppercase mb-1">
 														이름</div>
-													<div class="h5 mb-0 font-weight-bold text-gray-800">
-														<h2>${dto.name }</h2>
+														<div class="h5 mb-0 font-weight-bold text-gray-800">
+														${dto.name }
+													</div>
 													</div>
 												</div>
 											</div>
 										</div>
+									
 									</div>
 
 									<br />
-
-									<div class="card border-left-primary shadow h-100 py-2">
-										<div class="card-body">
-											<div class="row no-gutters align-items-center">
-												<div class="col mr-2">
-													<div
-														class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-														성별</div>
-													<div class="h5 mb-0 font-weight-bold text-gray-800">
-														<h2>
-															<c:if test="${dto.gender == 1}">
-																남
-															</c:if>
-															<c:if test="${dto.gender == 2}">
-																여
-															</c:if>
-														</h2>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<br />
-
-									<div class="card border-left-primary shadow h-100 py-2">
-										<div class="card-body">
-											<div class="row no-gutters align-items-center">
-												<div class="col mr-2">
-													<div
+									
+									<div class="row">
+										<div class="myInfo border-left-primary col-sm-8 ">
+											<div class="myInfoBody">
+												<div class="row align-items-center">
+													<div class="col mr-2">
+														<div
 														class="text-xs font-weight-bold text-primary text-uppercase mb-1">
 														Email 주소</div>
-													<div class="h5 mb-0 font-weight-bold text-gray-800">
-														<h2>${dto.email }</h2>
+														<div class="h5 mb-0 font-weight-bold text-gray-800">
+														${dto.email }
+													</div>
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-
-									<br />
-
-									<div class="card border-left-primary shadow h-100 py-2">
-										<div class="card-body">
-											<div class="row no-gutters align-items-center">
-												<div class="col mr-2">
-													<div
+										
+										<div class="col-sm-1">
+										
+										</div>
+										
+										<div class="myInfo border-left-primary col-sm-2 ">
+											<div class="myInfoBody">
+												<div class="row align-items-center">
+													<div class="col mr-2">
+														<div
 														class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-														휴대전화</div>
-													<div class="h5 mb-0 font-weight-bold text-gray-800">
-														<h2>${dto.tel }</h2>
+														성별</div>
+														<div class="h5 mb-0 font-weight-bold text-gray-800">
+														<c:if test="${dto.gender == 1}">
+																남자
+															</c:if>
+															<c:if test="${dto.gender == 2}">
+																여자
+															</c:if>
+													</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+	
+									<br />
+									<div class="row">
+									<div class="myInfo border-left-primary col-sm-11 ">
+											<div class="myInfoBody">
+												<div class="row align-items-center">
+													<div class="col mr-2">
+														<div
+														class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+														전화번호</div>
+														<div class="h5 mb-0 font-weight-bold text-gray-800">
+														${dto.tel}
+													</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 
-									<br />
-
-									<div>
-										<input type="button"
-											class="btn btn-primary btn-user btn-block" value=" 회원정보 수정 "
-											onclick="javascript:location.href='<%=cp%>/userUpdated.action';" />
-									</div>
-
-									<br />
-
-									<div>
-										<form action="" name="remove">
+									<div class="row" style="margin-top: 10px; ">
+										<div class="col-sm-7" style="margin: 2px;">
 											<input type="button"
-												class="btn btn-primary btn-user btn-block" value=" 회원 탈퇴하기 "
-												onclick="removeCheck();" />
-										</form>
+												class="btn btn-primary btn-user btn-block" value=" 회원정보 수정 "
+												onclick="javascript:location.href='<%=cp%>/userUpdated.action';" />
+										</div>
+
+										<div class="col-sm-4" style="margin: 2px;">
+											<form action="" name="remove">
+												<input type="button"
+													class="btn btn-danger btn-user btn-block" value=" 회원 탈퇴하기 "
+													onclick="removeCheck();" />
+											</form>
+										</div>
 									</div>
 
 								</div>
@@ -212,56 +235,56 @@
 
 						<div class="col-lg-6">
 
-							<!-- Collapsable Card Example -->
+							
 							<div class="card shadow mb-4">
 								<!-- Card Header - Accordion -->
-								<a href="#collapseCardExample" class="d-block card-header py-3"
-									data-toggle="collapse" role="button" aria-expanded="true"
-									aria-controls="collapseCardExample">
+								<a href="#participateList" class="d-block card-header py-3"
+									data-toggle="collapse" role="button" aria-expanded="false"
+									aria-controls="participateList">
 									<h6 class="m-0 font-weight-bold text-primary">참여한 방 목록</h6>
 								</a>
 								<!-- Card Content - Collapse -->
-								<div class="collapse show" id="collapseCardExample">
+								<div class="collapse show" id="participateList">
 									<div class="card-body">
-										This is a collapsable card example using Bootstrap's built in
-										collapse functionality. <strong>Click on the card
-											header</strong> to see the card body collapse and expand!
+										<c:forEach var="participateDTO" items="${participateList}">
+											<p>${participateDTO.title }</p>
+										</c:forEach>
 									</div>
 								</div>
 							</div>
 
-							<!-- Collapsable Card Example -->
 							<div class="card shadow mb-4">
 								<!-- Card Header - Accordion -->
-								<a href="#collapseCardExample" class="d-block card-header py-3"
-									data-toggle="collapse" role="button" aria-expanded="true"
-									aria-controls="collapseCardExample">
+								<a href="#manageList" class="d-block card-header py-3"
+									data-toggle="collapse" role="button" aria-expanded="false"
+									aria-controls="manageList">
 									<h6 class="m-0 font-weight-bold text-primary">관리하는 방 목록</h6>
 								</a>
 								<!-- Card Content - Collapse -->
-								<div class="collapse show" id="collapseCardExample">
+								<div class="collapse show" id="manageList">
 									<div class="card-body">
-										This is a collapsable card example using Bootstrap's built in
-										collapse functionality. <strong>Click on the card
-											header</strong> to see the card body collapse and expand!
+										<c:forEach var="manageDTO" items="${manageList}">
+											<a href="article.action?roomNum=${manageDTO.roomNum}">
+												<p>${manageDTO.title}</p>
+											</a>
+										</c:forEach>
 									</div>
 								</div>
 							</div>
 
-							<!-- Collapsable Card Example -->
 							<div class="card shadow mb-4">
 								<!-- Card Header - Accordion -->
-								<a href="#collapseCardExample" class="d-block card-header py-3"
-									data-toggle="collapse" role="button" aria-expanded="true"
-									aria-controls="collapseCardExample">
+								<a href="#requestList" class="d-block card-header py-3"
+									data-toggle="collapse" role="button" aria-expanded="false"
+									aria-controls="requestList">
 									<h6 class="m-0 font-weight-bold text-primary">방 신청 목록</h6>
 								</a>
 								<!-- Card Content - Collapse -->
-								<div class="collapse show" id="collapseCardExample">
+								<div class="collapse show" id="requestList">
 									<div class="card-body">
-										This is a collapsable card example using Bootstrap's built in
-										collapse functionality. <strong>Click on the card
-											header</strong> to see the card body collapse and expand!
+										<c:forEach var="requestDTO" items="${requestList}">
+											<p>${requestDTO.msg} </p>
+										</c:forEach>
 									</div>
 								</div>
 							</div>

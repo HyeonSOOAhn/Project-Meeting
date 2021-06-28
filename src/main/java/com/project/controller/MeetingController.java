@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.RegisterDAO;
 import com.project.dao.RoomDAO;
+import com.project.dto.RoomDTO;
 import com.project.dto.UserDTO;
 import com.project.dto.UserInfo;
 import com.project.dto.msgDTO;
@@ -43,9 +44,11 @@ public class MeetingController {
 	@RequestMapping(value = "/main.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView main(HttpServletRequest req) throws Exception {
 
+		
 		HttpSession session = req.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
 
+		//로그인 확인
 		if (info == null) {
 
 			ModelAndView mav = new ModelAndView();
@@ -142,6 +145,7 @@ public class MeetingController {
 
 		info.setUserId(dto.getUserId());
 		info.setUserName(dto.getName());
+		info.setUstoredFileName(dto.getUstoredFileName());
 
 		HttpSession session = req.getSession();
 
@@ -225,20 +229,25 @@ public class MeetingController {
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
 
 		if (info == null) {
-
 			return "redirect:/login.action";
-
 		}
 
 		// 내메세지 가져오기
 		List<msgDTO> msgList = roomDao.getMsgList(info.getUserId());
-
+		List<RoomDTO> manageList = dao.getManageList(info.getUserId());
+		List<msgDTO> requestList = dao.getRequestList(info.getUserId());
+		List<RoomDTO> participateList = dao.getParticipateList(info.getUserId());
+		
 		String cp = request.getContextPath();
 
 		UserDTO dto = dao.getUserInfo(info.getUserId());
 
 		request.setAttribute("dto", dto);
 		request.setAttribute("msgList", msgList);
+		request.setAttribute("manageList", manageList);
+		request.setAttribute("requestList", requestList);
+		request.setAttribute("participateList", participateList);
+
 		return "register/myPage";
 
 	}
