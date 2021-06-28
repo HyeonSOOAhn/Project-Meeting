@@ -8,7 +8,7 @@ public class TeeingCommentDTO {
 	private int teeingNum;
 	private String userId;
 	private String name;
-	private String comment;
+	private String comments;
 	private String created;
 	
 	
@@ -42,11 +42,11 @@ public class TeeingCommentDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getComment() {
-		return comment;
+	public String getComments() {
+		return comments;
 	}
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 	public String getCreated() {
 		return created;

@@ -35,13 +35,11 @@ public class TeeingCommentDAO {
 		
 	}
 	
-	public List<TeeingCommentDTO> getTeeingCommentLists(int start,int end,String searchKey,String searchValue) {
+	public List<TeeingCommentDTO> getTeeingCommentLists(int start,int end) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("start", start);
 		params.put("end", end);
-		params.put("searchKey", searchKey);
-		params.put("searchValue", searchValue);
 		
 		List<TeeingCommentDTO> lists = sessionTemplate.selectList("com.teeingCommentMapper.getTeeingCommentLists", params);
 		

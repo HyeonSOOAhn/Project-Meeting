@@ -7,8 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.teeingCommentMapper">
 
 	<insert id="insertTeeingCommentData" parameterType="com.project.dto.TeeingCommentDTO">
-		insert into teeingComment (commentNum,teeingNum,userId,name,comment,created)
-		values (commentNum_SEQ.nextval,#{teeingNum},#{userId},#{name},#{comment},sysdate)
+		insert into teeingComment (commentNum,teeingNum,userId,name,comments,created)
+		values (commentNum_SEQ.nextval,#{teeingNum},#{userId},#{name},#{comments},sysdate)
 	</insert>
 	
 	<select id="teeingCommentDataCount" resultType="int">
@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getTeeingCommentLists" resultType="com.project.dto.TeeingCommentDTO" parameterType="map">
 		select * from (
 		select rownum rnum, data.* from (
-		select commentNum,teeingNum,userId,name,comment,to_char(created,'YYYY-MM-DD') created
+		select commentNum,teeingNum,userId,name,comments,to_char(created,'YYYY-MM-DD') created
 		from teeingComment order by commentNum desc) data)
 		<![CDATA[
 		where rnum >= #{start} and rnum <= #{end}

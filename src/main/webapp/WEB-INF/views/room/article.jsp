@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -30,25 +29,27 @@ String cp = request.getContextPath();
 <link href="css/room.css" rel="stylesheet">
 
 <style type="text/css">
-h2 {
-	font: italic bold 3em/1em Georgia, serif;
-	color: #4D71DB;
-	display: inline;
-}
 
-h1 {
-	font: italic bold 3em/1em Georgia, serif;
-	background-color: #C0C0C0;
-	color: #000000;
-	display: inline;
-}
+	h2 {
+		font: italic bold 3em/1em Georgia, serif;
+		color: #4D71DB;
+		display: inline;
+	}
+	
+	h1 {
+		font: italic bold 3em/1em Georgia, serif;
+		background-color: #C0C0C0;
+		color: #000000;
+		display: inline;
+	}
+	
+	p {
+		font: italic bold 1em/1em Georgia, serif;
+		background-color: #C0C0C0;
+		color: #000000;
+		display: inline;
+	}
 
-p {
-	font: italic bold 1em/1em Georgia, serif;
-	background-color: #C0C0C0;
-	color: #000000;
-	display: inline;
-}
 </style>
 
 </head>
@@ -123,7 +124,7 @@ p {
 								<!-- 마이룸 테이블의 member 가져오기 : dto.manager && dto.member -->
 
 								<c:if test="${sessionScope.userInfo.userId == dto.manager}">
-									<a href="#" class="btn btn-primary btn-user btn-block"> 방
+									<a href="<%=cp%>/tmain.action?roomNum=${dto.roomNum }" class="btn btn-primary btn-user btn-block"> 방
 										참가하기 </a>
 								</c:if>
 							</div>

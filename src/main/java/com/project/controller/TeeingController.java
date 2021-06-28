@@ -9,17 +9,20 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.RegisterDAO;
+import com.project.dao.RoomDAO;
 import com.project.dao.TeeingDAO;
+import com.project.dto.RoomDTO;
 import com.project.dto.TeeingDTO;
 import com.project.dto.UserDTO;
 import com.project.dto.UserInfo;
 import com.project.util.PageUtil;
 
+@Controller
 public class TeeingController {
 	
 	@Autowired
@@ -30,13 +33,19 @@ public class TeeingController {
 	RegisterDAO dao2;
 	
 	@Autowired
+	@Qualifier("roomDAO")
+	RoomDAO dao3;
+	
+	@Autowired
 	@Qualifier("pageUtil")
 	PageUtil pageUtil;
 	
 	@RequestMapping(value = "/tcreated.action")
-	public ModelAndView tcreated(HttpServletRequest request) throws Exception {
+	public String tcreated(HttpServletRequest request) throws Exception {
 		
 		//http://localhost:8080/meeting/tcreated.action
+		
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		
 		//로그인 확인
 		HttpSession session = request.getSession();
@@ -44,10 +53,7 @@ public class TeeingController {
 		
 		if(info == null) {
 			
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("login/login");
-			
-			return mav;
+			return "login/login";
 			
 		}
 		
@@ -55,11 +61,13 @@ public class TeeingController {
 		
 		dto = dao2.getUserInfo(info.getUserId());
 		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("teeing/tcreated");
-		mav.addObject(dto);
+		request.setAttribute("roomNum", roomNum);
+		request.setAttribute("userId", dto.getUserId());
+		request.setAttribute("name", dto.getName());
+		request.setAttribute("email", dto.getEmail());
+		request.setAttribute("ustoredFileName", dto.getUstoredFileName());
 		
-		return mav;
+		return "teeing/tcreated";
 		
 	}
 	
@@ -77,7 +85,11 @@ public class TeeingController {
 		
 		String cp = request.getContextPath();
 		
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		String pageNum = request.getParameter("pageNum");
+		
+		RoomDTO dto = new RoomDTO();
+		dto = dao3.getReadData(roomNum);
 		
 		int currentPage = 1;
 		
@@ -130,6 +142,12 @@ public class TeeingController {
 		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
 		//포워딩할 페이지에 넘길 데이터
+		request.setAttribute("subject", dto.getSubject());
+		request.setAttribute("title", dto.getTitle());
+		request.setAttribute("introduce", dto.getIntroduce());
+		request.setAttribute("manager", dto.getManager());
+		
+		request.setAttribute("roomNum", roomNum);
 		request.setAttribute("lists", lists);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
