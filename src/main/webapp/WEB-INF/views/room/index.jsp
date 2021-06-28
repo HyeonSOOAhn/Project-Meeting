@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -85,9 +85,6 @@ p {
 								class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
 								class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
 						</c:if>
-						<c:if test="${empty sessionScope.userInfo.userId }">
-							<p>로그인을 하셔야 방 만들기가 가능합니다.</p>
-						</c:if>
 					</div>
 
 					<!-- Content Row class="row" -->
@@ -100,7 +97,7 @@ p {
 							<div class="row">
 								<div class="col-lg-6 mb-4">
 									<button class="card bg-primary text-white shadow"
-										" onclick="javascript:location.href='<%=cp%>/travelList.action'">
+										" onclick="javascript:location.href='<%=cp%>/list.action?subject=여행'">
 										<div class="card-body" align="left">
 											여 행
 											<div class="text-white-50 small">여행 떠나실 준비 되셨나요? 마음이 맞는
@@ -110,7 +107,7 @@ p {
 								</div>
 								<div class="col-lg-6 mb-4">
 									<button class="card bg-success text-white shadow"
-										" onclick="javascript:location.href='<%=cp%>/travelList.action'">
+										" onclick="javascript:location.href='<%=cp%>/list.action?subject=맛집'">
 										<div class="card-body" align="left">
 											맛 집
 											<div class="text-white-50 small">이제 혼밥은 그만. 음식 취향이 같은
@@ -120,7 +117,7 @@ p {
 								</div>
 								<div class="col-lg-6 mb-4">
 									<button class="card bg-info text-white shadow"
-										" onclick="javascript:location.href='<%=cp%>/travelList.action'">
+										" onclick="javascript:location.href='<%=cp%>/list.action?subject=운동'">
 										<div class="card-body" align="left">
 											운 동
 											<div class="text-white-50 small">여러가지 운동을 다양한 사람들과 함께
@@ -130,7 +127,7 @@ p {
 								</div>
 								<div class="col-lg-6 mb-4">
 									<button class="card bg-info text-white shadow"
-										" onclick="javascript:location.href='<%=cp%>/travelList.action'">
+										" onclick="javascript:location.href='<%=cp%>/list.action?subject=공부'">
 										<div class="card-body" align="left">
 											공 부
 											<div class="text-white-50 small">공부도 하고 지식도 나누고 미래도 함께
@@ -138,38 +135,7 @@ p {
 										</div>
 									</button>
 								</div>
-								<div class="col-lg-6 mb-4">
-									<button class="card bg-danger text-white shadow">
-										<div class="card-body" align="left">
-											Danger
-											<div class="text-white-50 small">#e74a3b</div>
-										</div>
-									</button>
-								</div>
-								<div class="col-lg-6 mb-4">
-									<button class="card bg-secondary text-white shadow">
-										<div class="card-body">
-											Secondary
-											<div class="text-white-50 small">#858796</div>
-										</div>
-									</button>
-								</div>
-								<div class="col-lg-6 mb-4">
-									<button class="card bg-light text-black shadow">
-										<div class="card-body">
-											Light
-											<div class="text-black-50 small">#f8f9fc</div>
-										</div>
-									</button>
-								</div>
-								<div class="col-lg-6 mb-4">
-									<button class="card bg-dark text-white shadow">
-										<div class="card-body">
-											Dark
-											<div class="text-white-50 small">#5a5c69</div>
-										</div>
-									</button>
-								</div>
+								
 							</div>
 
 						</div>
