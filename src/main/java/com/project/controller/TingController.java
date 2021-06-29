@@ -95,6 +95,23 @@ public class TingController {
 		
 		dto.setIntroduce(dto.getIntroduce().replaceAll("\n","<br/>"));
 		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "login/login";
+			
+		}
+		
+		//유저정보 가져오기
+		UserDTO dto1 = new UserDTO();
+		
+		dto1 = dao2.getUserInfo(info.getUserId());
+		
+		
+		
 		int currentPage = 1;
 		
 		if(pageNum!=null) {
@@ -136,10 +153,10 @@ public class TingController {
 		}
 		
 		//url 사용자 정의
-		String listUrl = cp + "/tmain.action";
+		String listUrl = cp + "/tmain.action?roomNum" + roomNum;
 		
 		if(!param.equals("")) {
-			listUrl += "?" + param;
+			listUrl += "&" + param;
 		}
 		
 		//페이징
@@ -151,10 +168,14 @@ public class TingController {
 		request.setAttribute("introduce", dto.getIntroduce());
 		request.setAttribute("manager", dto.getManager());
 		
+		request.setAttribute("userId", dto1.getUserId());
+		request.setAttribute("name", dto1.getName());
+		
 		request.setAttribute("roomNum", roomNum);
 		request.setAttribute("lists", lists);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
+		request.setAttribute("pageNum", currentPage);
 		
 		return "ting/tmain";
 		
@@ -164,7 +185,19 @@ public class TingController {
 	@RequestMapping(value = "/tupdated.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String tupdated(HttpServletRequest request) throws Exception {
 		
-		String cp = request.getContextPath();
+		//http://localhost:8080/meeting/tcreated.action
+		
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "login/login";
+			
+		}
 		
 		int tingNum = Integer.parseInt(request.getParameter("tingNum"));
 		String pageNum = request.getParameter("pageNum");
@@ -195,6 +228,7 @@ public class TingController {
 			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
 		
+		request.setAttribute("roomNum", roomNum);
 		request.setAttribute("dto", dto);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("params", param);
@@ -208,26 +242,32 @@ public class TingController {
 	@RequestMapping(value = "/tupdated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String tupdated_ok(TingDTO dto,HttpServletRequest request) throws Exception {
 		
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
 		
-		dao.updateTingData(dto);
+		System.out.println(dto.getContent());
+		System.out.println(dto.getTitle());
+		System.out.println(dto.getTingNum());
 		
-		String param = "pageNum=" + pageNum;
+		dao.updateTingData(dto);
+		/*
+		String param = "&pageNum=" + pageNum;
 		
 		if(!searchValue.equals("")) {
 			param += "&searchKey=" + searchKey;
 			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
-		return "redirect:/tmain.action?" + param;
+		*/
+		return "redirect:/tmain.action?roomNum=" + roomNum; //+ param
 		
 	}
 	
 	@RequestMapping(value = "/tdeleted.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String tdeleted(HttpServletRequest request) throws Exception {
 		
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		int tingNum = Integer.parseInt(request.getParameter("tingNum"));
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
@@ -235,14 +275,14 @@ public class TingController {
 		
 		dao.deleteTingData(tingNum);
 		
-		String param = "pageNum=" + pageNum;
+		String param = "&pageNum=" + pageNum;
 		
 		if(searchValue!=null) {
 			param += "&searchKey=" + searchKey;
 			param += "&searchValue=" + searchValue;
 		}
 		
-		return "redirect:/tmain.action?" + param;
+		return "redirect:/tmain.action?roomNum=" + roomNum + param;
 		
 	}
 	

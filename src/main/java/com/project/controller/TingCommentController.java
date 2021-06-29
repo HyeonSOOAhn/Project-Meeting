@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.RegisterDAO;
 import com.project.dao.TingCommentDAO;
@@ -37,6 +36,8 @@ public class TingCommentController {
 	@RequestMapping(value = "/comment.action")
 	public String comment(TingCommentDTO dto,HttpServletRequest request) throws Exception {
 		
+		int tingNum = Integer.parseInt(request.getParameter("tingNum"));
+		
 		//로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
@@ -50,10 +51,12 @@ public class TingCommentController {
 		UserDTO dto1 = new UserDTO();
 		
 		dto1 = dao2.getUserInfo(info.getUserId());
-		dto.setUserId(dto1.getUserId());
-		dto.setName(dto1.getName());
+		dto.setTcuserId(dto1.getUserId());
+		dto.setTcname(dto1.getName());
 		
 		dao.insertTingCommentData(dto);
+		
+		request.setAttribute("tingNum", tingNum);
 		
 		return tclist(request);
 		
@@ -64,6 +67,7 @@ public class TingCommentController {
 		
 		String cp = request.getContextPath();
 		
+		int tingNum = Integer.parseInt(request.getParameter("tingNum"));
 		String pageNum = request.getParameter("pageNum");
 		
 		int currentPage = 1;
@@ -101,6 +105,7 @@ public class TingCommentController {
 		
 		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage);
 		
+		request.setAttribute("tingNum", tingNum);
 		request.setAttribute("lists", lists);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
@@ -113,11 +118,13 @@ public class TingCommentController {
 	@RequestMapping(value = "/tcdeleted.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String tcdeleted(HttpServletRequest request) throws Exception {
 		
+		int tingNum = Integer.parseInt(request.getParameter("tingNum"));
 		int commentNum = Integer.parseInt(request.getParameter("commentNum"));
 		String pageNum = request.getParameter("pageNum");
 		
 		dao.deleteTingCommentData(commentNum);
 		
+		request.setAttribute("tingNum", tingNum);
 		request.setAttribute("pageNum", pageNum);
 		
 		return tclist(request);

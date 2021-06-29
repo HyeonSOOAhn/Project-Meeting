@@ -6,8 +6,8 @@ public class TingCommentDTO {
 	
 	private int commentNum;
 	private int tingNum;
-	private String userId;
-	private String name;
+	private String tcuserId;
+	private String tcname;
 	private String comments;
 	private String created;
 	
@@ -30,17 +30,17 @@ public class TingCommentDTO {
 	public void setTingNum(int tingNum) {
 		this.tingNum = tingNum;
 	}
-	public String getUserId() {
-		return userId;
+	public String getTcuserId() {
+		return tcuserId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setTcuserId(String tcuserId) {
+		this.tcuserId = tcuserId;
 	}
-	public String getName() {
-		return name;
+	public String getTcname() {
+		return tcname;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setTcname(String tcname) {
+		this.tcname = tcname;
 	}
 	public String getComments() {
 		return comments;

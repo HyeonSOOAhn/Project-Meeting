@@ -16,7 +16,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Ting 만들기</title>
+<title>Ting 수정하기</title>
 
 <!-- Custom fonts for this template-->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -60,7 +60,7 @@
 		
 		
 		//가상경로
-		f.action = "<%=cp%>/tcreated_ok.action?roomNum=" + ${roomNum};
+		f.action = "<%=cp%>/tupdated_ok.action?roomNum=" + ${roomNum};
 		f.submit();
 		
 	}
@@ -101,23 +101,20 @@
 								<div class="form-group">
 									<input name="title" type="text"
 										class="form-control form-control-user" id="exampleInputEmail"
-										placeholder="Ting 제목">
+										placeholder="Ting 제목" value="${dto.title }">
 								</div>
 
 								<div>
 									<textarea name="content" rows="12" cols="63"
 										placeholder="Ting을 소개해주세요. (날짜,장소,일정 등)"
-										class="form-control"></textarea>
+										class="form-control">${dto.content }</textarea>
 								</div>
 								<br/>
 								
 								<input type="hidden" name="roomNum" value="${roomNum}"/>
-								<input type="hidden" name="userId" value="${userId}"/>
-								<input type="hidden" name="name" value="${name}"/>
-								<input type="hidden" name="email" value="${email}"/>
-								<input type="hidden" name="ustoredFileName" value="${ustoredFileName}"/>
+								<input type="hidden" name="tingNum" value="${dto.tingNum}"/>
 
-								<input type="button" class="btn btn-primary btn-user btn-block" value="생 성 하 기" onclick="sendIt();"/>
+								<input type="button" class="btn btn-primary btn-user btn-block" value="수 정 하 기" onclick="sendIt();"/>
 
 							</form>
 							<hr>

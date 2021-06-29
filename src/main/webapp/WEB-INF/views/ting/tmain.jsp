@@ -19,16 +19,17 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/room.css" rel="stylesheet">
     
+    <!-- jQuery 1.12.4 -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    
     <script type="text/javascript">
 
-		function sendIt() {
+	    function sendIt() {
 			
 			var f = document.searchForm;
 			
@@ -36,7 +37,95 @@
 			f.submit();
 			
 		}
-
+		
+		$(function() {
+			
+			listPage(1);
+			
+		});
+		
+		$(function() {
+			
+			$("#sendButton").click(function() {
+				
+				var params = "comments=" + $("#comments").val() + "&tingNum=" + $("#tingNum").val()
+				+ "&tcuserId=" + $("#tcuserId").val() + "&tcname=" + $("#tcname").val();
+				
+				$.ajax({
+					
+					type:"POST",
+					url:"<%=cp%>/comment.action?tingNum=" + ${tingNum},
+					data:params,
+					success:function(args) {
+						
+						$("#listData").html(args); //넘어온 데이터
+						
+						//출력 후 내용 비워주기
+						$("#comments").val("");
+						
+					},
+					beforeSend:showRequest,
+					error:function(e) {
+						alert(e.responseText);
+					}
+					
+				});
+				
+			});
+			
+		});
+		
+		function showRequest() {
+			
+			//trim : 공백제거
+			var comments = $.trim($("#comments").val());
+			
+			if(!comments) {
+				alert("\n내용을 입력하세요!");
+				$("#comments").focus();
+				return false;
+			}
+			
+			if(comments.length>500) {
+				alert("\n내용은 500자까지만 가능합니다!");
+				$("#comments").focus();
+				return false;
+			}
+			
+			return true; //중요
+			
+		}
+		
+		function listPage(page) {
+			
+			var url = "<%=cp%>/tclist.action?tingNum=" + ${tingNum};
+			
+			//전형적인 비동기방식
+			//결과처리와 그에대한 함수도 같이 가지고 있다.
+			$.post(url,{pageNum:page},function(args) {
+				$("#listData").html(args);
+			});
+			
+			$("#listData").show();
+			
+		}
+		
+		function deletePage(commentNum,page) {
+			
+			var url = "<%=cp%>/tcdeleted.action?tingNum=" + ${tingNum};
+			
+			$.post(url,{commentNum:commentNum,pageNum:page},function(args) {
+				$("#listData").html(args);
+			});
+			
+		}
+		
+	</script>
+	
+	<script type="text/javascript">
+	
+		
+	
 	</script>
     
     <style type="text/css">
@@ -389,17 +478,17 @@
 									
 										<select name="searchKey"
 											class="custom-select custom-select-sm form-control form-control-sm"
-											style="width: 15%; display: inline;">
+											style="width: 18%; display: inline;">
 											<option value="userId">작성자 아이디</option>
 											<option value="name">작성자 이름</option>
 											<option value="title">Ting 이름</option>
 										</select>
 										<input type="text" name="searchValue"
 											class="form-control form-control-sm"
-											style="width: 20%; display: inline;" />
+											style="width: 30%; display: inline;"/>
 										<input type="button"
 											value=" 검 색 " class="btn btn-primary btn-user btn-block"
-											onclick="sendIt()" style="width: 10%; display: inline;" />
+											onclick="sendIt();" style="width: 10%; display: inline;"/>
 											
 									</form>
 									<br/>
@@ -410,8 +499,9 @@
                                 	<c:forEach var="dto" items="${lists }">
                             			<div class="card-header py-3 card shadow mb-4">
                             				
-                            				<div class="ok">
-												<div class="left">
+                            				<div>
+												<div>
+												
 													<img src='<spring:url value="/image/${dto.ustoredFileName }"/>' width="50" height="50" style="border-radius: 50%;"/>
 													&nbsp;&nbsp;<u>${dto.userId }</u>&nbsp;&nbsp;/&nbsp;&nbsp;<u>${dto.name }</u><br/><br/>
 													
@@ -420,9 +510,37 @@
 													
 													작성일 : ${dto.created }<br/>
 													
+													<div align="center">
+														<c:if test="${dto.userId == sessionScope.userInfo.userId}">
+															<input type="button" class="btn btn-primary btn-user btn-block"
+																value="수정" style="width: 10%; display: inline;"
+																onclick="javascript:location.href='<%=cp%>/tupdated.action?roomNum=${roomNum }&tingNum=${dto.tingNum }&${params }';"/>
+															<input type="button" class="btn btn-primary btn-user btn-block"
+																value="삭제" style="width: 10%; display: inline;"
+																onclick="javascript:location.href='<%=cp%>/deleted.action?roomNum=${roomNum }&tingNum=${dto.tingNum }&${params }';"/>
+														</c:if>
+													</div>
+													
 												</div>
-												<div class="right">
-														
+											</div>
+											
+											<hr>
+												
+												<span id="listData" style="display: none"></span>
+												
+											<hr>
+											
+											<div>
+												<div class="form-group">
+													<input name="comments" type="text"
+														class="form-control form-control-user" id="comments" style="width: 73%; display: inline;"
+														placeholder="Ting 참여여부 입력 (참여합니다,참여,조인!,나도!,...)"/>
+													<input type="hidden" name="tingNum" id="tingNum" value="${dto.tingNum}"/>
+													<input type="hidden" name="tcuserId" id="tcuserId" value="${userId}"/>
+													<input type="hidden" name="tcname" id="tcname" value="${name}"/>
+													
+													<input type="button" class="btn btn-primary btn-user btn-block"
+														value="Ting 참여하기" id="sendButton" style="width: 25%; display: inline;"/>
 												</div>
 											</div>
                             				
