@@ -8,9 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.project.dto.UserDTO;
 
@@ -26,6 +30,42 @@ public class UserFileUtil {
 	private static final String filePath = "C:\\image\\"; // <img src='<spring:url value="/image/${dto.ustoredFileName
 															// }"/>' width="300" height="300"/>
 
+	//이미지 변경
+	public Map<String, String> changeProfile(MultipartHttpServletRequest mpRequest) {
+		
+		String fileName = "";
+		String uoriginalFileName = null;
+		String uoriginalFileExtension = null;
+		String ustoredFileName = null;
+		
+		File f = new File(filePath);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        String encType = "UTF-8";
+        int maxFilesize = 5 * 1024 * 1024;
+  
+        try {
+        	
+        	MultipartFile mf = mpRequest.getFile("fileProfile");
+        	uoriginalFileName = mf.getOriginalFilename();
+			uoriginalFileExtension = uoriginalFileName.substring(uoriginalFileName.lastIndexOf("."));
+			ustoredFileName = getRandomString() + uoriginalFileExtension;
+
+			f = new File(filePath + ustoredFileName);
+			mf.transferTo(f);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("ustoredFileName", ustoredFileName);
+        map.put("uoriginalFileName", uoriginalFileName);
+     
+		return map;
+	}
+	
+	
 	// 파일 업로드
 	public List<Map<String, Object>> parseInsertFileInfo(UserDTO dto, MultipartHttpServletRequest mpRequest)
 			throws Exception {
@@ -55,6 +95,8 @@ public class UserFileUtil {
 				uoriginalFileExtension = uoriginalFileName.substring(uoriginalFileName.lastIndexOf("."));
 				ustoredFileName = getRandomString() + uoriginalFileExtension;
 
+				System.out.println(ustoredFileName);
+				
 				file = new File(filePath + ustoredFileName);
 				multipartFile.transferTo(file);
 				listsMap = new HashMap<String, Object>();

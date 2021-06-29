@@ -97,6 +97,12 @@ public class RoomController {
 			dao.insertData(lists.get(i));
 		}
 		
+		// 여기
+		//System.out.println(dto.getRoomNum());
+		
+		//dao.addMember(dto.getManager(), dto.getRoomNum(),"방장");
+		
+		
 		return "redirect:/list.action";
 		
 	}
@@ -106,6 +112,15 @@ public class RoomController {
 	public String list(HttpServletRequest request) throws Exception {
 		
 		//http://localhost:8080/meeting/list.action
+		
+		// 로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+
+		if (info == null) {
+			
+			return "main";
+		}
 		
 		String subject = request.getParameter("subject");
 		
@@ -419,7 +434,7 @@ public class RoomController {
 		// 메시지 상태 수락으로 바꾸기
 		dao.changeRequestAccept(Integer.parseInt(msgNum));
 		//멤버 추가
-		dao.addMember(sender, Integer.parseInt(roomNum));
+		dao.addMember(sender, Integer.parseInt(roomNum),"멤버");
 
 		return "success";
 	}
@@ -427,7 +442,6 @@ public class RoomController {
 	@RequestMapping(value = "/modalReject.action", method = { RequestMethod.POST})
 	public @ResponseBody String modalReject(HttpServletRequest request,String msgNum)
 			throws Exception {
-		System.out.println(msgNum +"아아아아아아아아아");
 		// 메시지 상태 거절로 바꾸기
 		dao.changeRequestReject(Integer.parseInt(msgNum));
 		

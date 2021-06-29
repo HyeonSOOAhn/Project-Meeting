@@ -143,28 +143,20 @@
 										placeholder="전화번호">
 								</div>
 
-								<div class="form-group">
-									<input type="file" name="file" id="file" value="Profile Image" />
-									<button type="button"
-										class="btn btn-primary btn-user btn-block" id="btn"
-										style="font-size: 0.8rem; border-radius: 10rem; padding: 0.75rem 1rem;">Profile
-										Image</button>
-								</div>
-
 								<input type="button" value="Register Account"
 									disabled="disabled"
 									class="btn btn-primary registerBtn btn-user btn-block"
 									onclick="sendIt();" />
-								<hr>
+								
 
 							</form>
 							<hr>
 							<div class="text-center">
-								<a class="small" href="forgot-password.html">Forgot
+								<a class="small" href="forgotPwd.action">Forgot
 									Password?</a>
 							</div>
 							<div class="text-center">
-								<a class="small" href="login.html">Already have an account?
+								<a class="small" href="main.action">Already have an account?
 									Login!</a>
 							</div>
 						</div>

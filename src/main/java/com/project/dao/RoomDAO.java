@@ -252,11 +252,11 @@ private SqlSessionTemplate sessionTemplate;
 			
 		}
 		
-		public void addMember(String userId,int roomNum) {
+		public void addMember(String userId,int roomNum,String member) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("userId", userId);
 			map.put("roomNum", roomNum);
-			map.put("position", "멤버");
+			map.put("position", member);
 			
 			sessionTemplate.insert("com.roomMapper.addMember",map);
 		}
