@@ -178,7 +178,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<insert id="addMember" parameterType="map">
 		insert into roomMember(userId,roomNum,position)
-		values(#{userId},#{roomNum},#{position})
+		values(#{userId},#{roomNum},'멤버')
+	</insert>
+	<insert id="addManager" parameterType="String">
+		insert into roomMember(userId,roomNum,position)
+		values(#{userId},roomNum_seq.currval,'방장')
 	</insert>
 	
 

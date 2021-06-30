@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.dao.RegisterDAO;
 import com.project.dao.RoomDAO;
 import com.project.dto.RoomDTO;
+import com.project.dto.UserDTO;
 import com.project.dto.UserInfo;
 import com.project.dto.msgDTO;
 import com.project.util.RoomFileUtil;
@@ -32,6 +34,9 @@ public class RoomController {
 	@Autowired
 	@Qualifier("roomDAO")
 	RoomDAO dao;
+	
+	@Autowired
+	RegisterDAO regiDao;
 	
 	@Autowired
 	@Qualifier("pageUtil")
@@ -97,6 +102,10 @@ public class RoomController {
 			dao.insertData(lists.get(i));
 		}
 		
+		
+		dao.addManager(dto.getManager());
+		
+		
 		return "redirect:/list.action";
 		
 	}
@@ -106,6 +115,17 @@ public class RoomController {
 	public String list(HttpServletRequest request) throws Exception {
 		
 		//http://localhost:8080/meeting/list.action
+		
+		// 로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+
+		if (info == null) {
+			
+			return "main";
+		}
+		
+		UserDTO userDto = regiDao.getUserInfo(info.getUserId());
 		
 		String subject = request.getParameter("subject");
 		
@@ -217,6 +237,7 @@ public class RoomController {
 		request.setAttribute("articleUrl", articleUrl);
 		//request.setAttribute("fileList", fileList);
 		request.setAttribute("imagePath", imagePath);
+		request.setAttribute("userRight", userDto.getRight());
 		
 		return "room/list";
 		
@@ -427,7 +448,6 @@ public class RoomController {
 	@RequestMapping(value = "/modalReject.action", method = { RequestMethod.POST})
 	public @ResponseBody String modalReject(HttpServletRequest request,String msgNum)
 			throws Exception {
-		System.out.println(msgNum +"아아아아아아아아아");
 		// 메시지 상태 거절로 바꾸기
 		dao.changeRequestReject(Integer.parseInt(msgNum));
 		

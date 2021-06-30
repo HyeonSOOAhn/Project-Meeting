@@ -12,6 +12,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (userNum_seq.nextval,#{userId},#{userPwd},#{name},#{gender},#{email},#{tel},0,
 		#{uoriginalFileName},#{ustoredFileName})
 	</insert>
+	<insert id="insertData" parameterType="com.project.dto.UserDTO">
+		insert into users(userNum,userId,userPwd,name,gender,email,tel,right,uoriginalFileName,ustoredFileName)
+		values(userNum_seq.nextval,#{userId},#{userPwd},#{name},#{gender},#{email},#{tel},0,'basic.png','basic.png')
+	
+	</insert>
 	
 	<select id="checkId" parameterType="map" resultType="int">
 		select count(*) from users where userId = #{userId} 
@@ -36,23 +41,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</select>
 	
-	<update id="updateUserData" parameterType="hashMap">
-		update users set name = #{name},email = #{email},userPwd = #{userPwd},tel = #{tel},
-		uoriginalFileName = #{uoriginalFileName},ustoredFileName = #{ustoredFileName}
+	<!-- myPage -->
+	<update id="updateProfileImg" parameterType="map">
+		update users set ustoredFileName = #{ustoredFileName},uoriginalFileName=#{uoriginalFileName}
 		where userId = #{userId}
 	</update>
-	
+	<update id="updateUserData" parameterType="com.project.dto.UserDTO">
+		update users set email = #{email},userPwd = #{userPwd},tel = #{tel},right=#{right}
+		where userId = #{userId}
+	</update>
 	<delete id="deleteUserData" parameterType="String">
 		delete users where userId = #{userId}
 	</delete>
-	
-	<!-- myPage -->
 	<select id="getParticipateList" parameterType="String" resultType="com.project.dto.RoomDTO">
-		select A.roomNum,A.subject,A.title,A.created,A.totalP,A.currentP from wholeRoom A, roomMember B
+		select A.roomNum,A.subject,A.title,to_char(A.created,'yy/mm/dd') created,A.totalP,A.currentP from wholeRoom A, roomMember B
 		where B.userId = #{userId} and B.roomNum = A.roomNum
 	</select>
 	<select id="getManageList" parameterType="String" resultType="com.project.dto.RoomDTO">
-		select roomNum,subject,title,created,totalP,currentP from wholeRoom
+		select roomNum,subject,title,to_char(created,'yy/mm/dd') created,totalP,currentP from wholeRoom
 		where manager = #{manager}
 	</select>
 	<select id="getRequestList" parameterType="String" resultType="com.project.dto.msgDTO">
