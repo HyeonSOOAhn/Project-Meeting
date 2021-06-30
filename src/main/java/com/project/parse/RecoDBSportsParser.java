@@ -101,7 +101,7 @@ public class RecoDBSportsParser {
     			
     			dto.setRecoNum(((pageNo-1)*100)+RecoDBStudyParser.totalCount+RecoDBTravelParser.totalCount+i);
     			dto.setSubject("sports");
-    			dto.setKeyword("체육시설 유형 : " + ((object.get("ftypeNm")).toString()).replace("\"", ""));
+    			dto.setKeyword(((object.get("ftypeNm")).toString()).replace("\"", ""));
     			dto.setTitle(((object.get("faciNm")).toString()).replace("\"", ""));
             	dto.setIntroduce("시설상태 : " + ((object.get("faciStat")).toString()).replace("\"", "")
             	+ "<br/>실내외 구분 : " + ((object.get("inoutGbn")).toString()).replace("\"", "")
