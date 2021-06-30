@@ -28,13 +28,9 @@
 <link href="css/register.css" rel="stylesheet">
 
 <style type="text/css">
-    
-    	#file {
-    	
-    		display:none;
-    		
-    	}
-    
+#file {
+	display: none;
+}
 </style>
 
 
@@ -54,7 +50,8 @@
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
 							</div>
-							<form name="myForm" class="user" method="post" enctype="multipart/form-data">
+							<form name="myForm" class="user" method="post"
+								enctype="multipart/form-data">
 
 								<div class="form-group">
 									<span class="errorMessage nameCon hide"></span>
@@ -71,8 +68,7 @@
 										style="vertical-align: middle; text-align: left;">
 										<input type="radio" id="man" value=1 name="gender"
 											style="display: none;"> <label for="man"
-											class="genderLabel"><span>남</span></label> 
-										<input
+											class="genderLabel"><span>남</span></label> <input
 											type="radio" id="woman" value=2 name="gender"
 											style="display: none;"> <label for="woman"
 											class="genderLabel"><span>여</span></label>
@@ -111,7 +107,7 @@
 								<div class="form-group">
 									<span class="errorMessage emailCon hide"></span>
 								</div>
-								
+
 								<!-- type="email" -->
 								<div class="form-group">
 									<input type="text" name="email"
@@ -146,27 +142,21 @@
 										class="form-control form-control-user btn-active" id="tel"
 										placeholder="전화번호">
 								</div>
-								
-								<div class="form-group">
-                                    <input type="file" name="file" id="file" value="Profile Image"/>
-                                    <button type="button" class="btn btn-primary btn-user btn-block" id="btn"
-                                    style="font-size: 0.8rem; border-radius: 10rem; padding: 0.75rem 1rem;">Profile Image</button>
-                                </div>
-								
+
 								<input type="button" value="Register Account"
 									disabled="disabled"
 									class="btn btn-primary registerBtn btn-user btn-block"
 									onclick="sendIt();" />
-								<hr>
+								
 
 							</form>
 							<hr>
 							<div class="text-center">
-								<a class="small" href="forgot-password.html">Forgot
+								<a class="small" href="forgotPwd.action">Forgot
 									Password?</a>
 							</div>
 							<div class="text-center">
-								<a class="small" href="login.html">Already have an account?
+								<a class="small" href="main.action">Already have an account?
 									Login!</a>
 							</div>
 						</div>

@@ -24,8 +24,10 @@ public class RecoDAO {
 	//끝페이지 구하기
 	public int getMaxNum(String subject) {
 		
+		
 		int maxNum = sessionTemplate.selectOne("com.recoMapper.getMaxNum",subject);
 		
+		System.out.println(maxNum);
 		maxNum = (maxNum/100)+1;
 		
 		return maxNum;

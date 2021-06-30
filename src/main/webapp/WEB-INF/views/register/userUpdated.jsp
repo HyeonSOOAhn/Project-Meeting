@@ -28,13 +28,9 @@
 <link href="css/register.css" rel="stylesheet">
 
 <style type="text/css">
-    
-    	#file {
-    	
-    		display:none;
-    		
-    	}
-    
+#file {
+	display: none;
+}
 </style>
 
 
@@ -54,7 +50,8 @@
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
 							</div>
-							<form name="myForm" class="user" method="post" enctype="multipart/form-data">
+							<form name="myForm" class="user" method="post"
+								enctype="multipart/form-data">
 
 								<div class="form-group">
 									<span class="errorMessage nameCon hide"></span>
@@ -69,30 +66,27 @@
 
 									<div class="col-sm-4 "
 										style="vertical-align: middle; text-align: left;">
-										
+
 										<c:if test="${dto.gender == 1}">
-										<input type="radio" id="man" value=1 name="gender"
-											style="display: none;" checked="checked"> <label for="man"
-											class="genderLabel"><span>남</span></label>
+											<input type="radio" id="man" value=1 name="gender"
+												style="display: none;" checked="checked">
+											<label for="man" class="genderLabel"><span>남</span></label>
 										</c:if>
-										
+
 										<c:if test="${dto.gender == 2}">
-										<input
-											type="radio" id="woman" value=2 name="gender"
-											style="display: none;" checked="checked"> <label for="woman"
-											class="genderLabel"><span>여</span></label>
+											<input type="radio" id="woman" value=2 name="gender"
+												style="display: none;" checked="checked">
+											<label for="woman" class="genderLabel"><span>여</span></label>
 										</c:if>
-											
+
 									</div>
 
 								</div>
 
 								<div class="form-group row">
-									<div class="col-sm-8">
-										${dto.userId }
-									</div>
+									<div class="col-sm-8">${dto.userId }</div>
 								</div>
-								
+
 								<!-- type="email" -->
 								<div class="form-group">
 									<input type="text" name="email"
@@ -127,23 +121,23 @@
 										class="form-control form-control-user btn-active" id="tel"
 										placeholder="전화번호" value="${dto.tel }">
 								</div>
-								
+
 								<div class="form-group">
-                                    <input type="file" name="file" id="file" value="Profile Image"/>
-                                    <button type="button" class="btn btn-primary btn-user btn-block" id="btn"
-                                    style="font-size: 0.8rem; border-radius: 10rem; padding: 0.75rem 1rem;">Profile Image</button>
-                                </div>
-                                
-                                <input type="hidden" name="userId" value="${dto.userId }">
-								
+									<input type="file" name="file" id="file" value="Profile Image" />
+									<button type="button"
+										class="btn btn-primary btn-user btn-block" id="btn"
+										style="font-size: 0.8rem; border-radius: 10rem; padding: 0.75rem 1rem;">Profile
+										Image</button>
+								</div>
+
+								<input type="hidden" name="userId" value="${dto.userId }">
+
 								<input type="button" value="수 정 하 기"
 									class="btn btn-primary registerBtn btn-user btn-block"
-									onclick="sendIt();" />
-								
-								<input type="button" value="수 정 취 소"
+									onclick="sendIt();" /> <input type="button" value="수 정 취 소"
 									class="btn btn-primary registerBtn btn-user btn-block"
 									onclick="javascript:location.href='<%=cp%>/myPage.action';" />
-									
+
 								<hr>
 
 							</form>

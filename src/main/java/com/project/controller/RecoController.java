@@ -43,6 +43,7 @@ public class RecoController {
 									throws IOException, InterruptedException {
 		
 		int maxNum = dao.getMaxNum(subject);
+		
 		List<RecoDTO> lists = dao.getLists(subject,pageNum);
 		
 		model.addAttribute("pageNum", pageNum);
