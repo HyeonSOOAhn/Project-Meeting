@@ -21,6 +21,9 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    
+    <!-- showMap -->
+    <link href="js/showMap.js">
 </head>
 <body id="page-top">
 
@@ -164,53 +167,7 @@
 					class="btn btn-link d-md-none rounded-circle mr-3">
 					<i class="fa fa-bars"></i>
 				</button>
-				<form action="reco" method="get"
-					class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-					
-					<div class="input-group">
-						 <button class="btn btn-primary dropdown-toggle" type="button"
-                               	id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="true">
-                                추천장소
-                         </button>
-                         <div class="dropdown-menu animated--fade-in"
-                         aria-labelledby="dropdownMenuButton1" data-toggle="buttons" style="padding: 15px;">
-                                 <a class="btn btn-outline-primary">
-                                 <input type="radio" name="subject" value="study"
-                                 style="display: none;" checked="checked">스터디</a>&nbsp;&nbsp;&nbsp;
-                                 <a class="btn btn-outline-primary">
-                                 <input type="radio" name="subject" value="travel"
-                                 style="display: none;">여행</a>&nbsp;&nbsp;&nbsp;
-                                 <a class="btn btn-outline-primary">
-                                 <input type="radio" name="subject" value="sports"
-                                 style="display: none;">운동</a>
-                         </div>
-                         &nbsp;&nbsp;&nbsp;&nbsp;
-                         <button class="btn btn-primary dropdown-toggle" type="button"
-                               	id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                검색대상
-                         </button>
-                         <div class="dropdown-menu animated--fade-in"
-                         aria-labelledby="dropdownMenuButton2" data-toggle="buttons" style="padding: 15px;">
-                                 <a class="btn btn-outline-primary">
-                                 <input type="radio" name="searchKey" value="study"
-                                 style="display: none;" checked="checked">장소명</a>&nbsp;&nbsp;&nbsp;
-                                 <a class="btn btn-outline-primary">
-                                 <input type="radio" name="searchKey" value="travel"
-                                 style="display: none;">도로명주소</a>&nbsp;&nbsp;&nbsp;
-                         </div>
-                         &nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" class="form-control bg-light border-0 small"
-							placeholder="Search for..." aria-label="Search"
-							aria-describedby="basic-addon2" name="searchValue">
-						<div class="input-group-append">
-							<button class="btn btn-primary" type="submit">
-								<i class="fas fa-search fa-sm"></i>
-							</button>
-						</div>
-					</div>
-				</form>
+				
 
 				<!-- Topbar Navbar -->
 				<ul class="navbar-nav ml-auto">
@@ -386,29 +343,71 @@
 
 					<!-- Page Heading -->
 					
-					<c:set var="subject" value="${subject }" />
-					<c:if test="${subject ne null}">
+					
+					&nbsp;&nbsp;						
+						<div class="form-group row">
+						<label>
 						<a href="reco_update" class="btn btn-secondary btn-icon-split">
 							<span class="icon text-white-50"> <i
 								class="fas fa-arrow-right"></i>
 						</span> <span class="text">자료 업데이트</span>
 						</a>
-						
-						<a href="#" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">내 주변 장소 찾기</span>
-                        </a>
-					</c:if>
+						</label>
 					
+                <pre>                       </pre>      	
+				<form action="reco" method="get">
+					<div class="form-group row" style="float: none; margin:100 auto;">
+						&nbsp;&nbsp;
+							<select name="subject" class="form-control" style="width:100px;height:40px;">
+										<option value="">전체</option>
+										<option value="study">스터디</option>
+										<option value="travel">여행</option>
+										<option value="sports">운동</option>
+							</select>
+						&nbsp;&nbsp;
+							<select name="searchKey" class="form-control" style="width:150px;height:40px;">
+										<option value="title">장소명</option>
+										<option value="keyword">장소유형</option>
+										<option value="location">소재지주소</option>
+							</select>
+						&nbsp;&nbsp;
+						<select name="sort" class="form-control" style="width:150px;height:40px;">
+										<option value="distance">거리순</option>
+										<option value="grade">평점순</option>
+										<option value="papularity">인기순</option>
+							</select>
+						&nbsp;&nbsp;
+						<input type="hidden" id="startLat" name="lat">
+	                    <input type="hidden" id="startLon" name="lon"> 
+						    <input name="searchValue"
+						    id="search-input" type="search" id="form1" class="form-control" style="width:500px;height:40px;"/>
+						  
+						  <button id="search-button" type="submit" class="btn btn-primary" onclick="geolocation();">
+						    <i class="fas fa-search"></i>
+						  </button>
+						  
+						  
+					</div>	
+				</form>	
+				
+				</div>
+					
+				
+				<br/>
 					
 
 					<div>${dto.subject }</div>
 
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">${subject }</h1>
+						<h1 class="h3 mb-0 text-gray-800">
+						<c:if test="${subject!=null }">
+						${subject }
+						</c:if>
+						<c:if test="${subject=='' }">
+						All
+						</c:if>
+						</h1>
 					</div>
 
 					<div class="row">
@@ -416,14 +415,19 @@
 
 							<!-- Basic Card Example -->
 							<c:forEach var="dto" items="${lists }">
-								<div class="card shadow mb-4">
+								
+								<div class="card shadow mb-4" onclick="location.href='reco_showMap?recoNum=${dto.recoNum}'"
+								style="cursor:pointer;">
 									<div class="card-header py-3">
-										<a
-											href="reco_showMap?recoNum=${dto.recoNum}">
-											<h6 class="m-0 font-weight-bold text-primary">${dto.title }</h6>
+										<a>
+											<h6 class="m-0 font-weight-bold text-primary">${dto.title }
+											<span style="text-align: right;">⭐&nbsp;${dto.star }</span>
+											</h6>
+											
 										</a>
 									</div>
 									<div class="card-body" align="center">
+											${dto.keyword}<br />
 											${dto.introduce}<br />
 											${dto.location}
 										
@@ -445,20 +449,20 @@
 					<c:set var="startNum" value="${pageNum-(pageNum-1)%5 }"/>
 					<c:set var="lastNum" value="${maxNum }"/>
 					<c:if test="${startNum>1 }">
-							<a class="page-link" href="reco?subject=${subject }&pageNum=${startNum-1 }">
+							<a class="page-link" href="reco?subject=${subject }&searchKey=${searchKey }&searchValue=${searchValue }&pageNum=${startNum-1 }">
 								 이전
 							</a>
 						</c:if>	
 							<c:forEach var="i" begin="0" end="4">
 								<c:if test="${startNum+i<=maxNum }">
-								<a class="page-link" href="reco?subject=${subject }&pageNum=${startNum+i }">
+								<a class="page-link" href="reco?subject=${subject }&searchKey=${searchKey }&searchValue=${searchValue }&pageNum=${startNum+i }">
 								 ${startNum+i }
 								 </a>
 								 </c:if>
 							</c:forEach>
 							
 					<c:if test="${startNum+5<maxNum }">
-							<a class="page-link" href="reco?subject=${subject }&pageNum=${startNum+5}">
+							<a class="page-link" href="reco?subject=${subject }&searchKey=${searchKey }&searchValue=${searchValue }&pageNum=${startNum+5}">
 								 다음
 							</a>
 						</c:if>	
@@ -507,7 +511,7 @@
             </div>
         </div>
     </div>
-
+	
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -517,5 +521,9 @@
 
     <!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
+	
+	<!-- geolocation으로 gps수신 -->
+	<script src="js/geolocation.js"></script>
+	
 </body>
 </html>

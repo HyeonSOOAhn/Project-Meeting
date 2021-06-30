@@ -361,21 +361,103 @@
 					
 					<!-- Basic Card Example -->
                             <div class="card shadow mb-4">
+                            
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">${list.title }</h6>
+                                
+                                    <h6 class="m-0 font-weight-bold text-primary">${list.title }
+                                    <span style="text-align: right;">⭐&nbsp;${list.star }</span>
+                                    </h6>
+                                    
                                 </div>
+                                
                                 <div class="card-body row">
                                 <div id="map" style="width:500px;height:500px;" class="col-sm-5"></div>
                        
 						<div class="col-sm-7" align="center">
+						${list.keyword}<br/>
 						${list.introduce}<br/>
 						${list.content }<br/>
-						${list.location }
+						${list.location }&nbsp;&nbsp;
+						<span><a href="javascript:openWindowPop('https://map.kakao.com/link/to/${list.title },${list.lat },${list.lon}', '갈찾기');">
+						<img alt="kakao_map" src="img/map.png">
+						</a></span>
+						<script>
+						function openWindowPop(url, name){
+						    var options = 'top=10, left=10, width=1500, height=1000';
+						    window.open(url, name, options);
+						}
+						</script>
+						<br/>
+						<br/>
+						<!--  -->
+						<div class="card mb-2">
+							<div class="card-header bg-light">
+							        <i class="fa fa-comment fa"></i> REVIEW
+							</div>
+							<div class="card-body">
+								<ul class="list-group list-group-flush">
+								    <li class="list-group-item">
+									<form action="reco_recoComment">
+									<div class="form-inline mb-2">
+										<label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
+										<input type="hidden" name="recoNum" value="${recoNum }">
+										<input type="text" name="userId" value="${info.userId }" class="form-control ml-2" id="reviewId" readonly>
+										&nbsp;&nbsp;
+										⭐ : &nbsp;&nbsp;
+										<select name="star" class="form-control" style="width:100px;height:40px;">
+										<option value="0">0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										</select>
+									</div>
+										<input type="text" name="content" class="form-control" id="exampleFormControlTextarea1" rows="3"  maxlength="100">
+										<input type="submit" class="btn btn-dark mt-3">
+								    </form>
+								    </li>
+								</ul>
+							</div>
+						</div>
+						<!-- Basic Card Example -->
+							
+						
 						</div>
 						
                                 </div>
                                 
                             </div>
+                            <!--  -->
+                            <div class="row">
+                            <c:forEach var="dto" items="${commentLists }">
+                            <div class="col-lg-3">
+                 <div class="card mb-2">
+							<div class="card-header bg-light">
+							        <i class="fa fa-comment fa"></i> ${dto.userId }
+							        
+							</div>
+							<div class="card-body">
+								<ul class="list-group list-group-flush">
+								    <li class="list-group-item">
+									
+									<div class="form-inline mb-2">
+										<label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
+										⭐ : ${dto.star }<br/>
+										${dto.content }
+									</div>
+										
+								    
+								    </li>
+								</ul>
+							</div>
+						</div>
+						</div>
+						</c:forEach>           
+                       <!--  -->     		
+						</div>
+						</div>
+							
 
                         </div>
                         
@@ -420,7 +502,12 @@
             </div>
         </div>
     </div>
-
+	<!-- lat과 lon을 js로 넘기기 위해 set -->
+	<script>
+	var lat = '${list.lat}';
+	var lon = '${list.lon}';
+	</script>
+	
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -432,25 +519,11 @@
     <script src="js/sb-admin-2.min.js"></script>
 
 	<!-- showMap -->
-	 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=955f20db57985bdfe58bf91db6e7d4aa"></script>
-						<script>
-							var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-							    mapOption = {
-							        center: new kakao.maps.LatLng(${list.lat}, ${list.lon}), // 지도의 중심좌표
-							        level: 3, // 지도의 확대 레벨
-							        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
-							    }; 
-					
-							// 지도를 생성한다 
-							var map = new kakao.maps.Map(mapContainer, mapOption); 
-					
-							// 지도에 마커를 생성하고 표시한다
-							var marker = new kakao.maps.Marker({
-							    position: new kakao.maps.LatLng(${list.lat}, ${list.lon}), // 마커의 좌표
-							    map: map // 마커를 표시할 지도 객체
-							});
-					
-						</script>
-
+	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=955f20db57985bdfe58bf91db6e7d4aa"></script>
+	<script src="js/showMap.js"></script>
+	
+	<!-- recoComment -->
+	<script src="js/recoComment.js"></script>
+	
 </body>
 </html>

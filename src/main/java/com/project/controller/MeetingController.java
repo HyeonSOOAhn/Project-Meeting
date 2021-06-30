@@ -100,7 +100,6 @@ public class MeetingController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/login/login");
-		
 		return mav;
 	}
 	

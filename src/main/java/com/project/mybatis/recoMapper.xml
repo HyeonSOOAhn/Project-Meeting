@@ -9,43 +9,64 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <!-- 데이터 총 갯수 불러오기 -->
-<select id="getMaxNum" parameterType="String" resultType="int">
-	 
-		select max(rnum)
-		from
-			(select 
-				rownum as rnum, a.* 
-			from 
-				Recommend a 
-			where 
-				subject=#{subject})
+<select id="getMaxNum" parameterType="hashmap" resultType="int">
+	 	select count(recoNum) 
+		from recommend 
+		where subject like '%'||#{subject, jdbcType=VARCHAR}||'%'
+		and ${searchKey} like '%'||#{searchValue, jdbcType=VARCHAR}||'%'
 	
 </select>
 
 
 <!-- 서브젝트별 db불러오기 -->
 <select id="getLists" parameterType="hashmap" resultType="com.project.dto.RecoDTO">
-	
-	select *
-	from
-		(select 
-			rownum as rnum, a.* 
-		from 
-			Recommend a 
-		where 
-			subject=#{subject}
-		<![CDATA[
-		and rownum<=#{pageNum}*100)
-	where
-		(#{pageNum}-1)*100<rnum
-		]]>
+		
+	select * from
+			(select *
+			 from
+				(select
+				rownum as rnum, c.*					
+				from 
+		            (select 
+		            		b.*,DISTNACE_WGS84((nvl(to_number(lat),9999)),
+							(nvl(to_number(lon),9999)),
+							#{lat},#{lon}) distance,
+							(select round(avg(a.star),3)
+									 from recocomment a 
+									 where a.recoNum = b.recoNum) star 
+				 	 from recommend b
+				 	 <choose>
+				 	 	<when test="sort=='distance'">
+				 	 		order by distance asc) c
+				 	 	</when>
+				 	 	<when test="sort=='grade'">
+				 	 		order by star desc nulls last) c
+				 	 	</when>
+				 	 	<when test="sort='papularity'">
+				 	 		order by papularity desc) c
+				 	 	</when>
+				 	 </choose>
+			 where 
+				  subject like '%'||#{subject, jdbcType=VARCHAR}||'%'
+				  and ${searchKey} like '%'||#{searchValue, jdbcType=VARCHAR}||'%')
+				<![CDATA[
+			where rnum<=#{pageNum}*100)
+		where
+			(#{pageNum}-1)*100<rnum
+				]]>
+		
 	
 	
 </select>
 
 <!-- dto하나 불러오기 -->
 <select id="getReadData" parameterType="int" resultType="com.project.dto.RecoDTO">
-select * from Recommend where recoNum=#{recoNum}
+		select a.*,
+			   (select round(avg(star),3)
+				from recocomment 
+				where recoNum = a.recoNum) star
+		from Recommend a
+		where recoNum=#{recoNum}
 </select>
 
 <!-- 업데이트 -->
@@ -69,5 +90,22 @@ select * from Recommend where recoNum=#{recoNum}
 	#{location, jdbcType=VARCHAR},
 	#{lat, jdbcType=VARCHAR},#{lon, jdbcType=VARCHAR})
 </update>
+
+<!-- addComment -->
+<insert id="insertComment" parameterType="com.project.dto.RecoCoDTO">
+	insert into recocomment (recoCoNum,recoNum,userId,star,content,userNum)
+	values (recoCoNum_SEQ.nextval,#{recoNum},#{userId},#{star},#{content, jdbcType=VARCHAR},
+	(select userNum from users where userId = #{userId}))
+
+</insert>
+
+<!-- getComment -->
+<select id="getComment" parameterType="int" resultType="com.project.dto.RecoCoDTO">
+	select * from recocomment
+	where recoNum = ${recoNum}
+	order by star desc
+</select>
+
+
 
 </mapper>
