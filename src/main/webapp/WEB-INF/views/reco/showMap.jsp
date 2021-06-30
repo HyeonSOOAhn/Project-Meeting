@@ -88,7 +88,7 @@
 						<span><a href="javascript:openWindowPop('https://map.kakao.com/link/to/${list.title },${list.lat },${list.lon}', '갈찾기');">
 						<img alt="kakao_map" src="img/map.png"></a></span>
 						<br/>
-			          <button onclick="createRoom" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
+			           <button onclick="createRoom" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
 						<br/>
 						<br/>
 						<!--  -->
