@@ -116,6 +116,12 @@ public class RecoDAO{
 		List<RecoCoDTO> commentLists = sessionTemplate.selectList("com.recoMapper.getComment", recoNum);
 		return commentLists;
 	}
+	
+	//인기증가또는 삽입
+	public void increasePop(int recoNum) {
+		
+		sessionTemplate.update("com.recoMapper.increasePop", recoNum);
+	}
 
 	
 	

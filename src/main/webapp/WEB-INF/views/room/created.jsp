@@ -206,18 +206,18 @@
                                     </div> -->
 								</div>
 								<div class="form-group">
-									<input name="title" type="text"
+									<input name="title" type="text" value="${list.title }"
 										class="form-control form-control-user" id="exampleInputEmail"
 										placeholder="방 이름">
 								</div>
 								<div class="form-group">
-									<input name="keyword" type="text"
+									<input name="keyword" type="text" value="${list.keyword }"
 										class="form-control form-control-user" id="exampleInputEmail"
 										placeholder="#키워드">
 								</div>
 								<div>
 									<textarea name="introduce" rows="12" cols="63"
-										placeholder="방을 소개해주세요." class="form-control"></textarea>
+										placeholder="방을 소개해주세요." class="form-control"><c:if test="${!empty list }">${list.introduce }&#10;${list.content }&#10;${list.location }</c:if></textarea>
 								</div>
 								<br />
 
