@@ -81,6 +81,24 @@
                     </div>
                 </div>
             </li>
+            
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2"
+                    aria-expanded="true" aria-controls="collapseTwo2">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>추천장소</span>
+                </a>
+                <div id="collapseTwo2" class="collapse" aria-expanded="true" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded" >
+                        <h6 class="collapse-header"><a class="small" href="<%=cp%>/index.action">추천장소</a></h6>
+                        <a class="collapse-item" href="reco?subject=study">스터디</a>
+                        <a class="collapse-item" href="reco?subject=travel">여행</a>
+                        <a class="collapse-item" href="reco?subject=sports">운동</a> 
+                    </div>
+                </div>
+            </li>
+            
 
             <!-- Divider -->
             <hr class="sidebar-divider">

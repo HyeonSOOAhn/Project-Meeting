@@ -101,16 +101,15 @@ public class RecoDBSportsParser {
     			
     			dto.setRecoNum(((pageNo-1)*100)+RecoDBStudyParser.totalCount+RecoDBTravelParser.totalCount+i);
     			dto.setSubject("sports");
-    			dto.setKeyword("sports");
+    			dto.setKeyword("체육시설 유형 : " + ((object.get("ftypeNm")).toString()).replace("\"", ""));
     			dto.setTitle(((object.get("faciNm")).toString()).replace("\"", ""));
             	dto.setIntroduce("시설상태 : " + ((object.get("faciStat")).toString()).replace("\"", "")
-            	+ "<br/>체육시설 유형 : " + ((object.get("ftypeNm")).toString()).replace("\"", "")
             	+ "<br/>실내외 구분 : " + ((object.get("inoutGbn")).toString()).replace("\"", "")
             	+ "<br/>시설연락처 : " + ((object.get("faciTel")).toString()).replace("\"", ""));
             	dto.setContent("");
             	dto.setLocation("소재지도로명주소 : " + ((object.get("faciRoadAddr1")).toString()).replace("\"", ""));//소재지도로명주소 location
-            	dto.setLat(((object.get("faciPointY")).toString()).replace("\"", ""));
-            	dto.setLon(((object.get("faciPointX")).toString()).replace("\"", ""));
+            	dto.setLat(((object.get("faciPointY")).toString()).replace("\"", "").replace("-",""));
+            	dto.setLon(((object.get("faciPointX")).toString()).replace("\"", "").replace("-",""));
             	
             	list.add(dto);
             	

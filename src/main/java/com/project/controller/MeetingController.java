@@ -44,7 +44,7 @@ public class MeetingController {
 	@Autowired
 	@Qualifier("userFileUtil")
 	UserFileUtil userFileUtil;
-
+	
 	@RequestMapping(value = "/main.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView main(HttpServletRequest req) throws Exception {
 
@@ -64,10 +64,8 @@ public class MeetingController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("main");
 
-		// 내메세지 가져오기
-		List<msgDTO> msgList = roomDao.getMsgList(info.getUserId());
-
-		mav.addObject("msgList", msgList);
+		
+		
 
 		return mav;
 
@@ -107,7 +105,6 @@ public class MeetingController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/login/login");
-
 		return mav;
 	}
 
