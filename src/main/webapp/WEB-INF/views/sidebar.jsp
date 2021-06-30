@@ -70,8 +70,8 @@
                     <i class="fas fa-fw fa-folder"></i>
                     <span>방</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                <div id="collapseTwo" class="collapse" aria-expanded="true" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded" >
                         <h6 class="collapse-header"><a class="small" href="<%=cp%>/index.action">방 카테고리</a></h6>
                         <a class="collapse-item" href="<%=cp%>/list.action">전체</a>
                         <a class="collapse-item" href="<%=cp%>/list.action?subject=여행">여행</a>

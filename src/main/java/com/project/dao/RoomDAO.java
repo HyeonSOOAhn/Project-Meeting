@@ -260,6 +260,11 @@ private SqlSessionTemplate sessionTemplate;
 			
 			sessionTemplate.insert("com.roomMapper.addMember",map);
 		}
+		public void addManager(String userId) {
+			
+			sessionTemplate.insert("com.roomMapper.addManager",userId);
+		}
+	
 		public void changeRequestReject(int msgNum) {
 
 			Map<String, Integer> map = new HashMap<String, Integer>();

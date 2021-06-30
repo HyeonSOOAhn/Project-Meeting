@@ -84,7 +84,7 @@
 			aria-expanded="false"> <span
 				class="mr-2 d-none d-lg-inline text-gray-600 small">[${sessionScope.userInfo.userName}]
 					님 반갑습니다.</span> 
-					<img class="img-profile rounded-circle"
+					<img class="img-profile rounded-circle" style="border: 1px solid black;"
 					src="/meeting/image/${sessionScope.userInfo.ustoredFileName}"/>
 		</a> 
 		
@@ -126,12 +126,8 @@
 					<textarea class="modalIntroduce" rows="10" cols="73" disabled="disabled" style="resize: none; background-color: #fff"></textarea>
 				</div>
 				<div class="modal-footer">
-
-					
 						<a class="btn btn-primary" href="#" onclick="requestAccept();">수락</a>
 						<a class="btn btn-danger" href="#" onclick="requestReject();">거절</a>
-						
-
 				</div>
 			</div>
 		</div>

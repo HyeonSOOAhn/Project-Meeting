@@ -24,6 +24,9 @@ public class RegisterDAO {
 	public void insertUserData(Map<String, Object> map) {
 		sessionTemplate.insert("com.Mapper.insertUserData", map);
 	}
+	public void insertData(UserDTO dto) {
+		sessionTemplate.insert("com.Mapper.insertData",dto);
+	}
 
 	public int checkId(String userId) {
 
@@ -74,18 +77,17 @@ public class RegisterDAO {
 
 	}
 
-	public void updateUserData(Map<String, Object> map) {
-
-		sessionTemplate.update("com.Mapper.updateUserData", map);
-
-	}
-
-	public void deleteUserData(String userId) {
-
-		sessionTemplate.delete("com.Mapper.deleteUserData", userId);
-
-	}
+	
 	//myPage
+	public void updateProfileImg(Map<String, String> map) {
+		sessionTemplate.update("com.Mapper.updateProfileImg",map);
+	}
+	public void updateUserData(UserDTO dto) {
+		sessionTemplate.update("com.Mapper.updateUserData", dto);
+	}
+	public void deleteUserData(String userId) {
+		sessionTemplate.delete("com.Mapper.deleteUserData", userId);
+	}
 	public List<RoomDTO> getManageList(String manager){
 		return sessionTemplate.selectList("com.Mapper.getManageList",manager);
 	}
