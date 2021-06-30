@@ -28,7 +28,9 @@ public class RecoDAO{
 		map.put("searchValue", searchValue);
 		
 		int maxNum = sessionTemplate.selectOne("com.recoMapper.getMaxNum",map);
+
 		
+		System.out.println(maxNum);
 		maxNum = (maxNum/100)+1;
 		System.out.println(maxNum);
 		return maxNum;

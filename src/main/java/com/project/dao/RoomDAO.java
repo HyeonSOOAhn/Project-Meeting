@@ -7,9 +7,10 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.project.dto.RoomDTO;
+import com.project.dto.msgDTO;
 
 public class RoomDAO {
-	
+
 private SqlSessionTemplate sessionTemplate;
 	
 	//의존성 주입
@@ -217,5 +218,61 @@ private SqlSessionTemplate sessionTemplate;
 		return lists;
 			
 	}
+	// 메세지
+		public void insertMsg(msgDTO dto) {
+
+			sessionTemplate.insert("com.roomMapper.insertMsg", dto);
+
+		}
+
+		public List<msgDTO> getMsgList(String userId) {
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("recipient", userId);
+
+			List<msgDTO> lists = sessionTemplate.selectList("com.roomMapper.getMsgList", map);
+
+			return lists;
+		}
+
+		public void changeRequestAccept(int msgNum) {
+
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("msgNum", msgNum);
+
+			sessionTemplate.update("com.roomMapper.changeRequestAccept", map);
+
+		}
+		public int existMsg(int roomNum,String userId) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("sender", userId);
+			map.put("roomNum", roomNum);
+			
+			return sessionTemplate.selectOne("com.roomMapper.existMsg",map);
+			
+		}
+		
+		public void addMember(String userId,int roomNum) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("userId", userId);
+			map.put("roomNum", roomNum);
+			map.put("position", "멤버");
+			
+			sessionTemplate.insert("com.roomMapper.addMember",map);
+		}
+		public void addManager(String userId) {
+			
+			sessionTemplate.insert("com.roomMapper.addManager",userId);
+		}
+	
+		public void changeRequestReject(int msgNum) {
+
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("msgNum", msgNum);
+
+			sessionTemplate.update("com.roomMapper.changeRequestReject", map);
+
+		}
 
 }
+

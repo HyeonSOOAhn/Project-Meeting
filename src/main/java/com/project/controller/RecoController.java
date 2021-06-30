@@ -54,9 +54,7 @@ public class RecoController {
 		
 		int maxNum = dao.getMaxNum(subject,searchKey,searchValue);
 		List<RecoDTO> lists = dao.getLists(subject,searchKey,sort,searchValue,pageNum,lat,lon);
-		
-		
-		
+
 		model.addAttribute("searchKey",searchKey);
 		model.addAttribute("searchValue",searchValue);
 		model.addAttribute("pageNum", pageNum);
