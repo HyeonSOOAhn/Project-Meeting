@@ -43,8 +43,10 @@ public class RegisterDAO {
 
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("email", email);
-
-		return sessionTemplate.selectOne("com.Mapper.checkEmail", params);
+		
+		int result = sessionTemplate.selectOne("com.Mapper.checkEmail", params);
+		
+		return result;
 
 	}
 
