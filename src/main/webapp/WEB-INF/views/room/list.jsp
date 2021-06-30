@@ -67,6 +67,16 @@ div.right {
 	float: right;
 	box-sizing: border-box;
 }
+
+.certificationBtn{
+	text-decoration: none;
+	color: #3E4348;
+}
+.certificationBtn:hover {
+	text-decoration: none;
+	color: #C65146;
+}
+
 </style>
 
 </head>
@@ -147,13 +157,21 @@ div.right {
 
 
 							</c:when>
-
+						
 						</c:choose>
-						<c:if test="${!empty sessionScope.userInfo.userId }">
-							<a href="<%=cp%>/created.action?subject=${subject}"
-								class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-								class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
-						</c:if>
+						<c:choose>
+							<c:when test="${userRight==0 }">
+								<div class="d-none d-sm-inline-block ">  
+									이메일 인증이 필요합니다. 인증을 완료해주세요. <a class="certificationBtn btn btn-primary" href="myPage.action">인증하기</a>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<a href="<%=cp%>/created.action?subject=${subject}"
+									class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+									class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
+							
+							</c:otherwise>
+						</c:choose>
 					</div>
 
 					<!-- DataTales Example -->

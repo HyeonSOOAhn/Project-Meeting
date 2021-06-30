@@ -29,27 +29,6 @@
 <link href="css/room.css" rel="stylesheet">
 <link href="css/myPage.css" rel="stylesheet">
 
-<script type="text/javascript">
-    
-	    function removeCheck() {
-	
-	    	 if (confirm("정말 탈퇴하시겠습니까?") == true){//확인
-	
-	    	     document.remove.action = "<%=cp%>/userDeleted.action";
-	    	     document.remove.submit();
-	
-	    	 }else{//취소
-	
-	    	     return false;
-	
-	    	 }
-	
-	    }
-	    
-	 
-    
-    </script>
-
 <style type="text/css">
 
 .myInfo{
@@ -274,7 +253,9 @@
 										</div>
 									</div>
 									<c:if test="${dto.right == 0}">
-									<div style="text-align: center; margin-top: 10px;"><a href="#">이메일 인증하기</a></div>
+									<div style="text-align: center; margin-top: 10px;">
+										<a href="certification.action?email=${dto.email}">이메일 인증하기</a>
+									</div>
 									</c:if>
 									<div class="row" style="margin-top: 10px; ">
 										<div class="col-sm-7" style="margin: 2px;">
@@ -396,13 +377,8 @@
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			<footer class="sticky-footer bg-white">
-			<div class="container my-auto">
-				<div class="copyright text-center my-auto">
-					<span>Copyright &copy; Your Website 2020</span>
-				</div>
-			</div>
-			</footer>
+			<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
+
 			<!-- End of Footer -->
 
 		</div>

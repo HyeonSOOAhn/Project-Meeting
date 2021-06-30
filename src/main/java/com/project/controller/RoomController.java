@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.dao.RegisterDAO;
 import com.project.dao.RoomDAO;
 import com.project.dto.RoomDTO;
+import com.project.dto.UserDTO;
 import com.project.dto.UserInfo;
 import com.project.dto.msgDTO;
 import com.project.util.RoomFileUtil;
@@ -32,6 +34,9 @@ public class RoomController {
 	@Autowired
 	@Qualifier("roomDAO")
 	RoomDAO dao;
+	
+	@Autowired
+	RegisterDAO regiDao;
 	
 	@Autowired
 	@Qualifier("pageUtil")
@@ -97,10 +102,8 @@ public class RoomController {
 			dao.insertData(lists.get(i));
 		}
 		
-		// 여기
-		//System.out.println(dto.getRoomNum());
 		
-		//dao.addMember(dto.getManager(), dto.getRoomNum(),"방장");
+		dao.addManager(dto.getManager());
 		
 		
 		return "redirect:/list.action";
@@ -121,6 +124,8 @@ public class RoomController {
 			
 			return "main";
 		}
+		
+		UserDTO userDto = regiDao.getUserInfo(info.getUserId());
 		
 		String subject = request.getParameter("subject");
 		
@@ -232,6 +237,7 @@ public class RoomController {
 		request.setAttribute("articleUrl", articleUrl);
 		//request.setAttribute("fileList", fileList);
 		request.setAttribute("imagePath", imagePath);
+		request.setAttribute("userRight", userDto.getRight());
 		
 		return "room/list";
 		
@@ -434,7 +440,7 @@ public class RoomController {
 		// 메시지 상태 수락으로 바꾸기
 		dao.changeRequestAccept(Integer.parseInt(msgNum));
 		//멤버 추가
-		dao.addMember(sender, Integer.parseInt(roomNum),"멤버");
+		dao.addMember(sender, Integer.parseInt(roomNum));
 
 		return "success";
 	}

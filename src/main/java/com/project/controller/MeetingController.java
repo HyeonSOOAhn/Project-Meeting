@@ -15,6 +15,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -276,10 +277,14 @@ public class MeetingController {
 		
 		map.put("userId", info.getUserId());
 		dao.updateProfileImg(map);
+		dto = dao.getUserInfo(info.getUserId());
+		
+		session.removeAttribute("userInfo");
 		
 		info.setUstoredFileName(dto.getUstoredFileName());
-		session.removeAttribute("userInfo");
+		
 		session.setAttribute("userInfo", info);
+
 		session.setMaxInactiveInterval(60 * 30);
 		
 		return "success";
@@ -303,6 +308,16 @@ public class MeetingController {
         map.put("uoriginalFileName", "basic.png");
         map.put("userId", info.getUserId());
 		dao.updateProfileImg(map);
+		
+		dto = dao.getUserInfo(info.getUserId());
+		
+		session.removeAttribute("userInfo");
+		
+		info.setUstoredFileName(dto.getUstoredFileName());
+		
+		session.setAttribute("userInfo", info);
+
+		session.setMaxInactiveInterval(60 * 30);	
 		
 		return "success";
 	}
@@ -368,6 +383,53 @@ public class MeetingController {
 
 		return "success";
 
+	}
+	@RequestMapping(value = "/certification.action", method = { RequestMethod.GET })
+	public String certification(HttpServletRequest request,@RequestParam("email") String email) throws Exception {
+		
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		String randomStr = "";
+		
+
+		try {
+			MimeMessage mail = mailSender.createMimeMessage();
+			MimeMessageHelper mailHelper = new MimeMessageHelper(mail, true, "UTF-8");
+			randomStr = UserFileUtil.getRandomString();
+			
+			mailHelper.setFrom("Meeting");
+			mailHelper.setTo(email);
+			mailHelper.setSubject("이메일 인증 메일입니다. 아래의 문자를 정확히 입력하세요");
+			mailHelper.setText(randomStr);
+
+			mailSender.send(mail);
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		request.setAttribute("sendedEmail", "등록된 이메일주소로 메일을 보냈습니다. 확인해 주세요.");
+		request.setAttribute("randomStr", randomStr);
+		
+		
+		return "register/certification";
+	}
+	
+	@RequestMapping(value = "/certification_ok.action", method = { RequestMethod.POST})
+	public @ResponseBody String certification_ok(HttpServletRequest request) throws Exception {
+		
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		UserDTO dto = dao.getUserInfo(info.getUserId());
+		
+		dto.setRight(1);
+		
+		dao.updateUserData(dto);
+		
+		
+		return "success";
 	}
 
 }
