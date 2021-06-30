@@ -9,22 +9,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <!-- 데이터 총 갯수 불러오기 -->
-<select id="getMaxNum2" parameterType="String" resultType="int">
+<select id="getMaxNum" parameterType="String" resultType="int">
 	 
-		select max(rnum)
-		from
-			(select 
-				rownum as rnum, a.* 
-			from 
-				Recommend a 
-			where 
-				subject=#{subject})
+		select count(recoNum) from recommend where subject=#{subject}
 	
 </select>
 
 
 <!-- 서브젝트별 db불러오기 -->
-<select id="getLists2" parameterType="hashmap" resultType="com.project.dto.RecoDTO">
+<select id="getLists" parameterType="hashmap" resultType="com.project.dto.RecoDTO">
 	
 	select *
 	from
@@ -44,12 +37,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 <!-- dto하나 불러오기 -->
-<select id="getReadData2" parameterType="int" resultType="com.project.dto.RecoDTO">
+<select id="getReadData" parameterType="int" resultType="com.project.dto.RecoDTO">
 select * from Recommend where recoNum=#{recoNum}
 </select>
 
 <!-- 업데이트 -->
-<update id="insertData2" parameterType="com.project.dto.RecoDTO">
+<update id="insertData" parameterType="com.project.dto.RecoDTO">
 
 	MERGE INTO Recommend
 	USING DUAL ON (recoNum = #{recoNum})

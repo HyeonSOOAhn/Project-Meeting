@@ -27,7 +27,11 @@
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 <link href="css/register.css" rel="stylesheet">
 
-
+<style type="text/css">
+#file {
+	display: none;
+}
+</style>
 
 
 </head>
@@ -46,7 +50,8 @@
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
 							</div>
-							<form name="myForm" class="user" method="post">
+							<form name="myForm" class="user" method="post"
+								enctype="multipart/form-data">
 
 								<div class="form-group">
 									<span class="errorMessage nameCon hide"></span>
@@ -54,7 +59,7 @@
 
 								<div class="form-group row">
 									<div class="col-sm-8">
-										<input type="text" name="userName"
+										<input type="text" name="name"
 											class="form-control form-control-user btn-active"
 											id="userName" placeholder="이름">
 									</div>
@@ -63,8 +68,7 @@
 										style="vertical-align: middle; text-align: left;">
 										<input type="radio" id="man" value=1 name="gender"
 											style="display: none;"> <label for="man"
-											class="genderLabel"><span>남</span></label> 
-										<input
+											class="genderLabel"><span>남</span></label> <input
 											type="radio" id="woman" value=2 name="gender"
 											style="display: none;"> <label for="woman"
 											class="genderLabel"><span>여</span></label>
@@ -104,8 +108,9 @@
 									<span class="errorMessage emailCon hide"></span>
 								</div>
 
+								<!-- type="email" -->
 								<div class="form-group">
-									<input type="email" name="email"
+									<input type="text" name="email"
 										class="form-control form-control-user btn-active"
 										id="InputEmail" placeholder="이메일">
 								</div>
@@ -138,21 +143,20 @@
 										placeholder="전화번호">
 								</div>
 
-
 								<input type="button" value="Register Account"
 									disabled="disabled"
 									class="btn btn-primary registerBtn btn-user btn-block"
 									onclick="sendIt();" />
-								<hr>
+								
 
 							</form>
 							<hr>
 							<div class="text-center">
-								<a class="small" href="forgot-password.html">Forgot
+								<a class="small" href="forgotPwd.action">Forgot
 									Password?</a>
 							</div>
 							<div class="text-center">
-								<a class="small" href="login.html">Already have an account?
+								<a class="small" href="main.action">Already have an account?
 									Login!</a>
 							</div>
 						</div>
@@ -181,9 +185,22 @@
 			f.action = "<%=cp%>/register_ok.action";
 			f.submit();
 		}
+		
+		//파일 버튼
+		$(function() {
+			
+			$('#btn').click(function (e) {
+				e.preventDefault();
+				$('#file').click();
+			});
+			
+		});
+		
+		function changeValue(obj) {
+			alert(obj.value);
+		}
 	
-	</script>]
-
+	</script>
 
 </body>
 

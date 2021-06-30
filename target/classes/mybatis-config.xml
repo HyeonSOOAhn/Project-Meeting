@@ -5,13 +5,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-	
 	<!-- myBatis 영역 -->
 	<!-- Spring에서는 생략 -->
 	<!-- 다른 프레임워크 붙일 수 있다 - DB위치 적기 -->
 	<properties>
 		<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@localhost:1522:orcl"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:TestDB"/>
 		<property name="username" value="suzi"/>
 		<property name="password" value="a123"/>
 	</properties>
@@ -34,6 +33,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="com/project/mybatis/Mapper.xml"/>
 		<mapper resource="com/project/mybatis/roomMapper.xml"/>
 		<mapper resource="com/project/mybatis/recoMapper.xml"/>
+		<mapper resource="com/project/mybatis/RoomInfoMapper.xml"/>
 	</mappers>
-	
 </configuration>

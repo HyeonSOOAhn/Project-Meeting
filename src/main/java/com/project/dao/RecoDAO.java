@@ -1,9 +1,11 @@
 package com.project.dao;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.project.dto.RecoDTO;
@@ -22,8 +24,10 @@ public class RecoDAO {
 	//끝페이지 구하기
 	public int getMaxNum(String subject) {
 		
+		
 		int maxNum = sessionTemplate.selectOne("com.recoMapper.getMaxNum",subject);
 		
+		System.out.println(maxNum);
 		maxNum = (maxNum/100)+1;
 		
 		return maxNum;
