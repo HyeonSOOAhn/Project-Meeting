@@ -40,7 +40,7 @@
   - 추천장소 API : 전국의 도서관, 운동시설, 관광지를 보여줌
 
 
-  - 검색필터 : 사용자가 검색하기 편하도록 필터를 사용
+  - 검색필터 : 사용자가 검색하기 편하도록 필터를 사용, Geolcation을 이용한 내위치 기반 거리순 
 
 
 
@@ -77,13 +77,34 @@
 
 
 ## 기능구현
-  - 
+  - 추천 장소 API
+  <!-- 업데이트 -->
+  <update id="insertData" parameterType="com.project.dto.RecoDTO">
+
+    MERGE INTO Recommend
+    USING DUAL ON (recoNum = #{recoNum})
+    WHEN MATCHED THEN
+    UPDATE SET
+    subject = #{subject},keyword = #{keyword},
+    title = #{title, jdbcType=VARCHAR}, introduce = #{introduce, jdbcType=VARCHAR},content = #{content, jdbcType=VARCHAR},
+    location = #{location, jdbcType=VARCHAR},
+    lat = #{lat, jdbcType=VARCHAR},lon = #{lon, jdbcType=VARCHAR}
+    WHEN NOT MATCHED THEN
+    INSERT
+    (recoNum,subject,keyword,title,
+    introduce,content,location,lat,lon)
+    VALUES
+    (#{recoNum},#{subject},#{keyword},
+    #{title, jdbcType=VARCHAR}, #{introduce, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},
+    #{location, jdbcType=VARCHAR},
+    #{lat, jdbcType=VARCHAR},#{lon, jdbcType=VARCHAR})
+  </update>
 
 ## Collaborator
 @DYKIM9866<br>
 
 @HyeonSOOAhn<br>
-추천목록, (도서관,운동시설,관광지)파싱 후 view단에 뿌리기, 데이터 상세페이지, 데이터 상세페이지 리뷰&평점, 카카오맵api를 이용한 추천장소 지도 띄우기, Geolocation api를 이용한 내위치 기반 거리순 정렬, 검색필터, 인터셉터를 이용한 로그인 세션확인 
+추천목록, (도서관,운동시설,관광지)파싱 후 view단에 뿌리기, 데이터 상세페이지, 데이터 상세페이지 리뷰&평점, 카카오맵API를 이용한 추천장소 지도 띄우기, Geolocation api를 이용한 내위치 기반 거리순 정렬, 검색필터, 인터셉터를 이용한 로그인 세션확인 
 @kth0423<br>
 
 @stbhg5<br>
