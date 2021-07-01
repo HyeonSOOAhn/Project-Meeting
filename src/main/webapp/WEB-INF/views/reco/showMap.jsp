@@ -88,18 +88,22 @@
 						<span><a href="javascript:openWindowPop('https://map.kakao.com/link/to/${list.title },${list.lat },${list.lon}', '갈찾기');">
 						<img alt="kakao_map" src="img/map.png"></a></span>
 						<br/>
-						<c:choose>
-							<c:when test="${list.subject eq 'study'}">
-								<button onclick="location.href = 'created.action?subject=공부&recoNum=${list.recoNum}'" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
-							</c:when>
-							<c:when test="${list.subject eq 'travel'}">
-								<button onclick="location.href = 'created.action?subject=여행&recoNum=${list.recoNum}'" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
-							</c:when>
-							<c:when test="${list.subject eq 'sports'}">
-								<button onclick="location.href = 'created.action?subject=운동&recoNum=${list.recoNum}'" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
-							</c:when>
-						</c:choose>
-						
+						<c:if test="${dto.right==1 }">
+							<c:choose>
+								<c:when test="${list.subject eq 'study'}">
+									<button onclick="location.href = 'created.action?subject=공부&recoNum=${list.recoNum}'" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
+								</c:when>
+								<c:when test="${list.subject eq 'travel'}">
+									<button onclick="location.href = 'created.action?subject=여행&recoNum=${list.recoNum}'" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
+								</c:when>
+								<c:when test="${list.subject eq 'sports'}">
+									<button onclick="location.href = 'created.action?subject=운동&recoNum=${list.recoNum}'" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
+								</c:when>
+							</c:choose>
+						</c:if>
+						<c:if test="${dto.right!=1 }">
+							<button onclick="alert('이메일 인증을 해주세요!');location.href = 'myPage.action';" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
+						</c:if>
 						<br/>
 						<br/>
 						<!--  -->

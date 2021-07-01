@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
+	String cp = request.getContextPath();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -223,14 +223,14 @@ h1 {
 	
 								<div class="form-group">
 									<!-- 마이룸 테이블의 member 가져오기 : dto.manager || dto.member -->
-									<c:if test="${sessionScope.userInfo.userId != dto.manager}">
+									<c:if test="${sessionScope.userInfo.userId != dto.manager || sessionScope.userInfo.userId != memberUserId}">
 										<a data-toggle="modal" href="#proposeRoom" 
 											data-roomnum="${dto.roomNum }" data-title = "${dto.title}"
 											class="btn btn-primary btn-user btn-propose btn-size"> 방 참여 신청하기 </a>
 	
 									</c:if>
 									<!-- 마이룸 테이블의 member 가져오기 : dto.manager && dto.member -->
-									<c:if test="${sessionScope.userInfo.userId == dto.manager}">
+									<c:if test="${sessionScope.userInfo.userId == dto.manager || sessionScope.userInfo.userId == memberUserId}">
 										<a href="<%=cp%>/tmain.action?roomNum=${dto.roomNum }" class="btn btn-primary btn-user btn-block">
 										방 참가하기</a>
 									</c:if>
@@ -393,4 +393,5 @@ h1 {
 	<script src="js/sb-admin-2.min.js"></script>
 
 </body>
+>>>>>>> branch 'develop' of https://github.com/DYKIM9866/Project-Meeting.git
 </html>

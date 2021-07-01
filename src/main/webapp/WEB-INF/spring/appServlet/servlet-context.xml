@@ -89,7 +89,8 @@
 	        </beans:bean> 
 	    </beans:property> 
 	</beans:bean>
-
+	
+	
 	<!-- 인터셉터 -->
 	<interceptors>
 		<interceptor>
@@ -102,6 +103,4 @@
 			<beans:bean class="com.project.util.AuthInterceptor"/>
 		</interceptor>
 	</interceptors>
-	
-</beans:beans>
-
+	</beans:beans>

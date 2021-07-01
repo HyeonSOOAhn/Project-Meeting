@@ -41,15 +41,23 @@
 	</script>
     
     <style type="text/css">
+    
+    	h3 {
+    		font: italic bold 1em/1em Georgia, serif;
+			color: #4D71DB;
+			display: inline;
+    	}
 
 		h2 {
 			font: italic bold 1em/1em Georgia, serif;
+			background-color: #C0C0C0;
 			color: #4D71DB;
 			display: inline;
 		}
 		
 		h1 {
 			font: italic bold 3em/1em Georgia, serif;
+			background-color: #C0C0C0;
 			color: #000000;
 			display: inline;
 		}
@@ -86,7 +94,7 @@
 				
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid" style="background-size: cover;background-image: url('<spring:url value="/upload/${storedFileName }"/>');">
 
                     <!-- Page Heading -->
                     
@@ -169,8 +177,8 @@
 													&nbsp;&nbsp;<u>${dto.userId }</u>&nbsp;&nbsp;/&nbsp;&nbsp;<u>${dto.name }</u><br/><br/>
 													
 													<a href="${tarticleUrl }&roomNum=${dto.roomNum }&tingNum=${dto.tingNum}">
-													<h2>${dto.title }</h2><br/><br/>
-													<p style="background-color: #FFFFFF;">${dto.content }</p><br/><br/>
+													<h3>${dto.title }</h3><br/><br/>
+													<p style="background-color: #F8F9FC;">${dto.content }</p><br/><br/>
 													</a>
 													
 													작성일 : ${dto.created }<br/>
@@ -205,7 +213,7 @@
 
                             <div class="col-lg-10 mb-4">
 									<button class="card bg-primary text-white shadow"
-										" onclick="javascript:location.href='<%=cp%>/.action'">
+										onclick="javascript:location.href='<%=cp%>/rroom.action?roomNum=${roomNum}&mode1=notice'" style="border-color: #4D71DB;">
 										<div class="card-body" align="left">
 											공 지 사 항
 											<div class="text-white-50 small">방장님이 올려주시는 공지사항을 잘 확인하여
@@ -216,7 +224,7 @@
                             
                             <div class="col-lg-10 mb-4">
 									<button class="card bg-primary text-white shadow"
-										" onclick="javascript:location.href='<%=cp%>/.action'">
+										onclick="javascript:location.href='<%=cp%>/rroom.action?roomNum=${roomNum}&mode1=vote'" style="border-color: #4D71DB;">
 										<div class="card-body" align="left">
 											투 표 하 기
 											<div class="text-white-50 small">두구두구 어떤 투표가 올라왔는지 확인해볼까요?
@@ -227,7 +235,7 @@
                             
                             <div class="col-lg-10 mb-4">
 									<button class="card bg-primary text-white shadow"
-										" onclick="javascript:location.href='<%=cp%>/.action'">
+										onclick="javascript:location.href='<%=cp%>/rroom.action?roomNum=${roomNum}&mode1=schedule'" style="border-color: #4D71DB;">
 										<div class="card-body" align="left">
 											달 력 보 기
 											<div class="text-white-50 small">가장 중요한 일정을 정하기 위해 달력을 보면서
