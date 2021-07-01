@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select storedFileName from roomFile where roomNum = #{roomNum} and DEL_GB = 'N'
 	</select>
 	 -->
-	<insert id="insertData" parameterType="hashMap">
+	<insert id="insertData" parameterType="com.project.dto.RoomDTO">
 		insert into wholeRoom (roomNum,subject,title,keyword,introduce,created,
 		totalP,currentP,manager,originalFileName,storedFileName)
 		values (roomNum_SEQ.NEXTVAL,#{subject},#{title},#{keyword},#{introduce},sysdate,

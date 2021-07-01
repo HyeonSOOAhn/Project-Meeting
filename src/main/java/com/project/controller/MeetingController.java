@@ -119,8 +119,10 @@ public class MeetingController {
 
 
 	@RequestMapping(value = "/login_ok.action", method = RequestMethod.POST)
-	public String login_ok(String userId, String userPwd, String email, String rememberBtn, HttpServletRequest req)
+	public String login_ok(String userId, String userPwd,HttpServletRequest req)
 			throws Exception {
+		
+		
 		
 		//공백 거르기
 		if(userId.equals("")) {
@@ -133,13 +135,16 @@ public class MeetingController {
 		}
 
 		// 아이디 or 이메일 존재하는지 있다면 비밀번호 맞는지 확인하는 거 구현
-		if (dao.checkId(userId) == 0 && dao.checkEmail(email) == 0) {
-			req.setAttribute("noExistInfo", "아이디/이메일이나 비밀번호가 틀렸습니다.");
-			return "/login/login";
-		}
+		if (dao.checkId(userId) == 0 ) {
+			if(dao.checkEmail(userId) == 0) {
 
+				req.setAttribute("noExistInfo", "정보가 정확하지 않습니다.");
+				return "/login/login";
+			}
+		}
 		if (!dao.checkPwd(userId).equals(userPwd)) {
-			req.setAttribute("noExistInfo", "아이디/이메일이나 비밀번호가 틀렸습니다.");
+
+			req.setAttribute("noExistInfo", "정보가 정확하지 않습니다.");
 			return "/login/login";
 		}
 
@@ -266,6 +271,7 @@ public class MeetingController {
 		
 		//파일 올리기
 		Map<String, String> map = userFileUtil.changeProfile(mpRequest);
+		
 		UserDTO dto = dao.getUserInfo(info.getUserId());
 		
 		if(dto.getUstoredFileName() != "basic.png" && !dto.getUstoredFileName().equals("basic.png")) {
