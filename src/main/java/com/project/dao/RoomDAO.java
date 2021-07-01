@@ -23,8 +23,12 @@ public class RoomDAO {
 	//전체 방 --------------------------------------------------------------
 	//입력
 	public void insertData(RoomDTO dto) {
-		
 		sessionTemplate.insert("com.roomMapper.insertData", dto);
+	}
+	
+	public void updateProfileImg(Map<String, String> map) {
+		
+		sessionTemplate.update("com.roomMapper.updateProfileImg",map);
 		
 	}
 	

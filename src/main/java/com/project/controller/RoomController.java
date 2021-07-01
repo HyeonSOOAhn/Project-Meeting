@@ -330,23 +330,6 @@ public class RoomController {
 		
 	}
 	
-	@RequestMapping(value = "/updated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String updated_ok(RoomDTO dto,HttpServletRequest request,MultipartHttpServletRequest mpRequest) throws Exception {
-		
-		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
-		
-		List<Map<String, Object>> lists = roomFileUtil.parseUpdateFileInfo(dto, mpRequest);
-		
-		int size = lists.size();
-		
-		for(int i=0;i<size;i++) {
-			dao.updateData(lists.get(i));
-		}
-		
-		return "redirect:/tmain.action?roomNum=" + roomNum;
-		
-	}
-
 	//삭제
 	@RequestMapping(value = "/deleted.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String deleted(HttpServletRequest request) throws Exception {
@@ -424,6 +407,29 @@ public class RoomController {
 		// 메시지 상태 거절로 바꾸기
 		dao.changeRequestReject(Integer.parseInt(msgNum));
 		
+		return "success";
+	}
+	@RequestMapping(value = "/alterationRoomProfileImg.action", method = { RequestMethod.POST })
+	public @ResponseBody String alterationProfileImg(MultipartHttpServletRequest mpRequest) 
+			throws Exception {
+		HttpSession session = mpRequest.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		//파일 올리기
+		MultipartFile mf = mpRequest.getFile("roomProfile");
+		Map<String, String> map = roomFileUtil.uploadRoomProfile(mf);
+		
+		String roomNum = mpRequest.getParameter("roomNum");
+		
+		RoomDTO dto = dao.getReadData(Integer.parseInt(roomNum));
+		
+		roomFileUtil.parseDeleteFileInfo(dto.getStoredFileName());
+		
+		map.put("roomNum", Integer.toString(dto.getRoomNum()));
+		
+		dao.updateProfileImg(map);
+		
+
 		return "success";
 	}
 	
