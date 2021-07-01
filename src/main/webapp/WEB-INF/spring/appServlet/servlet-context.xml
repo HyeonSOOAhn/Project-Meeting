@@ -54,6 +54,14 @@
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
 	
+	<beans:bean id="tingDAO" class="com.project.dao.TingDAO">
+		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
+	</beans:bean>
+	
+	<beans:bean id="tingCommentDAO" class="com.project.dao.TingCommentDAO">
+		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
+	</beans:bean>
+	
 	<!-- MyBatis DB연결 -->
 	<beans:bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg ref="sessionFactory"/>
@@ -94,5 +102,4 @@
 			<beans:bean class="com.project.util.AuthInterceptor"/>
 		</interceptor>
 	</interceptors>
-
 </beans:beans>

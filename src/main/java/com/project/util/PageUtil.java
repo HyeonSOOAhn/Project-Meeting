@@ -143,6 +143,60 @@ public class PageUtil {
 		return sb.toString(); // 스트링 버퍼를 스트링으로 변환!!
 
 	}
+	
+	//자바스크립트로 페이징 처리
+	public String pageIndexList(int currentPage,int totalPage) {
+		
+		int numPerBlock = 5;
+		int currentPageSetup;
+		
+		//int n;
+		int page;
+		String strList = "";
+		
+		if(currentPage==0) {
+			return "";
+		}
+		
+		//표시할 첫 페이지
+		currentPageSetup = (currentPage/numPerBlock)*numPerBlock; //공식
+		
+		if(currentPage%numPerBlock==0) {
+			currentPageSetup=currentPageSetup-numPerBlock;
+		}
+		
+		//◀이전
+		//n = currentPage - numPerBlock;
+		//n = currentPageSetup;
+		if(totalPage>numPerBlock && currentPageSetup>0) {
+			strList += "<a onclick='listPage(" + currentPageSetup + ");'>◀이전</a>&nbsp;"; //자바스크립트 함수실행
+		}
+		
+		//바로가기 페이지
+		page = currentPageSetup + 1;
+		
+		while((page<=totalPage) && (page<=currentPageSetup+numPerBlock)) {
+			
+			if(page==currentPage) {
+				strList += "<font color='Fuchsia'>" + page + "</font>&nbsp;";
+			}else {
+				strList += "<a onclick='listPage(" + page + ");'>" + page + "</a>&nbsp;";
+			}
+			
+			page++;
+			
+		}
+		
+		//다음▶
+		//n = currentPage + numPerBlock + 1;
+		//n = currentPageSetup + numPerBlock + 1;
+		if(totalPage-currentPageSetup > numPerBlock) {
+			strList += "<a onclick='listPage(" + page + ");'>다음▶</a>&nbsp;";
+		}
+		
+		return strList;
+		
+	}
 
 }
 

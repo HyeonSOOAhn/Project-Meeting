@@ -126,7 +126,7 @@ p {
 									</button>
 								</div>
 								<div class="col-lg-6 mb-4">
-									<button class="card bg-info text-white shadow"
+									<button class="card bg-warning text-white shadow"
 										" onclick="javascript:location.href='<%=cp%>/list.action?subject=공부'">
 										<div class="card-body" align="left">
 											공 부
