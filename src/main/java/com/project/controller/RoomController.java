@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -111,19 +112,17 @@ public class RoomController {
 	@RequestMapping(value = "/created_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String created_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
 		
-		//dao.insertData(dto);
+		HttpSession session = mpRequest.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
 		
-		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
+		//파일 올리기
+		MultipartFile mf = mpRequest.getFile("roomProfileFile");
+		Map<String, String> map = roomFileUtil.uploadRoomProfile(mf);
 		
-		int size = lists.size();
-		
-		for(int i=0;i<size;i++) {
-			dao.insertData(lists.get(i));
-		}
-		
-		
-		dao.addManager(dto.getManager());
-		
+		dto.setStoredFileName(map.get("storedFileName"));
+		dto.setOriginalFileName(map.get("originalFileName"));
+		dao.insertData(dto);
+		dao.addManager(info.getUserId());
 		
 		return "redirect:/list.action";
 		
@@ -347,7 +346,7 @@ public class RoomController {
 		return "redirect:/tmain.action?roomNum=" + roomNum;
 		
 	}
-	
+
 	//삭제
 	@RequestMapping(value = "/deleted.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String deleted(HttpServletRequest request) throws Exception {

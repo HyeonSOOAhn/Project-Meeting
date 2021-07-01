@@ -52,12 +52,122 @@ String cp = request.getContextPath();
 		color: #000000;
 		display: inline;
 	}
+	
+.card-css{
+	background-color: #C7D4D4;
+}
+
+.articleProfileContainer{
+	text-align: center;
+	vertical-align:middle;
+	padding: 20px;
+	height: 400px;
+	
+	
+}
+.articleProfileImgContainer{
+	text-align: center;
+	vertical-align:middle;
+	margin-top: 20px;
+}
+
+.articleProfileImg{
+	border: 0.05rem solid #263959;
+	border-radius: 100%;
+	width: 300px;
+	height: 300px;
+}
+.articleProfileChange{
+	text-align: right;
+	
+}
+.articleProfileChangeA{
+	color: #000;
+	transition: .5s;
+	font-weight: 600;
+}
+.articleProfileChangeA:hover{
+	color: #000;
+	text-decoration: none;
+	font-weight: 600;
+	text-shadow: 1px 1px 1px gray;
+	transition: .5s;
+}
+
+.articleProfileCategoryContainer{
+	text-align: left;
+}
+
+.articleProfileCategory{
+	color: #000;
+	margin: 10px;
+	font-size: 1.0rem;
+	font-weight: 600;
+}
+.articleTitle{
+	font-size: 2.6rem;
+	font-weight: 900;
+	color: #000000;
+}
+.articleTag{
+	font-size: 1rem;
+	font-weight: 700;
+	color:  #CBCDD4; 
+}
+.articleP{
+	margin: 0;
+	margin-bottom: 10px;
+}
+.articleFormGroup{
+	margin-bottom: 5px; 
+}
+
+.bg-article-travle-basic{
+	background-image: url("https://source.unsplash.com/featured/?travel");
+	background-size: cover;
+}
+.bg-article-study-basic{
+	background-image: url("https://source.unsplash.com/featured/?study");
+	background-size: cover;
+}
+.bg-article-restaurant-basic{
+	background-image: url("https://source.unsplash.com/featured/?restaurant");
+	background-size: cover;
+}
+.bg-article-exercise-basic{
+	background-image: url("https://source.unsplash.com/featured/?weight-training");
+	background-size: cover;
+}
+.articleBottomContainer{
+	padding: 25px;
+}
+.articleBottom{
+	border-radius: 10px;
+	background-color: #f4f5f9;
+}
+.btn-size{
+	width: 30%;
+}
+
+.backWholeList{
+	color: #000;
+	font-size: 9px;
+}
+.backWholeList:hover{
+	color: #263959;
+	text-decoration: none;
+}
 
 </style>
 
 </head>
+<c:choose>
+	<c:when test="${dto.subject eq '운동' }"><body class="bg-article-exercise-basic"></c:when>
+	<c:when test="${dto.subject eq '여행' }"><body class="bg-article-travle-basic"></c:when>
+	<c:when test="${dto.subject eq '맛집' }"><body class="bg-article-restaurant-basic"></c:when>
+	<c:when test="${dto.subject eq '공부' }"><body class="bg-article-study-basic"></c:when>
+</c:choose>
 
-<body class="bg-gradient-primary">
 
 	<div class="container">
 
@@ -66,34 +176,26 @@ String cp = request.getContextPath();
 
 			<div class="col-xl-10 col-lg-12 col-md-9">
 
-				<div class="card o-hidden border-0 shadow-lg my-5">
+				<div class="card-css card o-hidden border-0 shadow-lg my-5" >
 
 					<!-- url('${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }'); -->
-					<div class="card-body p-0" align="left"
-						style="background-size: 920px 900px;background-image: url('<spring:url value="/upload/${dto.storedFileName }"/>');">
-
-						<br />
-						<br />
-						<br />
-						<br />
-						<br /> <br />
-						<br />
-						<br />
-						<br />
-						<br /> <br />
-						<br />
-						<br />
-						<br />
-						<br />
-
-
-						<div class="p-5">
-							<div>
-								<h2>${dto.subject}</h2>
-								<br /> <br />
-								<h1>${dto.title }</h1>
-								<br /> <br />
+					<div class="card-body p-0 articleBackground" align="left">
+					
+					
+					
+					<div class="articleProfileContainer" >
+						<div class="articleProfileCategoryContainer">
+							<p class="articleProfileCategory">카테고리 > ${dto.subject}</p>
+						</div>
+						<div class="articleProfileImgContainer">
+							<img class="articleProfileImg" src='<spring:url value="/upload/${dto.storedFileName }"/>'>
+						</div>
+						<c:if test="${sessionScope.userInfo.userId eq dto.manager}">
+							<div class="articleProfileChange">
+								<a class="articleProfileChangeA" href="#" onclick="roomProfileImgChange();">프로필 변경</a>
+								<div style="display: none;"><input name="roomProfile" type="file"/></div>
 							</div>
+						</c:if>
 
 							<div class="form-group">
 								<p>${dto.keyword }</p>
@@ -133,10 +235,9 @@ String cp = request.getContextPath();
 								</c:if>
 							</div>
 
-
 							<hr>
 							<div class="text-center">
-								<a class="small" href="<%=cp%>/list.action?${params }">전체 방
+								<a class="backWholeList" href="<%=cp%>/list.action?${params }">전체 방
 									목록으로 돌아가기</a>
 							</div>
 							
@@ -249,6 +350,9 @@ String cp = request.getContextPath();
 		        }
 		    }
 		
+		function roomProfileImgChange() {
+			$("input[name='roomProfile']").click();
+		}
 		
 	</script>
 	

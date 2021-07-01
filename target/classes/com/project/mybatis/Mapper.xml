@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="checkPwd" parameterType="map" resultType="String">
-		select userPwd from users where userId = #{userId}
+		select userPwd from users where userId = #{userId} or email =#{userId}
 	</select>
 	
 	<update id="resetPwd" parameterType="map">
@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getUserInfo" parameterType="map" resultType="com.project.dto.UserDTO">
 		select userNum,userId,userPwd,name,gender,email,tel,right,uoriginalFileName,ustoredFileName
-		from users where userId = #{userId}
+		from users where userId = #{userId} or email = #{userId}
 	</select>
 	
 	<!-- myPage -->
