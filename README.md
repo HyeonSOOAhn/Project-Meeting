@@ -1,5 +1,5 @@
 # Project-Meeting
-<img src="logo.bmp">
+![logo](https://user-images.githubusercontent.com/77277946/124152008-17106280-dace-11eb-99fa-2fb8c6ed6132.png){: width="100" height="100"}
 
 자바 스프링프레임워크를 이용한 미팅 웹서비스 개발
 "공통된 관심사를 기반으로한 모임 서비스"
@@ -26,17 +26,28 @@
   - 언어
     * JAVA(jdk1.6)
     * HTML5/CSS3
-    * JavaScript 'ES6'<br/>
+    * JavaScript 'ES6'
+
+
   - 프레임워크
     * Spring4.3.0
     * Jquery
     * Bootstrap
+
+
   - 서버(WAS)
     * Apache Tomcat v8.5
+
+
   - 개발도구
     * STS 3.0
+
+
   - 커뮤니티
     * Github
+
+## DATABASE
+![ERD](https://user-images.githubusercontent.com/77277946/124152011-1972bc80-dace-11eb-84c0-b5ec6e570a96.png){: width="100" height="100"}
 
 
 ## Collaborator
