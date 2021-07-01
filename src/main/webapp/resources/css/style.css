@@ -1,0 +1,51 @@
+﻿@CHARSET "UTF-8";
+
+* {
+	margin:0px;
+	padding:0px;
+}
+/* 
+body {	
+	font-size: 9pt;
+	font-family:굴림;
+}
+ */
+a {
+	cursor: hand;
+	color: #000000;
+	text-decoration: none;
+	font-size: 9pt;
+	line-height: 150%;
+}
+
+a:hover, a:active {
+	font-size: 9pt;
+	color: #F28011;
+	text-decoration: underline;
+}
+
+ul {
+	list-style: none;
+}
+/* 
+td {font-size: 9pt;}
+ */
+.btn1 {
+	font-size: 9pt; 
+	color:rgb(0,0,0); 
+	background-color:rgb(245,245,245); 
+	line-height:16px;
+}
+
+.btn2 {
+	width:50px;
+	height:50px;
+	border-radius:50px;
+	color:#000000;
+	font: normal 9pt '굴림','trebuchet ms',helvetica,sans-serif;
+	background-color:#4e73df;
+	border:0px;
+	outline:none;
+	line-height:16px;	
+	padding:1px 6px 1px 6px;
+}

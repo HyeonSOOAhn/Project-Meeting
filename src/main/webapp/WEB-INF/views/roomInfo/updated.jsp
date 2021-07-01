@@ -121,22 +121,21 @@
 	                <div class="container-fluid">
 	                    <div>
 							<div>
+								<input type="hidden" id="mode2" value="${mode2}" name="mode2"/>
 								구분 : 
-								<input type="radio" name="sortBoard" value="notice" checked="checked"/>공지
-								<input type="radio" name="sortBoard" value="schedule"/>일정
-								<input type="radio" name="sortBoard" value="vote"/>투표
+								<input type="radio" name="sortBoard" value="notice" readonly="readonly"/>공지
+								<input type="radio" name="sortBoard" value="schedule" readonly="readonly"/>일정
+								<input type="radio" name="sortBoard" value="vote" readonly="readonly"/>투표
 							</div>
 							
-							<form action="<%=cp%>/rcreated_ok.action" method="post">
+							<form action="<%=cp%>/rupdated_ok.action" method="post">
 								<div id="loadHtml"></div>
 								
 								<div id="footer">
-									<input type="hidden" id="mode2" value="${mode2}" name="mode2"/>
-									<input type="hidden" id="boardNum" value="${boardNum}" name="boardNum"/>
 									<input type="hidden" value="${dto.roomNum}" name="roomNum"/>
 									<input type="hidden" value="${dto.userId}" name="userId"/>
 									<input type="submit" value=" 등록 " class="btn2"/>
-									<input type="button" value=" 취소 " class="btn2" onclick="location.href='<%=cp%>/rroom.action?roomNum=${dto.roomNum}';"/>
+									<input type="button" value=" 취소 " class="btn2" onclick="location.href='<%=cp%>/room.action';"/>
 								</div>
 							</form>
 						</div>
@@ -196,29 +195,21 @@
 	    <script src="js/demo/datatables-demo.js"></script>
 	    
 	    <script type="text/javascript">
-	    
 		    $(function() {
-
-	    		var mode2 = $("#mode2").val();
-		    	var boardNum = $("#boardNum").value;
-		    	var url = "rnotice.action";
-		    	
+				
+		    	var mode2 = $("#mode2").value;
 		    	var radio = $(":radio[name=sortBoard]");
 		    	
-		    	if(mode2 != null && mode2 != "") {
+		    	for(var i=0; i<radio.length; i++) {
 		    		
-			    	for(var i=0; i<radio.length; i++) {
-			    		
-			    		if(mode2 == radio[i].value) {
-			    			
-			    			$(":radio[name=sortBoard]:input[value=" + radio[i].value + "]").prop("checked", true);
-			    			url = "r" + radio[i].value + ".action";
-			    		}
-			    	}
+		    		if(mode2 == radio[i].value) {
+		    			
+		    			$(":radio[name=sortBoard]:input[value=" + radio[i].value + "]").prop("checked", true);
+		    		}
 		    	}
 		    	
 		    	loadHtml = document.querySelector("#loadHtml");
-		    	$("#loadHtml").load(url);
+		    	$("#loadHtml").load("rnotice.action");
 		    	
 		    	$(':radio[name=sortBoard]').change(function() {
 		    		

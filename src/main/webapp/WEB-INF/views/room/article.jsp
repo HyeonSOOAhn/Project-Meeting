@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
+	String cp = request.getContextPath();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -395,4 +395,5 @@ h1 {
 	<script src="js/sb-admin-2.min.js"></script>
 
 </body>
+>>>>>>> branch 'develop' of https://github.com/DYKIM9866/Project-Meeting.git
 </html>
