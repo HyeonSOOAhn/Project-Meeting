@@ -11,22 +11,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (commentNum_SEQ.nextval,#{tingNum},#{tcuserId},#{tcname},#{comments},sysdate)
 	</insert>
 	
-	<select id="tingCommentDataCount" resultType="int">
-		select nvl(count(*),0) from tingComment
+	<select id="tingCommentDataCount" resultType="int" parameterType="int">
+		select nvl(count(*),0) from tingComment where tingNum = #{tingNum}
 	</select>
 	
 	<select id="getTingCommentLists" resultType="com.project.dto.TingCommentDTO" parameterType="map">
 		select * from (
 		select rownum rnum, data.* from (
 		select commentNum,tingNum,tcuserId,tcname,comments,to_char(created,'YYYY-MM-DD') created
-		from tingComment order by commentNum desc) data)
+		from tingComment where tingNum = #{tingNum}
+		order by commentNum desc) data)
 		<![CDATA[
 		where rnum >= #{start} and rnum <= #{end}
 		]]>
 	</select>
 	
 	<delete id="deleteTingCommentData" parameterType="int">
-		delete tingComment where commentNum = #{commentNum}
+		delete tingComment where commentNum = #{commentNum} and tingNum = #{tingNum}
 	</delete>
 
 </mapper>
