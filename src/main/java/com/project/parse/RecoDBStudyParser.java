@@ -27,7 +27,6 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class RecoDBStudyParser {
 	
 	public static int totalCount;//도서관 totalCount

@@ -101,12 +101,12 @@
             
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
+         
 
             <!-- 사이드바 공간1 -->
 
             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+            
             
             <!-- 사이드바 공간2 -->
 

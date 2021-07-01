@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
+	String cp = request.getContextPath();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -183,11 +183,12 @@ h1 {
 							<img class="articleProfileImg" src='<spring:url value="/upload/${dto.storedFileName }"/>'>
 						</div>
 						<c:if test="${sessionScope.userInfo.userId eq dto.manager}">
-							<div class="articleProfileChange">
-								<a class="articleProfileChangeA" href="#" onclick="roomProfileImgChange();">프로필 변경</a>
-								<div style="display: none;"><input name="roomProfile" type="file"/></div>
-							</div>
-							<div style="display: none;"><input name="fileProfile" type="file"/></div>
+							<form id="profileImgForm">
+								<div class="articleProfileChange">
+									<a class="articleProfileChangeA" href="#" onclick="roomProfileImgChange();">프로필 변경</a>
+									<div style="display: none;"><input name="roomProfile" type="file"/></div>
+								</div>
+							</form>
 						</c:if>
 					</div>
 					
@@ -355,6 +356,29 @@ h1 {
 			$("input[name='roomProfile']").click();
 		}
 		
+		$("input[name='roomProfile']").change(function(e){
+			var frm = document.getElementById('profileImgForm');
+			frm.method = 'POST';
+			frm.enctype = 'multipart/form-data';
+	        var fileData = new FormData(frm);
+			
+	        fileData.append("roomNum", ${dto.roomNum});
+	        
+			$.ajax({
+				type:"POST",
+				url: "alterationRoomProfileImg.action",
+				data: fileData,
+				processData: false,
+	            contentType: false,
+	            success:function(){
+	            	window.location.reload();
+	            },
+	            error : function(request,status,error) {  
+		               alert("code:"+request.status+"\n"+"error:"+error);
+		        }
+			});
+		})
+		
 	</script>
 	
 
@@ -369,4 +393,5 @@ h1 {
 	<script src="js/sb-admin-2.min.js"></script>
 
 </body>
+>>>>>>> branch 'develop' of https://github.com/DYKIM9866/Project-Meeting.git
 </html>

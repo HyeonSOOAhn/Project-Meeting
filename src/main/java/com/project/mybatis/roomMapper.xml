@@ -71,6 +71,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		storedFileName = #{storedFileName} where roomNum = #{roomNum}
 	</update>
 	
+	<update id="updateProfileImg" parameterType="map">
+		update wholeRoom set originalFileName = #{originalFileName},
+		storedFileName = #{storedFileName} where roomNum = #{roomNum}
+	
+	</update>
+	
 	<delete id="deleteData" parameterType="int">
 		delete wholeRoom where roomNum = #{roomNum}
 	</delete>
