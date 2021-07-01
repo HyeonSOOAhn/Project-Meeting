@@ -316,24 +316,8 @@ public class RoomController {
 	@RequestMapping(value = "/updated.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String updated(HttpServletRequest request) throws Exception {
 		
-		String cp = request.getContextPath();
-		
 		//javascript:location.href='<%=cp%>/updated.action?roomNum=${dto.roomNum }&${params }';
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
-		String pageNum = request.getParameter("pageNum");
-		String searchKey = request.getParameter("searchKey");
-		String searchValue = request.getParameter("searchValue");
-				
-		if(searchValue!=null) {
-				
-			if(request.getMethod().equalsIgnoreCase("get")) {
-				searchValue = URLDecoder.decode(searchValue, "UTF-8");
-			}
-					
-		}else {
-			searchKey = "subject"; 
-			searchValue = ""; 
-		}
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
@@ -341,18 +325,7 @@ public class RoomController {
 			return "redirect:/list.action";
 		}
 		
-		String param = "pageNum=" + pageNum;
-				
-		if(!searchValue.equals("")) {
-			param+= "&searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
-		}
-		
 		request.setAttribute("dto", dto);
-		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("params", param);
-		request.setAttribute("searchKey", searchKey);
-		request.setAttribute("searchValue", searchValue);
 		
 		return "room/updated";
 		
@@ -362,9 +335,6 @@ public class RoomController {
 	public String updated_ok(RoomDTO dto,HttpServletRequest request,MultipartHttpServletRequest mpRequest) throws Exception {
 		
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
-		String pageNum = request.getParameter("pageNum");
-		String searchKey = request.getParameter("searchKey");
-		String searchValue = request.getParameter("searchValue");
 		
 		List<Map<String, Object>> lists = roomFileUtil.parseUpdateFileInfo(dto, mpRequest);
 		
@@ -374,14 +344,7 @@ public class RoomController {
 			dao.updateData(lists.get(i));
 		}
 		
-		String param = "&pageNum=" + pageNum;
-		
-		if(!searchValue.equals("")) {
-			param += "&searchKey=" + searchKey;
-			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
-		}
-		
-		return "redirect:/tmain.action?roomNum=" + roomNum + param;
+		return "redirect:/tmain.action?roomNum=" + roomNum;
 		
 	}
 	
@@ -392,8 +355,6 @@ public class RoomController {
 		//javascript:location.href='<%=cp%>/deleted.action?roomNum=${dto.roomNum }&${params }';
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		String pageNum = request.getParameter("pageNum");
-		String searchKey = request.getParameter("searchKey");
-		String searchValue = request.getParameter("searchValue");
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
@@ -401,14 +362,7 @@ public class RoomController {
 		
 		dao.deleteData(roomNum);
 		
-		String param = "pageNum=" + pageNum;
-		
-		if(searchValue!=null) {
-			param += "&searchKey=" + searchKey;
-			param += "&searchValue=" + searchValue;
-		}
-		
-		return "redirect:/list.action?" + param;
+		return "redirect:/list.action?" + pageNum;
 		
 	}
 	

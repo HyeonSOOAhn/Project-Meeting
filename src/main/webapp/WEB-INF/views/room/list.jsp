@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'develop' of https://github.com/DYKIM9866/Project-Meeting.git
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -110,24 +106,6 @@ div.right {
 
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-<<<<<<< HEAD
-						<div>
-							<h1 class="h3 mb-2 text-gray-800">
-								<b>전체 방 목록</b>
-							</h1>
-							<p class="mb-4">여러분들이 참여하실 수 있는 모든 방 목록입니다.</p>
-						</div>
-						<c:if test="${!empty sessionScope.userInfo.userId }">
-							<a href="<%=cp%>/created.action"
-								class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-								class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
-						</c:if>
-						<c:if test="${empty sessionScope.userInfo.userId }">
-							<p style="font-style: oblique; font-weight: bold; font-size: 15px; color: #4D71DB;">
-								로그인을 하셔야 방 만들기가 가능합니다.
-							</p>
-						</c:if>
-=======
 						<c:choose>
 							<c:when test="${empty subject }">
 								<div>
@@ -193,7 +171,6 @@ div.right {
 							
 							</c:otherwise>
 						</c:choose>
->>>>>>> branch 'develop' of https://github.com/DYKIM9866/Project-Meeting.git
 					</div>
 
 					<!-- DataTales Example -->

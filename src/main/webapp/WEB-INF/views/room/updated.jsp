@@ -90,9 +90,11 @@ String cp = request.getContextPath();
 </script>
 
 <style type="text/css">
-#file {
-	display: none;
-}
+	
+	#file {
+		display: none;
+	}
+	
 </style>
 
 </head>
@@ -148,11 +150,9 @@ String cp = request.getContextPath();
 										프로필 이미지</button>
 								</div>
 
-								<input type="hidden" name="manager" value="1"> <input
-									type="hidden" name="roomNum" value="${dto.roomNum }"> <input
-									type="hidden" name="pageNum" value="${pageNum }"> <input
-									type="hidden" name="searchKey" value="${searchKey }"> <input
-									type="hidden" name="searchValue" value="${searchValue }">
+								<input type="hidden" name="manager" value="1">
+								<input type="hidden" name="roomNum" value="${dto.roomNum }">
+								<input type="hidden" name="pageNum" value="${pageNum }">
 
 								<input type="button" class="btn btn-primary btn-user btn-block"
 									value="수 정 하 기" onclick="sendIt();">
