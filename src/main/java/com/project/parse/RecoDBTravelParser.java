@@ -101,7 +101,7 @@ public class RecoDBTravelParser {
     			
     			dto.setRecoNum(((pageNo-1)*100)+RecoDBStudyParser.totalCount+i);
     			dto.setSubject("travel");
-    			dto.setKeyword("관광지 유형 : " + ((object.get("trrsrtSe")).toString()).replace("\"", ""));
+    			dto.setKeyword(((object.get("trrsrtSe")).toString()).replace("\"", ""));
     			dto.setTitle(((object.get("trrsrtNm")).toString()).replace("\"", ""));//관광지명 title 
             	dto.setIntroduce("관광지소개<br/>" + ((object.get("trrsrtIntrcn")).toString()).replace("\"", "")//시도명 introduce
             	+ "<br/>관리기관전화번호 : " + ((object.get("phoneNumber")).toString()).replace("\"", ""));//시군구명 introduce

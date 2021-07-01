@@ -113,7 +113,7 @@ public class RecoDBStudyParser {
 			
 			dto.setRecoNum(((pageNo-1)*100)+i);
 			dto.setSubject("study");
-			dto.setKeyword("도서관 유형 : " + ((object.get("lbrrySe")).toString()).replace("\"", ""));
+			dto.setKeyword(((object.get("lbrrySe")).toString()).replace("\"", ""));
         	dto.setTitle(((object.get("lbrryNm")).toString()).replace("\"", ""));//도서관명 title 
         	dto.setIntroduce("시도명 : " + ((object.get("ctprvnNm")).toString()).replace("\"", "")//시도명 introduce
         	+ "<br/>시군구명 : " + ((object.get("signguNm")).toString()).replace("\"", "")//시군구명 introduce
