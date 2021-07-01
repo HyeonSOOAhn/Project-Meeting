@@ -26,7 +26,7 @@
   - 언어
     * JAVA(jdk1.6)
     * HTML5/CSS3
-    * JavaScript 'ES6'
+    * JavaScript 'ES6'<br/>
   - 프레임워크
     * Spring4.3.0
     * Jquery
