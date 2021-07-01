@@ -102,6 +102,4 @@
 			<beans:bean class="com.project.util.AuthInterceptor"/>
 		</interceptor>
 	</interceptors>
-	
 </beans:beans>
-

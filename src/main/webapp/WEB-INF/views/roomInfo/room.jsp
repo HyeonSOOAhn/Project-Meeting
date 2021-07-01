@@ -79,10 +79,10 @@
 	                	data-parent="#accordionSidebar">
 	                    <div class="bg-white py-2 collapse-inner rounded">
 	                        <h6 class="collapse-header" id="test">종류:</h6>
-	                        <a class="collapse-item" href="<%=cp%>/rroom.action">전체보기</a>
-	                        <a class="collapse-item" href="<%=cp%>/rroom.action?mode1=notice">공지</a>
-	                        <a class="collapse-item" href="<%=cp%>/rschedule.action">일정</a>
-	                        <a class="collapse-item" href="<%=cp%>/rvote.action">투표</a>
+	                        <a class="collapse-item" href="<%=cp%>/rroom.action?roomNum=${roomNum}">전체보기</a>
+	                        <a class="collapse-item" href="<%=cp%>/rroom.action?mode1=notice&roomNum=${roomNum}">공지사항</a>
+	                        <a class="collapse-item" href="<%=cp%>/rroom.action?mode1=schedule&roomNum=${roomNum}">일정</a>
+	                        <a class="collapse-item" href="<%=cp%>/rroom.action?mode1=vote&roomNum=${roomNum}">투표</a>
 	                    </div>
 	                </div>
 	            </li>
@@ -149,7 +149,26 @@
 	                    <!-- DataTales Example -->
 	                    <div class="card shadow mb-4">
 	                        <div class="card-header py-3">
-	                            <h6 class="m-0 font-weight-bold text-primary">게시판</h6>
+	                            <h6 class="m-0 font-weight-bold text-primary">
+	                            	<c:if test="${!empty mode1}">
+	                            		<c:choose>
+	                            			<c:when test="${mode1 == 'notice'}">
+	                            				공지사항
+	                            			</c:when>
+	                            			
+	                            			<c:when test="${mode1 == 'schedule'}">
+	                            				일정
+	                            			</c:when>
+	                            			
+	                            			<c:when test="${mode1 == 'vote'}">
+	                            				투표
+	                            			</c:when>
+	                            		</c:choose>
+                            		</c:if>
+                            		<c:if test="${empty mode1}">
+                            			전체
+                            		</c:if>
+	                            </h6>
 	                        </div>
 	                        <div class="card-body">
 	                            <div class="table-responsive"><!-- 여기에 Show랑 Search 들어가있음 -->
@@ -157,11 +176,10 @@
 	                                	<!-- 정렬이 적용되고있음. 디폴트 적용을 날짜로 바꾸기 -->
 	                                    <thead>
 	                                        <tr>
+	                                        	<th>타입</th>
+	                                        	<th>제목</th>
 	                                            <th>작성자</th>
-	                                            <th>제목</th>
-	                                            <th>내용</th>
 	                                            <th>등록날짜</th>
-	                                            <th>타입</th>
 	                                        </tr>
 	                                    </thead>
 	                                    
@@ -170,11 +188,24 @@
 	                                    	<c:forEach var="dto" items="${lists}">
 	                                    		<tbody>
 			                                        <tr>
+			                                        	<td>
+			                                            	<c:choose>
+						                            			<c:when test="${dto.mode1 == 'notice'}">
+						                            				공지사항
+						                            			</c:when>
+						                            			
+						                            			<c:when test="${dto.mode1 == 'schedule'}">
+						                            				일정
+						                            			</c:when>
+						                            			
+						                            			<c:when test="${dto.mode1 == 'vote'}">
+						                            				투표
+						                            			</c:when>
+						                            		</c:choose>
+			                                            </td>
+			                                            <td><a href="<%=cp%>/rarticle.action?boardNum=${dto.boardNum}&roomNum=${roomNum}">${dto.boardTitle}</a></td>
 			                                            <td>${dto.userId}</td>
-			                                            <td>${dto.boardTitle}</td>
-			                                            <td>${dto.boardContent}</td>
 			                                            <td>${dto.created}</td>
-			                                            <td>${dto.mode1}</td>
 			                                        </tr>
 			                                    </tbody>
 	                                    	</c:forEach>

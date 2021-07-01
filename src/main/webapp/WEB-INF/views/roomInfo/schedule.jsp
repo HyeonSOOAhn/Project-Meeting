@@ -28,7 +28,7 @@
 				
 				<dl>
 					<dd class="select_category">내용 : </dd>
-					<dd><textarea rows="1" cols="30" name="boardContent"></textarea></dd>
+					<dd><textarea rows="1" cols="30" name="boardTitle"></textarea></dd>
 				</dl>
 				
 				<dl>
