@@ -2,11 +2,14 @@ package com.project.dao;
 
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.project.dto.RoomDTO;
 import com.project.dto.UserDTO;
+import com.project.dto.msgDTO;
 
 public class RegisterDAO {
 
@@ -21,8 +24,11 @@ public class RegisterDAO {
 	public void insertUserData(Map<String, Object> map) {
 		sessionTemplate.insert("com.Mapper.insertUserData", map);
 	}
+	public void insertData(UserDTO dto) {
+		sessionTemplate.insert("com.Mapper.insertData",dto);
+	}
 
-	public int checkId(String userId) {
+	public int checkId(String userId) { 
 
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("userId", userId);
@@ -71,16 +77,25 @@ public class RegisterDAO {
 
 	}
 
-	public void updateUserData(Map<String, Object> map) {
-
-		sessionTemplate.update("com.Mapper.updateUserData", map);
-
+	
+	//myPage
+	public void updateProfileImg(Map<String, String> map) {
+		sessionTemplate.update("com.Mapper.updateProfileImg",map);
 	}
-
+	public void updateUserData(UserDTO dto) {
+		sessionTemplate.update("com.Mapper.updateUserData", dto);
+	}
 	public void deleteUserData(String userId) {
-
 		sessionTemplate.delete("com.Mapper.deleteUserData", userId);
-
+	}
+	public List<RoomDTO> getManageList(String manager){
+		return sessionTemplate.selectList("com.Mapper.getManageList",manager);
+	}
+	public List<msgDTO> getRequestList(String sender){
+		return sessionTemplate.selectList("com.Mapper.getRequestList",sender);
+	}
+	public List<RoomDTO> getParticipateList(String userId){
+		return sessionTemplate.selectList("com.Mapper.getParticipateList",userId);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,14 +15,18 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.RegisterDAO;
 import com.project.dao.RoomDAO;
+import com.project.dto.RoomDTO;
 import com.project.dto.UserDTO;
 import com.project.dto.UserInfo;
 import com.project.dto.msgDTO;
+import com.project.util.RoomFileUtil;
 import com.project.util.UserFileUtil;
 
 @Controller
@@ -39,13 +44,15 @@ public class MeetingController {
 	@Autowired
 	@Qualifier("userFileUtil")
 	UserFileUtil userFileUtil;
-
+	
 	@RequestMapping(value = "/main.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView main(HttpServletRequest req) throws Exception {
 
+		
 		HttpSession session = req.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
 
+		//로그인 확인
 		if (info == null) {
 
 			ModelAndView mav = new ModelAndView();
@@ -57,10 +64,8 @@ public class MeetingController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("main");
 
-		// 내메세지 가져오기
-		List<msgDTO> msgList = roomDao.getMsgList(info.getUserId());
-
-		mav.addObject("msgList", msgList);
+		
+		
 
 		return mav;
 
@@ -89,14 +94,8 @@ public class MeetingController {
 			return "/register/Register";
 		}
 
-		List<Map<String, Object>> lists = userFileUtil.parseInsertFileInfo(dto, mpRequest);
-
-		int size = lists.size();
-
-		for (int i = 0; i < size; i++) {
-			dao.insertUserData(lists.get(i));
-		}
-
+		dao.insertData(dto);
+		
 		return "redirect:/main.action";
 
 	}
@@ -106,7 +105,6 @@ public class MeetingController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/login/login");
-
 		return mav;
 	}
 
@@ -119,9 +117,20 @@ public class MeetingController {
 		return "redirect:/main.action";
 	}
 
+
 	@RequestMapping(value = "/login_ok.action", method = RequestMethod.POST)
 	public String login_ok(String userId, String userPwd, String email, String rememberBtn, HttpServletRequest req)
 			throws Exception {
+		
+		//공백 거르기
+		if(userId.equals("")) {
+			req.setAttribute("noExistInfo", "공백이 입력 될 수 없습니다.");
+			return "/login/login";
+		}
+		if(userPwd.equals("")) {
+			req.setAttribute("noExistInfo", "공백이 입력 될 수 없습니다.");
+			return "/login/login";
+		}
 
 		// 아이디 or 이메일 존재하는지 있다면 비밀번호 맞는지 확인하는 거 구현
 		if (dao.checkId(userId) == 0 && dao.checkEmail(email) == 0) {
@@ -142,7 +151,8 @@ public class MeetingController {
 
 		info.setUserId(dto.getUserId());
 		info.setUserName(dto.getName());
-
+		info.setUstoredFileName(dto.getUstoredFileName());
+		
 		HttpSession session = req.getSession();
 
 		session.setAttribute("userInfo", info);
@@ -225,70 +235,95 @@ public class MeetingController {
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
 
 		if (info == null) {
-
 			return "redirect:/login.action";
-
 		}
 
 		// 내메세지 가져오기
 		List<msgDTO> msgList = roomDao.getMsgList(info.getUserId());
-
+		List<RoomDTO> manageList = dao.getManageList(info.getUserId());
+		List<msgDTO> requestList = dao.getRequestList(info.getUserId());
+		List<RoomDTO> participateList = dao.getParticipateList(info.getUserId());
+		
 		String cp = request.getContextPath();
 
 		UserDTO dto = dao.getUserInfo(info.getUserId());
 
 		request.setAttribute("dto", dto);
 		request.setAttribute("msgList", msgList);
+		request.setAttribute("manageList", manageList);
+		request.setAttribute("requestList", requestList);
+		request.setAttribute("participateList", participateList);
+
 		return "register/myPage";
 
 	}
+	@RequestMapping(value = "/alterationProfileImg.action", method = { RequestMethod.POST })
+	public @ResponseBody String alterationProfileImg(MultipartHttpServletRequest mpRequest) 
+			throws Exception {
+		
+		HttpSession session = mpRequest.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		//파일 올리기
+		Map<String, String> map = userFileUtil.changeProfile(mpRequest);
+		UserDTO dto = dao.getUserInfo(info.getUserId());
+		
+		if(dto.getUstoredFileName() != "basic.png" && !dto.getUstoredFileName().equals("basic.png")) {
+			userFileUtil.parseDeleteFileInfo(dto.getUstoredFileName());
+		}
+		
+		map.put("userId", info.getUserId());
+		dao.updateProfileImg(map);
+		dto = dao.getUserInfo(info.getUserId());
+		
+		session.removeAttribute("userInfo");
+		
+		info.setUstoredFileName(dto.getUstoredFileName());
+		
+		session.setAttribute("userInfo", info);
+
+		session.setMaxInactiveInterval(60 * 30);
+		
+		return "success";
+	}
+	
+	@RequestMapping(value = "/updateBasic.action", method = { RequestMethod.POST })
+	public @ResponseBody String updateBasic(HttpServletRequest request) 
+			throws Exception {
+		
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+	
+		UserDTO dto = dao.getUserInfo(info.getUserId());
+		
+		if(dto.getUstoredFileName() != "basic.png" && !dto.getUstoredFileName().equals("basic.png")) {
+			userFileUtil.parseDeleteFileInfo(dto.getUstoredFileName());
+		}
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("ustoredFileName", "basic.png");
+        map.put("uoriginalFileName", "basic.png");
+        map.put("userId", info.getUserId());
+		dao.updateProfileImg(map);
+		
+		dto = dao.getUserInfo(info.getUserId());
+		
+		session.removeAttribute("userInfo");
+		
+		info.setUstoredFileName(dto.getUstoredFileName());
+		
+		session.setAttribute("userInfo", info);
+
+		session.setMaxInactiveInterval(60 * 30);	
+		
+		return "success";
+	}
+	
 
 	@RequestMapping(value = "/userUpdated.action", method = { RequestMethod.GET, RequestMethod.POST })
-	public String userUpdated(HttpServletRequest request) throws Exception {
-
-		// 로그인 확인
-		HttpSession session = request.getSession();
-		UserInfo info = (UserInfo) session.getAttribute("userInfo");
-
-		if (info == null) {
-
-			return "redirect:/login.action";
-
-		}
-
-		String cp = request.getContextPath();
-
-		UserDTO dto = dao.getUserInfo(info.getUserId());
-
-		if (dto == null) {
-			return "redirect:/login.action";
-		}
-
-		request.setAttribute("dto", dto);
-
-		return "register/userUpdated";
-
-	}
-
-	@RequestMapping(value = "/userUpdated_ok.action", method = { RequestMethod.GET, RequestMethod.POST })
-	public String userUpdated_ok(UserDTO dto, HttpServletRequest request, MultipartHttpServletRequest mpRequest)
+	public @ResponseBody String userUpdated(HttpServletRequest request,String userId,String userPwd,String email,String tel) 
 			throws Exception {
 
-		List<Map<String, Object>> lists = userFileUtil.parseUpdateFileInfo(dto, mpRequest);
-
-		int size = lists.size();
-
-		for (int i = 0; i < size; i++) {
-			dao.updateUserData(lists.get(i));
-		}
-
-		return "redirect:/myPage.action";
-
-	}
-
-	@RequestMapping(value = "/userDeleted.action", method = { RequestMethod.GET, RequestMethod.POST })
-	public String userDeleted(HttpServletRequest request) throws Exception {
-
 		// 로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
@@ -298,19 +333,100 @@ public class MeetingController {
 			return "redirect:/login.action";
 
 		}
+		
+		UserDTO dto = dao.getUserInfo(userId);
+		UserDTO inputDTO = new UserDTO();
+		
+		inputDTO.setUserId(userId);
+		inputDTO.setUserPwd(userPwd);
+		if(userPwd.equals("")) 
+			inputDTO.setUserPwd(dto.getUserPwd());
+		inputDTO.setEmail(email);
+		if(dto.getEmail() != email) 
+			inputDTO.setRight(0);
+		else inputDTO.setRight(dto.getRight());
+		inputDTO.setTel(tel);
+		
+		dao.updateUserData(inputDTO);
 
-		String cp = request.getContextPath();
+		return "success";
 
+	}
+
+
+	@RequestMapping(value = "/userDeleted.action", method = { RequestMethod.POST })
+	public @ResponseBody String userDeleted(HttpServletRequest request, String userPwd) throws Exception {
+
+		// 로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+
+		if (info == null) {
+			return "redirect:/login.action";
+		}
+		
 		UserDTO dto = dao.getUserInfo(info.getUserId());
-
-		userFileUtil.parseDeleteFileInfo(dto.getUstoredFileName());
+		
+		if (!dto.getUserPwd().equals(userPwd)){
+			return "false";
+		}
+		
+		if(!dto.getUstoredFileName().equals("basic.png")) { 
+			userFileUtil.parseDeleteFileInfo(dto.getUstoredFileName());
+		}
 
 		dao.deleteUserData(dto.getUserId());
-
 		session.removeAttribute("userInfo");
 
-		return "redirect:/login.action";
+		return "success";
 
+	}
+	@RequestMapping(value = "/certification.action", method = { RequestMethod.GET })
+	public String certification(HttpServletRequest request,@RequestParam("email") String email) throws Exception {
+		
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		String randomStr = "";
+		
+
+		try {
+			MimeMessage mail = mailSender.createMimeMessage();
+			MimeMessageHelper mailHelper = new MimeMessageHelper(mail, true, "UTF-8");
+			randomStr = UserFileUtil.getRandomString();
+			
+			mailHelper.setFrom("Meeting");
+			mailHelper.setTo(email);
+			mailHelper.setSubject("이메일 인증 메일입니다. 아래의 문자를 정확히 입력하세요");
+			mailHelper.setText(randomStr);
+
+			mailSender.send(mail);
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		request.setAttribute("sendedEmail", "등록된 이메일주소로 메일을 보냈습니다. 확인해 주세요.");
+		request.setAttribute("randomStr", randomStr);
+		
+		
+		return "register/certification";
+	}
+	
+	@RequestMapping(value = "/certification_ok.action", method = { RequestMethod.POST})
+	public @ResponseBody String certification_ok(HttpServletRequest request) throws Exception {
+		
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		UserDTO dto = dao.getUserInfo(info.getUserId());
+		
+		dto.setRight(1);
+		
+		dao.updateUserData(dto);
+		
+		
+		return "success";
 	}
 
 }

@@ -4,6 +4,7 @@ public class UserInfo {
 
 	private String userId;
 	private String userName;
+	private String ustoredFileName;
 
 	public String getUserName() {
 		return userName;
@@ -19,6 +20,14 @@ public class UserInfo {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUstoredFileName() {
+		return ustoredFileName;
+	}
+
+	public void setUstoredFileName(String ustoredFileName) {
+		this.ustoredFileName = ustoredFileName;
 	}
 
 }

@@ -9,6 +9,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 </head>
 <body>
 
@@ -42,7 +44,7 @@
 				<h6 class="dropdown-header">Message Center</h6>
 
 				<c:if test="${msgList.size()==0 }">
-					<a class="dropdown-item d-flex align-items-center msg-confirm"
+					<a class="dropdown-item d-flex align-items-center"
 						href="#">
 						<div class="font-weight-bold">
 							<div class="text-truncate">요청메세지가 없습니다.</div>
@@ -56,7 +58,8 @@
 						<c:when test="${msgDTO.status== 0 }">
 							<a class="dropdown-item d-flex align-items-center msg-confirm"
 								data-toggle="modal" href="#requestMsgModal"
-								data-msg1="${msgDTO.msgNum}" data-msg="${msgDTO.msg}">
+								data-msgnum="${msgDTO.msgNum}" data-sender="${msgDTO.sender}" data-roomnum = "${msgDTO.roomNum}"
+								data-msg="${msgDTO.msg}" data-introduce="${msgDTO.introduce}">
 								<div class="dropdown-list-image mr-3">
 									<img class="rounded-circle" src="img/undraw_profile_1.svg"
 										alt="...">
@@ -80,9 +83,12 @@
 			role="button" data-toggle="dropdown" aria-haspopup="true"
 			aria-expanded="false"> <span
 				class="mr-2 d-none d-lg-inline text-gray-600 small">[${sessionScope.userInfo.userName}]
-					님 반갑습니다.</span> <img class="img-profile rounded-circle"
-				src="img/undraw_profile.svg">
-		</a> <!-- Dropdown - User Information -->
+					님 반갑습니다.</span> 
+					<img class="img-profile rounded-circle" style="border: 1px solid black;"
+					src="/meeting/image/${sessionScope.userInfo.ustoredFileName}"/>
+		</a> 
+		
+		<!-- Dropdown - User Information -->
 			<div
 				class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 				aria-labelledby="userDropdown">
@@ -115,15 +121,13 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<input type="text" class="modalMsg">
+					<input type="text" class="modalMsg" disabled="disabled" style="border: 0px; background-color: #fff"><br><br>
+					<p style="margin: 0">소개글</p>
+					<textarea class="modalIntroduce" rows="10" cols="73" disabled="disabled" style="resize: none; background-color: #fff"></textarea>
 				</div>
 				<div class="modal-footer">
-
-					<input type="hidden" class="msgNumContainer"> 
 						<a class="btn btn-primary" href="#" onclick="requestAccept();">수락</a>
 						<a class="btn btn-danger" href="#" onclick="requestReject();">거절</a>
-						
-
 				</div>
 			</div>
 		</div>
@@ -131,42 +135,46 @@
 
 	<!-- Modal Message -->
 	<script type="text/javascript">
-    
+		var sender = "";
+    	var msgNum = "";
+    	var roomNum = "";
     	$(document).on("click",".msg-confirm",function(){
-    		var msgNum = $(this).data('msg1');
+    		msgNum = $(this).data('msgnum');
+    		sender = $(this).data("sender");
+    		roomNum = $(this).data("roomnum");
     		var msg = $(this).data('msg'); //지정해준 값 가져오기
-    
-    		$(".msgNumContainer").val(msgNum);
+    		var introduce = $(this).data('introduce');
+    		
     		$(".modalMsg").val(msg);
-    
+    		$(".modalIntroduce").val(introduce);
     	});
     	
     	function requestAccept() {
     		
-    		var msgNum = {"msgNum": $(".msgNumContainer").val()};
-    		
+    		var sendData = "msgNum=" + msgNum + "&sender=" + sender + "&roomNum=" + roomNum;
     		$.ajax({
-    			
+    			type:'POST',
     			url:"modalAccept.action",
-    	        type:'GET',
-    	        data: msgNum,
+    	        data: sendData,
     	        success:function(data){
-    	        	$(".modal").modal("hide");
+    	        	window.location.reload();
     	        }
     		});
 		}
     	function requestReject(){
-			var msgNum = {"msgNum": $(".msgNumContainer").val()};
+    		
+    		var sendData = "msgNum=" + msgNum;
     		
     		$.ajax({
+    			url: "modalReject.action",
+    			type:'POST',
+    			data:sendData,
+    			success:function(data){
+    				window.location.reload();
+    			}
     			
-    			url:"modalReject.action",
-    	        type:'GET',
-    	        data: msgNum,
-    	        success:function(data){
-    	        	$(".modal").modal("hide");
-    	        }
     		});
+			
     	}
     	
     

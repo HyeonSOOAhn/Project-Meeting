@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'develop' of https://github.com/DYKIM9866/Project-Meeting.git
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -16,7 +20,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>전체 방 목록</title>
+<title>방 리스트</title>
 
 <!-- Custom fonts for this template -->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -66,6 +70,16 @@ div.right {
 	float: right;
 	box-sizing: border-box;
 }
+
+.certificationBtn{
+	text-decoration: none;
+	color: #3E4348;
+}
+.certificationBtn:hover {
+	text-decoration: none;
+	color: #C65146;
+}
+
 </style>
 
 </head>
@@ -96,6 +110,7 @@ div.right {
 
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
+<<<<<<< HEAD
 						<div>
 							<h1 class="h3 mb-2 text-gray-800">
 								<b>전체 방 목록</b>
@@ -112,6 +127,73 @@ div.right {
 								로그인을 하셔야 방 만들기가 가능합니다.
 							</p>
 						</c:if>
+=======
+						<c:choose>
+							<c:when test="${empty subject }">
+								<div>
+									<h1 class="h3 mb-2 text-gray-800">
+										<b>전체 방 목록</b>
+									</h1>
+									<p class="mb-4">여러분들이 참여하실 수 있는 모든 방 목록입니다.</p>
+								</div>
+
+							</c:when>
+							<c:when test="${subject eq '여행'}">
+								<div>
+									<h1 class="h3 mb-2 text-gray-800">
+										<b>여행 방 목록</b>
+									</h1>
+									<p class="mb-4">여행 떠나실 준비 되셨나요? 마음이 맞는 사람들과 행복한 동행의 시작.</p>
+								</div>
+
+
+							</c:when>
+							<c:when test="${subject eq '맛집'}">
+								<div>
+									<h1 class="h3 mb-2 text-gray-800">
+										<b>맛집 방 목록</b>
+									</h1>
+									<p class="mb-4">이제 혼밥은 그만. 음식 취향이 같은 친구들과 함께 즐겨요!</p>
+								</div>
+
+
+							</c:when>
+							<c:when test="${subject eq '운동'}">
+								<div>
+									<h1 class="h3 mb-2 text-gray-800">
+										<b>운동 방 목록</b>
+									</h1>
+									<p class="mb-4">여러가지 운동을 다양한 사람들과 함께 즐겨봐요!</p>
+								</div>
+
+
+							</c:when>
+							<c:when test="${subject eq '공부'}">
+								<div>
+									<h1 class="h3 mb-2 text-gray-800">
+										<b>공부 방 목록</b>
+									</h1>
+									<p class="mb-4">공부도 하고 지식도 나누고 미래도 함께 준비해요!</p>
+								</div>
+
+
+							</c:when>
+						
+						</c:choose>
+						<c:choose>
+							<c:when test="${userRight==0 }">
+								<div class="d-none d-sm-inline-block ">  
+									이메일 인증이 필요합니다. 인증을 완료해주세요. <a class="certificationBtn btn btn-primary" href="myPage.action">인증하기</a>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<a href="<%=cp%>/created.action?subject=${subject}"
+									class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+									class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
+							
+							</c:otherwise>
+						</c:choose>
+>>>>>>> branch 'develop' of https://github.com/DYKIM9866/Project-Meeting.git
 					</div>
 
 					<!-- DataTales Example -->

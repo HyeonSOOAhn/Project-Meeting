@@ -40,7 +40,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="main.action">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -70,17 +70,35 @@
                     <i class="fas fa-fw fa-folder"></i>
                     <span>방</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                <div id="collapseTwo" class="collapse" aria-expanded="true" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded" >
                         <h6 class="collapse-header"><a class="small" href="<%=cp%>/index.action">방 카테고리</a></h6>
                         <a class="collapse-item" href="<%=cp%>/list.action">전체</a>
-                        <a class="collapse-item" href="<%=cp%>/travelList.action">여행</a>
-                        <a class="collapse-item" href="<%=cp%>/foodList.action">맛집</a>
-                        <a class="collapse-item" href="<%=cp%>/sportsList.action">운동</a>
-                        <a class="collapse-item" href="<%=cp%>/studyList.action">공부</a>
+                        <a class="collapse-item" href="<%=cp%>/list.action?subject=여행">여행</a>
+                        <a class="collapse-item" href="<%=cp%>/list.action?subject=맛집">맛집</a>
+                        <a class="collapse-item" href="<%=cp%>/list.action?subject=운동">운동</a>
+                        <a class="collapse-item" href="<%=cp%>/list.action?subject=공부">공부</a>
                     </div>
                 </div>
             </li>
+            
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2"
+                    aria-expanded="true" aria-controls="collapseTwo2">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>추천장소</span>
+                </a>
+                <div id="collapseTwo2" class="collapse" aria-expanded="true" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded" >
+                        <h6 class="collapse-header"><a class="small" href="<%=cp%>/index.action">추천장소</a></h6>
+                        <a class="collapse-item" href="reco?subject=travel">여행</a>
+                        <a class="collapse-item" href="reco?subject=sports">운동</a>
+                        <a class="collapse-item" href="reco?subject=study">공부</a> 
+                    </div>
+                </div>
+            </li>
+            
 
             <!-- Divider -->
             <hr class="sidebar-divider">

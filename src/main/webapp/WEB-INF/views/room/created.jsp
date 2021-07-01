@@ -165,6 +165,8 @@
 									<div class="col-sm-6 mb-3 mb-sm-0">
 										<!-- <input type="text" class="form-control form-control-user" id="exampleFirstName"
                                             placeholder="방 카테고리"> -->
+                                        <c:choose>
+                                        <c:when test="${empty subject}">
 										<select name="subject"
 											class="custom-select custom-select-sm form-control form-control-sm">
 											<option value="">방 카테고리</option>
@@ -173,6 +175,13 @@
 											<option value="운동">운동</option>
 											<option value="공부">공부</option>
 										</select>
+										</c:when>
+										<c:otherwise>
+											<h4>${subject}</h4>
+											<input type="hidden" name="subject" value="${subject}">
+										</c:otherwise>
+										
+										</c:choose>
 
 									</div>
 									<div class="col-sm-6 mb-3 mb-sm-0">
@@ -196,18 +205,18 @@
                                     </div> -->
 								</div>
 								<div class="form-group">
-									<input name="title" type="text"
+									<input name="title" type="text" value="${list.title }"
 										class="form-control form-control-user" id="exampleInputEmail"
 										placeholder="방 이름">
 								</div>
 								<div class="form-group">
-									<input name="keyword" type="text"
+									<input name="keyword" type="text" value="${list.keyword }"
 										class="form-control form-control-user" id="exampleInputEmail"
 										placeholder="#키워드">
 								</div>
 								<div>
 									<textarea name="introduce" rows="12" cols="63"
-										placeholder="방을 소개해주세요." class="form-control"></textarea>
+										placeholder="방을 소개해주세요." class="form-control"><c:if test="${!empty list }">${list.introduce }&#10;${list.content }&#10;${list.location }</c:if></textarea>
 								</div>
 								<br />
 
@@ -239,6 +248,7 @@
 		</div>
 
 	</div>
+	
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>

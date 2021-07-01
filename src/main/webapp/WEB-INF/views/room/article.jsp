@@ -28,6 +28,9 @@ String cp = request.getContextPath();
 <!-- Custom styles for this template-->
 <link href="css/room.css" rel="stylesheet">
 
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+
 <style type="text/css">
 
 	h2 {
@@ -117,8 +120,9 @@ String cp = request.getContextPath();
 							<div class="form-group">
 								<!-- 마이룸 테이블의 member 가져오기 : dto.manager || dto.member -->
 								<c:if test="${sessionScope.userInfo.userId != dto.manager}">
-									<a href="requestMsg.action?roomNum=${dto.roomNum}"
-										class="btn btn-primary btn-user btn-block"> 방 참여 신청하기 </a>
+									<a data-toggle="modal" href="#proposeRoom" 
+										data-roomnum="${dto.roomNum }" data-title = "${dto.title}"
+										class="btn btn-primary btn-user btn-block btn-propose"> 방 참여 신청하기 </a>
 
 								</c:if>
 								<!-- 마이룸 테이블의 member 가져오기 : dto.manager && dto.member -->
@@ -146,6 +150,108 @@ String cp = request.getContextPath();
 		</div>
 
 	</div>
+	
+	<!-- proposeRoom Modal -->
+	<div class="modal fade" id="proposeRoom" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<input class="modal-title" id="proposeModalLabel" type="text"
+						disabled="disabled" style="width: 600px; border: 0; background-color: #fff;">
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h6>간단하게 소개 적어주세요</h6>
+					<sup>(<span id="nowByte">0</span>/1000bytes)</sup>
+					<textarea class="proposeIntroduce" rows="10" cols="73" onkeyup="checkBytes(this);"></textarea>
+					
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-primary" onclick="proposeRoom();">전송</a>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal 처리 -->
+	<script type="text/javascript">
+		
+		var roomNum = "";
+		var status = "";
+		
+		$(document).on("click",".btn-propose",function(){
+			
+			var roomTitle = $(this).data("title");
+			roomNum = $(this).data("roomnum"); 
+			
+			//메세지가 있는 지 확인
+			var para = "roomNum="+roomNum;
+			$.ajax({
+				url:"msgConfirm.action",
+				type:'POST',
+				data: para,
+				success:function(data){
+					if(data=="exist"){
+						alert("이미 신청 하셨어요! 방장이 메세지를 확인 할 때 까지 기다려 주세요");
+						window.location.href = "list.action";
+					}else if(data=="noexist"){
+						$("#proposeModalLabel").val('['+roomTitle+']의 매니저에게 요청보내기');
+					}
+				}
+			});
+
+		});
+		
+		function proposeRoom(){
+			var introduce = $(".proposeIntroduce").val();
+			var sendData = "roomNum="+roomNum+"&introduce=" + introduce;
+			
+			$.ajax({
+				url: "requestMsg.action",
+				type: "POST",
+				data: sendData,
+				success:function(data){
+					alert("신청이 완료되었습니다.");
+					window.location.reload();
+				}
+			});
+		}
+		
+		function checkBytes(obj){
+			const maxByte = 1000;
+			const text_val = obj.value; //입력한 문자
+		    const text_len = text_val.length; //입력한 문자수
+		    
+		    var totalByte=0;
+		    for(let i=0; i<text_len; i++){
+		    	const each_char = text_val.charAt(i);
+		        const uni_char = escape(each_char) //유니코드 형식으로 변환
+		        if(uni_char.length>4){
+		        	// 한글 : 2Byte
+		            totalByte += 2;
+		        }else{
+		        	// 영문,숫자,특수문자 : 1Byte
+		            totalByte += 1;
+		        }
+		    }
+		    
+		    if(totalByte>maxByte){
+		    	alert('최대 1000Byte까지만 입력가능합니다.');
+		        	document.getElementById("nowByte").innerText = totalByte;
+		            document.getElementById("nowByte").style.color = "red";
+		        }else{
+		        	document.getElementById("nowByte").innerText = totalByte;
+		            document.getElementById("nowByte").style.color = "green";
+		        }
+		    }
+		
+		
+	</script>
+	
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
@@ -153,7 +259,7 @@ String cp = request.getContextPath();
 
 	<!-- Core plugin JavaScript-->
 	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
+	
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
 
