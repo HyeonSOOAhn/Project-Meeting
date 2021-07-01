@@ -20,13 +20,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select rownum rnum, data.* from (
 		select commentNum,tingNum,tcuserId,tcname,comments,to_char(created,'YYYY-MM-DD') created
 		from tingComment where tingNum = #{tingNum}
-		order by commentNum desc) data)
+		order by commentNum asc) data)
 		<![CDATA[
 		where rnum >= #{start} and rnum <= #{end}
 		]]>
 	</select>
 	
-	<delete id="deleteTingCommentData" parameterType="int">
+	<delete id="deleteTingCommentData" parameterType="map">
 		delete tingComment where commentNum = #{commentNum} and tingNum = #{tingNum}
 	</delete>
 

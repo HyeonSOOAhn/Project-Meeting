@@ -8,9 +8,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insertTingData" parameterType="com.project.dto.TingDTO">
 		insert into ting (tingNum,roomNum,userId,name,email,ustoredFileName,
-		title,content,created)
+		title,content,when,place,inwon,created)
 		values (tingNum_SEQ.nextval,#{roomNum},#{userId},#{name},#{email},#{ustoredFileName},
-		#{title},#{content},sysdate)
+		#{title},#{content},#{when},#{place},#{inwon},sysdate)
 	</insert>
 	
 	<select id="tingDataCount" resultType="int" parameterType="hashMap">
@@ -31,14 +31,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="tingReadData" resultType="com.project.dto.TingDTO" parameterType="map">
-		select tingNum,roomNum,userId,name,email,ustoredFileName,title,content,
+		select tingNum,roomNum,userId,name,email,ustoredFileName,title,content,when,place,inwon,
 		to_char(created,'YYYY-MM-DD') created
 		from ting where tingNum = #{tingNum} and roomNum = #{roomNum}
 	</select>
 	
 	<update id="updateTingData" parameterType="com.project.dto.TingDTO">
-		update ting set title = #{title},content = #{content}
-		where tingNum = #{tingNum} and roomNum = #{roomNum}
+		update ting set title = #{title},content = #{content},when = #{when},place = #{place},
+		inwon = #{inwon} where tingNum = #{tingNum} and roomNum = #{roomNum}
 	</update>
 	
 	<delete id="deleteTingData" parameterType="map">

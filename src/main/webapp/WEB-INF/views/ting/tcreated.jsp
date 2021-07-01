@@ -89,27 +89,46 @@
 								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
 									<%-- 
-											작성자 정보<br/>
-											ID : ${userId}<br/>
-											이름 : ${name}<br/>
-											E-Mail : ${email}<br/>
-											<img src='<spring:url value="/image/${ustoredFileName }"/>' width="300" height="300"/>
-										 --%>
+										작성자 정보<br/>
+										ID : ${userId}<br/>
+										이름 : ${name}<br/>
+										E-Mail : ${email}<br/>
+										<img src='<spring:url value="/image/${ustoredFileName }"/>' width="300" height="300"/>
+									 --%>
 									</div>
 									
 								</div>
 								<div class="form-group">
 									<input name="title" type="text"
 										class="form-control form-control-user" id="exampleInputEmail"
-										placeholder="Ting 제목">
+										placeholder="Ting 제목"/>
 								</div>
 
 								<div>
 									<textarea name="content" rows="12" cols="63"
-										placeholder="Ting을 소개해주세요. (날짜,장소,일정 등)"
+										placeholder="Ting을 소개해주세요."
 										class="form-control"></textarea>
 								</div>
+								
 								<br/>
+								
+								<div class="form-group">
+									<input name="when" type="text"
+										class="form-control form-control-user" id="exampleInputEmail"
+										placeholder="일시 (0000-00-00)"/>
+								</div>
+								
+								<div class="form-group">
+									<input name="place" type="text"
+										class="form-control form-control-user" id="exampleInputEmail"
+										placeholder="장소"/>
+								</div>
+								
+								<div class="form-group">
+									<input name="inwon" type="text"
+										class="form-control form-control-user" id="exampleInputEmail"
+										placeholder="추천 인원 (5인 이상은 좀..)"/>
+								</div>
 								
 								<input type="hidden" name="roomNum" value="${roomNum}"/>
 								<input type="hidden" name="userId" value="${userId}"/>

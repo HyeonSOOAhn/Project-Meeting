@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -71,8 +70,7 @@ String cp = request.getContextPath();
 		
 		
 		//가상경로
-		f.action = "<%=cp%>
-	/updated_ok.action";
+		f.action = "<%=cp%>/updated_ok.action?roomNum=" + ${dto.roomNum };
 		f.submit();
 
 	}
@@ -162,8 +160,7 @@ String cp = request.getContextPath();
 							</form>
 							<hr>
 							<div class="text-center">
-								<a class="small" href="<%=cp%>/index.action">방 카테고리 목록으로
-									돌아가기</a>
+								<a class="small" href="<%=cp%>/tmain.action?roomNum=${dto.roomNum }">방으로 돌아가기</a>
 							</div>
 						</div>
 					</div>

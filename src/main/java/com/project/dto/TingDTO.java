@@ -10,6 +10,9 @@ public class TingDTO {
 	private String ustoredFileName;
 	private String title;
 	private String content;
+	private String when;
+	private String place;
+	private int inwon;
 	private String created;
 	
 	
@@ -60,6 +63,24 @@ public class TingDTO {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getWhen() {
+		return when;
+	}
+	public void setWhen(String when) {
+		this.when = when;
+	}
+	public String getPlace() {
+		return place;
+	}
+	public void setPlace(String place) {
+		this.place = place;
+	}
+	public int getInwon() {
+		return inwon;
+	}
+	public void setInwon(int inwon) {
+		this.inwon = inwon;
 	}
 	public String getCreated() {
 		return created;

@@ -93,8 +93,6 @@ public class TingController {
 		RoomDTO dto = new RoomDTO();
 		dto = dao3.getReadData(roomNum);
 		
-		//dto.setIntroduce(dto.getIntroduce().replaceAll("\n","<br/>"));
-		
 		//로그인 확인
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
@@ -104,12 +102,6 @@ public class TingController {
 			return "login/login";
 			
 		}
-		
-		//유저정보 가져오기
-		UserDTO dto1 = new UserDTO();
-		
-		dto1 = dao2.getUserInfo(info.getUserId());
-		
 		
 		
 		int currentPage = 1;
@@ -162,22 +154,77 @@ public class TingController {
 		//페이징
 		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
+		//article 사용자 정의
+		String tarticleUrl = cp + "/tarticle.action?pageNum=" + currentPage;
+		
+		if(!param.equals("")) {
+			tarticleUrl += "&" + param;
+		}
+		
 		//포워딩할 페이지에 넘길 데이터
 		request.setAttribute("subject", dto.getSubject());
 		request.setAttribute("title", dto.getTitle());
 		request.setAttribute("introduce", dto.getIntroduce());
 		request.setAttribute("manager", dto.getManager());
 		
-		request.setAttribute("userId", dto1.getUserId());
-		request.setAttribute("name", dto1.getName());
-		
 		request.setAttribute("roomNum", roomNum);
 		request.setAttribute("lists", lists);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
+		request.setAttribute("tarticleUrl", tarticleUrl);
 		request.setAttribute("pageNum", currentPage);
 		
 		return "ting/tmain";
+		
+	}
+	
+	@RequestMapping(value = "/tarticle.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String tarticle(HttpServletRequest request) throws Exception {
+		
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
+		int tingNum = Integer.parseInt(request.getParameter("tingNum"));
+		String pageNum = request.getParameter("pageNum");
+		String searchKey = request.getParameter("searchKey");
+		String searchValue = request.getParameter("searchValue");
+		
+		if(searchValue!=null) {
+			searchValue = URLDecoder.decode(searchValue, "UTF-8");
+		}
+		
+		//로그인 확인
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		if(info == null) {
+			
+			return "redirect:/login.action";
+			
+		}
+		
+		//유저정보 가져오기
+		UserDTO dto1 = new UserDTO();
+		dto1 = dao2.getUserInfo(info.getUserId());
+		
+		TingDTO dto = dao.tingReadData(tingNum, roomNum);
+		
+		dto.setContent(dto.getContent().replaceAll("\n", "<br/>"));
+		
+		String param = "pageNum=" + pageNum;
+		if(searchValue!=null) {
+			param+= "&searchKey=" + searchKey;
+			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+		}
+		
+		request.setAttribute("userId", dto1.getUserId());
+		request.setAttribute("name", dto1.getName());
+		
+		request.setAttribute("roomNum", roomNum);
+		
+		request.setAttribute("dto", dto);
+		request.setAttribute("params", param);
+		request.setAttribute("pageNum", pageNum);
+		
+		return "ting/tarticle";
 		
 	}
 	
@@ -250,13 +297,13 @@ public class TingController {
 		dao.updateTingData(dto);
 		
 		System.out.println(pageNum);
-		/*
-		 * String param = "&pageNum=" + pageNum;
-		 * 
-		 * if(!searchValue.equals("")) { param += "&searchKey=" + searchKey; param +=
-		 * "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8"); }
-		 */
-		return "redirect:/tmain.action?roomNum=" + roomNum; // + param
+		
+		 String param = "&pageNum=" + pageNum;
+		 
+		 if(!searchValue.equals("")) { param += "&searchKey=" + searchKey; param +=
+		 "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8"); }
+		 
+		return "redirect:/tarticle.action?roomNum=" + roomNum + "&tingNum=" + dto.getTingNum() + param;
 		
 	}
 	

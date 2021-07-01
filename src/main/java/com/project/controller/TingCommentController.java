@@ -67,7 +67,7 @@ public class TingCommentController {
 		
 		String cp = request.getContextPath();
 		
-		//int tingNum = Integer.parseInt(request.getParameter("tingNum"));
+		int tingNum = Integer.parseInt(request.getParameter("tingNum"));
 		String pageNum = request.getParameter("pageNum");
 		
 		int currentPage = 1;
@@ -76,7 +76,7 @@ public class TingCommentController {
 			currentPage = Integer.parseInt(pageNum);
 		}
 		
-		int dataCount = dao.tingCommentDataCount();
+		int dataCount = dao.tingCommentDataCount(tingNum);
 		
 		int numPerPage = 5;
 		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
@@ -88,7 +88,7 @@ public class TingCommentController {
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
 		
-		List<TingCommentDTO> lists = dao.getTingCommentLists(start, end);
+		List<TingCommentDTO> lists = dao.getTingCommentLists(tingNum, start, end);
 		
 		int listNum, n = 0;
 		
@@ -105,7 +105,7 @@ public class TingCommentController {
 		
 		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage);
 		
-		//request.setAttribute("tingNum", tingNum);
+		request.setAttribute("tingNum", tingNum);
 		request.setAttribute("lists", lists);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
@@ -122,7 +122,7 @@ public class TingCommentController {
 		int commentNum = Integer.parseInt(request.getParameter("commentNum"));
 		String pageNum = request.getParameter("pageNum");
 		
-		dao.deleteTingCommentData(commentNum);
+		dao.deleteTingCommentData(commentNum,tingNum);
 		
 		request.setAttribute("tingNum", tingNum);
 		request.setAttribute("pageNum", pageNum);

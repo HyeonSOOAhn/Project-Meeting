@@ -292,6 +292,7 @@ public class RoomController {
 	@RequestMapping(value = "/updated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String updated_ok(RoomDTO dto,HttpServletRequest request,MultipartHttpServletRequest mpRequest) throws Exception {
 		
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		String pageNum = request.getParameter("pageNum");
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
@@ -304,14 +305,14 @@ public class RoomController {
 			dao.updateData(lists.get(i));
 		}
 		
-		String param = "pageNum=" + pageNum;
+		String param = "&pageNum=" + pageNum;
 		
 		if(!searchValue.equals("")) {
 			param += "&searchKey=" + searchKey;
 			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
 		
-		return "redirect:/list.action?" + param;
+		return "redirect:/tmain.action?roomNum=" + roomNum + param;
 		
 	}
 	

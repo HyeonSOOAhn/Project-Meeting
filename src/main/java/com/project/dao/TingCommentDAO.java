@@ -25,19 +25,20 @@ public class TingCommentDAO {
 		
 	}
 	
-	public int tingCommentDataCount() {
+	public int tingCommentDataCount(int tingNum) {
 		
 		int totalDataCount = 0;
 		
-		totalDataCount = sessionTemplate.selectOne("com.tingCommentMapper.tingCommentDataCount");
+		totalDataCount = sessionTemplate.selectOne("com.tingCommentMapper.tingCommentDataCount", tingNum);
 		
 		return totalDataCount;
 		
 	}
 	
-	public List<TingCommentDTO> getTingCommentLists(int start,int end) {
+	public List<TingCommentDTO> getTingCommentLists(int tingNum,int start,int end) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("tingNum", tingNum);
 		params.put("start", start);
 		params.put("end", end);
 		
@@ -47,9 +48,13 @@ public class TingCommentDAO {
 		
 	}
 	
-	public void deleteTingCommentData(int commentNum) {
+	public void deleteTingCommentData(int commentNum,int tingNum) {
 		
-		sessionTemplate.delete("com.tingCommentMapper.deleteTingCommentData", commentNum);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("commentNum", commentNum);
+		params.put("tingNum", tingNum);
+		
+		sessionTemplate.delete("com.tingCommentMapper.deleteTingCommentData", params);
 		
 	}
 	

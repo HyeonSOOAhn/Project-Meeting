@@ -135,12 +135,7 @@ String cp = request.getContextPath();
 								<a class="small" href="<%=cp%>/list.action?${params }">전체 방
 									목록으로 돌아가기</a>
 							</div>
-							<div>
-								<input type="button" value=" 수정 " class="btn2"
-									onclick="javascript:location.href='<%=cp%>/updated.action?roomNum=${dto.roomNum }&${params }';" />
-								<input type="button" value=" 삭제 " class="btn2"
-									onclick="javascript:location.href='<%=cp%>/deleted.action?roomNum=${dto.roomNum }&${params }';" />
-							</div>
+							
 						</div>
 					</div>
 

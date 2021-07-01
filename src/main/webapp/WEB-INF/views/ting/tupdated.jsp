@@ -82,26 +82,26 @@
 						<div class="p-5">
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">
-									<b>Ting 만들기</b>
+									<b>Ting 수정하기</b>
 								</h1>
 							</div>
 							<form action="" name="myForm" class="user" method="post">
 								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
 									<%-- 
-											작성자 정보<br/>
-											ID : ${userId}<br/>
-											이름 : ${name}<br/>
-											E-Mail : ${email}<br/>
-											<img src='<spring:url value="/image/${ustoredFileName }"/>' width="300" height="300"/>
-										 --%>
+										작성자 정보<br/>
+										ID : ${userId}<br/>
+										이름 : ${name}<br/>
+										E-Mail : ${email}<br/>
+										<img src='<spring:url value="/image/${ustoredFileName }"/>' width="300" height="300"/>
+									 --%>
 									</div>
 									
 								</div>
 								<div class="form-group">
 									<input name="title" type="text"
 										class="form-control form-control-user" id="exampleInputEmail"
-										placeholder="Ting 제목" value="${dto.title }">
+										placeholder="Ting 제목" value="${dto.title }"/>
 								</div>
 
 								<div>
@@ -109,7 +109,26 @@
 										placeholder="Ting을 소개해주세요. (날짜,장소,일정 등)"
 										class="form-control">${dto.content }</textarea>
 								</div>
+								
 								<br/>
+								
+								<div class="form-group">
+									<input name="when" type="text"
+										class="form-control form-control-user" id="exampleInputEmail"
+										placeholder="일시 (0000-00-00)" value="${dto.when }"/>
+								</div>
+								
+								<div class="form-group">
+									<input name="place" type="text"
+										class="form-control form-control-user" id="exampleInputEmail"
+										placeholder="장소" value="${dto.place }"/>
+								</div>
+								
+								<div class="form-group">
+									<input name="inwon" type="text"
+										class="form-control form-control-user" id="exampleInputEmail"
+										placeholder="추천 인원 (5인 이상은 좀..)" value="${dto.inwon }"/>
+								</div>
 								
 								<input type="hidden" name="roomNum" value="${roomNum}"/>
 								<input type="hidden" name="tingNum" value="${dto.tingNum}"/>

@@ -20,7 +20,7 @@
 	<c:forEach var="dto" items="${lists }">
 	<div class="card-header py-3 card shadow mb-4">
 	
-		<div>${dto.listNum }&nbsp;&nbsp;${dto.tcuserId }&nbsp;&nbsp;/&nbsp;&nbsp;${dto.tcname }</div>
+		<div><b>${dto.tcuserId }&nbsp;&nbsp;/&nbsp;&nbsp;${dto.tcname }</b></div>
 		<div>${dto.comments }</div><br/>
 		<div>${dto.created }</div>
 		
