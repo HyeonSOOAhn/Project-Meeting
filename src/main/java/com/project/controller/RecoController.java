@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +53,7 @@ public class RecoController {
 							)
 									throws IOException, InterruptedException {
 		
+
 		int maxNum = dao.getMaxNum(subject,searchKey,searchValue);
 		List<RecoDTO> lists = dao.getLists(subject,searchKey,sort,searchValue,pageNum,lat,lon);
 

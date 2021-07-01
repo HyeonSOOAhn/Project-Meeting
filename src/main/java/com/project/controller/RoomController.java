@@ -364,7 +364,7 @@ public class RoomController {
 		return "redirect:/list.action?" + pageNum;
 		
 	}
-	
+
 	@RequestMapping(value = "/requestMsg.action", method = RequestMethod.POST)
 	public @ResponseBody String roomRequest(HttpServletRequest request, String roomNum,String introduce) throws Exception {
 
