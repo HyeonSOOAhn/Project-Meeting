@@ -50,6 +50,15 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <style>
+
+
+@font-face {
+    font-family: 'Y_Spotlight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/Y_Spotlight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 div.ok {
 	width: 100%;
 	height: 200px;
@@ -83,8 +92,16 @@ div.right {
 	font-size: 1rem; 
 	font-weight: 650;
 }
-.make-room{
+.listInsertRoom{
+	color:#1e66d4;
+	font-family: 'Y_Spotlight';
+	
+}
 
+.listInsertRoom:hover{
+	text-decoration: none;
+	text-shadow: 1px 1px 1px gray;
+	transition: .5s;
 }
 
 </style>
@@ -214,13 +231,13 @@ div.right {
                             	<div class="ok">
 									<div class="left">
 										<p>${dto.subject }</p>
-										<h2><a href="${articleUrl }&roomNum=${dto.roomNum}">${dto.title }</a></h2><br/>
+										<h2><a class="listInsertRoom font-face" href="${articleUrl }&roomNum=${dto.roomNum}">${dto.title }</a></h2><br/>
 										${dto.keyword }<br/>
 										창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 : ${dto.currentP } / ${dto.totalP } 명
 									</div>
 									<div class="right">
 											<%-- <img src="${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }" width="200" height="200"/> --%>
-											<img src='<spring:url value="/upload/${dto.storedFileName }"/>' width="200" height="200"/>
+											<img src='<spring:url value="/upload/${dto.storedFileName }"/>' style="border-radius: 100%;" width="200" height="200"/>
 
 									</div>
 								</div>
