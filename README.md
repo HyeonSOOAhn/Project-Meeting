@@ -163,6 +163,7 @@
   ![image](https://user-images.githubusercontent.com/77277946/124163872-04505a80-dadb-11eb-9f15-0d8def116851.png)
 ## Collaborator
 @DYKIM9866<br>
+로그인 회원가입 구현, 프로필 관련 구현, 메세지 전달 구현, 알림 구현, 전체적인 front-end
 
 @HyeonSOOAhn<br>
 추천목록, (도서관,운동시설,관광지)파싱 후 view단에 뿌리기, 데이터 상세페이지, 데이터 상세페이지 리뷰&평점, 카카오맵API를 이용한 추천장소 지도 띄우기, Geolocation api를 이용한 내위치 기반 거리순 정렬, 검색필터, 인터셉터를 이용한 로그인 세션확인 
