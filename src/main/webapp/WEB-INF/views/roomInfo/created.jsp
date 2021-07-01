@@ -61,10 +61,10 @@
 	                	data-parent="#accordionSidebar">
 	                    <div class="bg-white py-2 collapse-inner rounded">
 	                        <h6 class="collapse-header" id="test">종류:</h6>
-	                        <a class="collapse-item" href="<%=cp%>/rroom.action">전체보기</a>
-	                        <a class="collapse-item" href="<%=cp%>/rroom.action?mode1=notice">공지</a>
-	                        <a class="collapse-item" href="<%=cp%>/rschedule.action">일정</a>
-	                        <a class="collapse-item" href="<%=cp%>/rvote.action">투표</a>
+	                        <a class="collapse-item" href="<%=cp%>/rroom.action?roomNum=${dto.roomNum}">전체보기</a>
+	                        <a class="collapse-item" href="<%=cp%>/rroom.action?mode1=notice&roomNum=${dto.roomNum}">공지사항</a>
+	                        <a class="collapse-item" href="<%=cp%>/rroom.action?mode1=schedule&roomNum=${dto.roomNum}">일정</a>
+	                        <a class="collapse-item" href="<%=cp%>/rroom.action?mode1=vote&roomNum=${dto.roomNum}">투표</a>
 	                    </div>
 	                </div>
 	            </li>
@@ -131,9 +131,12 @@
 								<div id="loadHtml"></div>
 								
 								<div id="footer">
-									<%-- <input type="hidden" value="${roomNum}" name="roomNum"/> --%>
+									<input type="hidden" id="mode2" value="${mode2}" name="mode2"/>
+									<input type="hidden" id="boardNum" value="${boardNum}" name="boardNum"/>
+									<input type="hidden" value="${dto.roomNum}" name="roomNum"/>
+									<input type="hidden" value="${dto.userId}" name="userId"/>
 									<input type="submit" value=" 등록 " class="btn2"/>
-									<input type="button" value=" 취소 " class="btn2" onclick="location.href='<%=cp%>/room.action';"/>
+									<input type="button" value=" 취소 " class="btn2" onclick="location.href='<%=cp%>/rroom.action?roomNum=${dto.roomNum}';"/>
 								</div>
 							</form>
 						</div>
@@ -193,10 +196,29 @@
 	    <script src="js/demo/datatables-demo.js"></script>
 	    
 	    <script type="text/javascript">
+	    
 		    $(function() {
-				
+
+	    		var mode2 = $("#mode2").val();
+		    	var boardNum = $("#boardNum").value;
+		    	var url = "rnotice.action";
+		    	
+		    	var radio = $(":radio[name=sortBoard]");
+		    	
+		    	if(mode2 != null && mode2 != "") {
+		    		
+			    	for(var i=0; i<radio.length; i++) {
+			    		
+			    		if(mode2 == radio[i].value) {
+			    			
+			    			$(":radio[name=sortBoard]:input[value=" + radio[i].value + "]").prop("checked", true);
+			    			url = "r" + radio[i].value + ".action";
+			    		}
+			    	}
+		    	}
+		    	
 		    	loadHtml = document.querySelector("#loadHtml");
-		    	$("#loadHtml").load("rnotice.action");
+		    	$("#loadHtml").load(url);
 		    	
 		    	$(':radio[name=sortBoard]').change(function() {
 		    		

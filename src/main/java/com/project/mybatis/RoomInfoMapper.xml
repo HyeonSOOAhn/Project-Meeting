@@ -16,13 +16,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			(#{roomNum}, #{boardNum}, #{userId}, #{boardTitle, jdbcType=VARCHAR}, #{boardContent}, #{selectDay, jdbcType=VARCHAR}, #{adst, jdbcType=VARCHAR}, #{mode1}, sysdate)
 	</insert>
 	
+	<insert id="insertVote" parameterType="map">
+		insert into vote (boardNum, userId, selectCon) values (#{boardNum}, #{userId}, #{selectCon})
+	</insert>
+		
 	<select id="getAllBoard" resultType="com.project.dto.RoomInfoDTO" parameterType="int">
-		select roomNum, boardNum, userId, boardTitle, boardContent, selectDay, adst, selectDay, to_char(created, 'YYYY-MM-DD') created, mode1 from roomBoard
+		select roomNum, boardNum, userId, boardTitle, boardContent, selectDay, adst, selectDay, created, mode1 from roomBoard
 			where roomNum = #{roomNum} order by created desc
 	</select>
 	
 	<select id="getSoltBoard" resultType="com.project.dto.RoomInfoDTO" parameterType="map">
-		select roomNum, boardNum, userId, boardTitle, boardContent, selectDay, adst, to_char(created, 'YYYY-MM-DD') created, mode1 from roomBoard
+		select roomNum, boardNum, userId, boardTitle, boardContent, selectDay, adst, created, mode1 from roomBoard
 			where roomNum = #{roomNum} and mode1 = #{mode1} order by created desc
 	</select>
 	
@@ -37,6 +41,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			from wholeRoom
 			where roomNum = #{roomNum}
 	</select>
+	
+	<update id="updateData" parameterType="com.project.dto.RoomInfoDTO">
+		update roomBoard set boardTitle = #{boardTitle}, boardContent = #{boardContent}, created = sysdate
+			where boardNum = #{boardNum}
+	</update>
 	
 	<delete id="deleteRoomBoard" parameterType="int">
 		delete roomBoard where roomNum = #{roomNum}

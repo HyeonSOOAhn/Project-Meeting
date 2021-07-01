@@ -25,9 +25,6 @@
 	
 	    <!-- Custom styles for this page -->
 	    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-	    
-	    <link rel = "stylesheet" type = "text/css" href = "css/style.css"/>
-		<link rel = "stylesheet" type = "text/css" href = "css/article.css"/>
 	</head>
 	<body id="page-top">
 	    <div id="wrapper">
@@ -121,81 +118,27 @@
 	                </nav>
 	                
 	                <!-- 내용 -->
-	                <div id="container-article">
-	                	<div class="card shadow mb-4">
-	                        <div class="card-header py-3">
-	                            <h6 class="m-0 font-weight-bold text-primary">
-                            		<c:choose>
-                            			<c:when test="${dto.mode1 == 'notice'}">
-					           				${dto.boardTitle}
-					           			</c:when>
-					           			
-					           			<c:when test="${dto.mode1 == 'schedule'}">
-					           				일정
-					           			</c:when>
-					           			
-					           			<c:when test="${dto.mode1 == 'vote'}">
-					           				${dto.boardTitle}
-					       				</c:when>
-                            		</c:choose>
-	                            </h6>
-	                        </div>
-	                        <div class="card-body">
-	                            <div class="table-responsive"><!-- 여기에 Show랑 Search 들어가있음 -->
-	                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-	                                    <thead>
-	                                        <tr>
-	                                        	<th>작성자</th>
-	                                        	<td>${dto.userId}</td>
-	                                        	<th>작성날짜</th>
-	                                        	<td>${dto.created}</td>
-	                                        </tr>
-	                                    </thead>
-	                                    
-                                   		<tbody>
-	                                        <tr>
-	                                        	<td colspan="4" class="contents-article" style="border-width:1px;">
-	                                            	<c:choose>
-														<c:when test="${dto.mode1 == 'notice'}">
-									           				${dto.boardContent}
-									           			</c:when>
-									           			
-									           			<c:when test="${dto.mode1 == 'schedule'}">
-									           				일정
-									           			</c:when>
-									           			
-									           			<c:when test="${dto.mode1 == 'vote'}">
-									           				${dto.boardContent}
-									       				</c:when>
-													</c:choose>
-	                                            </td>
-	                                        </tr>
-	                                    </tbody>
-	                                </table>
-	                                
-	                                <div id = "bbsArticle_footer">
-									<c:if test="${dto.userId == userId}">
-										<div id = "leftFooter">
-											<c:if test="${dto.mode1 == 'vote'}">
-												<span>
-													<input type = "button" value = " 투표 " class = "btn2" onclick = "vote();"/>
-							           				<input type = "button" value = " 마감 " class = "btn2" onclick = ""/>
-						           				</span>
-											</c:if>
-											
-											<input type = "button" value = " 수정 " class = "btn2" onclick = "location.href='<%=cp%>/rcreated.action?mode2=${dto.mode1}&boardNum=${dto.boardNum}&roomNum=${dto.roomNum}';"/>
-											<input type = "button" value = " 삭제 " class = "btn2" onclick = "location.href='<%=cp%>/rdeleted_ok.action?boardNum=${dto.boardNum}&roomNum=${dto.roomNum}';"/>
-										</div>
-									</c:if>
-									
-									<div id = "rightFooter">
-										&nbsp;
-										<input type = "button" value = " 목록 " class = "btn2" onclick = "location.href='<%=cp%>/rroom.action?roomNum=${dto.roomNum}';"/>
-									</div>
+	                <div class="container-fluid">
+	                    <div>
+							<div>
+								<input type="hidden" id="mode2" value="${mode2}" name="mode2"/>
+								구분 : 
+								<input type="radio" name="sortBoard" value="notice" readonly="readonly"/>공지
+								<input type="radio" name="sortBoard" value="schedule" readonly="readonly"/>일정
+								<input type="radio" name="sortBoard" value="vote" readonly="readonly"/>투표
+							</div>
+							
+							<form action="<%=cp%>/rupdated_ok.action" method="post">
+								<div id="loadHtml"></div>
+								
+								<div id="footer">
+									<input type="hidden" value="${dto.roomNum}" name="roomNum"/>
+									<input type="hidden" value="${dto.userId}" name="userId"/>
+									<input type="submit" value=" 등록 " class="btn2"/>
+									<input type="button" value=" 취소 " class="btn2" onclick="location.href='<%=cp%>/room.action';"/>
 								</div>
-	                            </div>
-	                        </div>
-	                    </div>
+							</form>
+						</div>
 	                </div>
 	            </div>
 	            
@@ -252,37 +195,38 @@
 	    <script src="js/demo/datatables-demo.js"></script>
 	    
 	    <script type="text/javascript">
-	    
-	    	$(function() {
-	    		
-	    		var target;
-	    		
-	    		$("input[class=btn2]").mousedown(function() {
-	    			
-	    			target = $(this);
-	    			mouseIn();
-	    		});
-	    		
-	    		$("*").mouseup(function() {
-	    			
-	    			if(target != null && target != "") {
-	    				
-	    				mouseOut();
-	    				target = null;
-	    			}
-	    		});
-	    		 
-	    		function mouseOut() {
-	    			
-	    			target.css("background-color", "#4e73df");
-	    		}
-	    		
-	    		function mouseIn() {
-	    			
-	    			target.css("background-color", "#334a90");
-	    		}
-	    	});
-	    
+		    $(function() {
+				
+		    	var mode2 = $("#mode2").value;
+		    	var radio = $(":radio[name=sortBoard]");
+		    	
+		    	for(var i=0; i<radio.length; i++) {
+		    		
+		    		if(mode2 == radio[i].value) {
+		    			
+		    			$(":radio[name=sortBoard]:input[value=" + radio[i].value + "]").prop("checked", true);
+		    		}
+		    	}
+		    	
+		    	loadHtml = document.querySelector("#loadHtml");
+		    	$("#loadHtml").load("rnotice.action");
+		    	
+		    	$(':radio[name=sortBoard]').change(function() {
+		    		
+		    		var check = $(':radio[name=sortBoard]:checked').val();
+		    		
+		    		if(check == "notice") {
+		    			
+		    			$("#loadHtml").load("rnotice.action");
+		    		} else if(check == "schedule") {
+		    			
+		    			$("#loadHtml").load("rschedule.action");
+		    		} else if(check == "vote") {
+		    			
+		    			$("#loadHtml").load("rvote.action");
+		    		}
+		    	});
+		    });
 	    </script>
 	</body>
 </html>

@@ -63,7 +63,7 @@
 			
 			<input type="hidden" name="mode1" value="vote"/>
 			<!-- <input type="hidden" name="boardContent" value=""/> -->
-			<input type="text" name="boardContent" value="asd"/>
+			<input type="hidden" id="boardContent" name="boardContent" value="asd"/>
 		</div>
 		
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
@@ -105,38 +105,27 @@
 					}
 				}
 				
-				var newStr = check(str);
+				str = str.substr(0, str.length-5);
 				
-				$("input[name=boardContent]").get()[0].value = newStr;
-			}
-			
-			function check(str) {
+				strArray = str.split("&sep&");
+				for(var i=0; i<strArray.length; i++) {
+					strArray[i] = strArray[i].trim();
+				}
 				
-				var strTrim = str.trim();
-				var strArray = strTrim.split("&sep&");
-				
-				for(var i=0; i<strArray; i++) {
+				str = "";
+				for(var i=0; i<strArray.length; i++) {
 					
-					if(strArray[i] == null || strArray[i] == "") {
+					if(strArray[i] != null && strArray[i] != "") {
 						
-						strArray.splice(i, 1);
-						
-						i--;
+						str += strArray[i] + "&sep&";
 					}
 				}
 				
-				var newStr = "";
+				str = str.substr(0, str.length-5);
 				
-				for(var i=0; i<strArray; i++) {
-					
-					newStr += strArray[i];
-					
-					if(i != strArray - 1) newStr += "&sep&";
-				}
-				
-				return newStr;
+				$("input[name=boardContent]").get()[0].value = str;
 			}
-		
+			
 		</script>
 	</body>
 </html>

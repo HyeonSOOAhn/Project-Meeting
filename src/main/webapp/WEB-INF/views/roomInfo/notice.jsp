@@ -34,14 +34,14 @@
 				<div id="bottomLine">
 					<dl>
 						<dt>제 목</dt>
-						<dd><input type="text" name="boardTitle" size="65" maxlength="100" class="boxTF"/></dd>
+						<dd><input type="text" name="boardTitle" value="${dto.boardTitle}" size="65" maxlength="100" class="boxTF"/></dd>
 					</dl>
 				</div>
 				
 				<div id="contents">
 					<dl>
 						<dt>내 용</dt>
-						<dd><textarea rows="12" cols="63" name="boardContent" class="boxTA"></textarea></dd>
+						<dd><textarea rows="12" cols="63" name="boardContent" value="${dto.boardContent}" class="boxTA"></textarea></dd>
 					</dl>
 				</div>
 			</div>

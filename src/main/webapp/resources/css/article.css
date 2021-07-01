@@ -71,6 +71,11 @@
 	border-bottom:1px solid #DBDBDB;
 	text-align:left;
 }
+#bbsArticle_content label {
+	clear:both;
+	float:left;
+	font-size:15pt;
+}
 
 #bbsArticle_footer {
 	clear:both;
@@ -88,4 +93,20 @@
 	float:right;
 	width:300px;
 	text-align:right;
+}
+
+#container-article {
+	width:700px;
+	padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.contents-article {
+	height:500px;
+	border-width:1px;
+}
+
+.table-bordered thead tr th,td {
+	border-width:1px;
+	border-bottom-width:2px;
 }

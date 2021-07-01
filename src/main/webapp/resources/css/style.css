@@ -4,12 +4,12 @@
 	margin:0px;
 	padding:0px;
 }
-
+/* 
 body {	
 	font-size: 9pt;
 	font-family:굴림;
 }
-
+ */
 a {
 	cursor: hand;
 	color: #000000;
@@ -27,9 +27,9 @@ a:hover, a:active {
 ul {
 	list-style: none;
 }
-
+/* 
 td {font-size: 9pt;}
-
+ */
 .btn1 {
 	font-size: 9pt; 
 	color:rgb(0,0,0); 
@@ -37,12 +37,15 @@ td {font-size: 9pt;}
 	line-height:16px;
 }
 
-.btn2 {   
+.btn2 {
+	width:50px;
+	height:50px;
+	border-radius:50px;
 	color:#000000;
 	font: normal 9pt '굴림','trebuchet ms',helvetica,sans-serif;
-	background-color:#E4E4E4;
-	border:1px solid;
-	border-color: #696 #363 #363 #696;
+	background-color:#4e73df;
+	border:0px;
+	outline:none;
 	line-height:16px;	
 	padding:1px 6px 1px 6px;
 }

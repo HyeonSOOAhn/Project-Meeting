@@ -79,6 +79,12 @@ public class RoomInfoDAO {
 		sessionTemplate.delete("project.RoomInfoMapper.deleteRoomForId", userId);
 	}
 	
+//	수정
+	public void updateData(RoomInfoDTO dto) {
+		
+		sessionTemplate.update("project.RoomInfoMapper.updateData", dto);
+	}
+	
 //	-------------------
 //	방 내부 게시물 가져오기
 	public List<RoomInfoDTO> getBoardList(int roomNum) {
