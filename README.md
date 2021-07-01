@@ -37,12 +37,16 @@
   - 팅 :  만남을 주선하고 싶은 사람이 팅을통해 만남에 대한 소개와 만남일시,장소,추천인원을 정하고 참여하고 싶은사람이 댓글을 통해 참여하는 방식
 
 
-  - 추천장소 API : 전국의 도서관, 운동시설, 관광지를 보여줌
+  - [추천장소 API](#추천-장소-api) : 전국의 도서관, 운동시설, 관광지를 보여줌
 
 
-  - 검색필터 : 사용자가 검색하기 편하도록 필터를 사용, Geolcation을 이용한 내위치 기반 거리순 
+  - 카카오맵 API : 카카오 맵 API를 이용하여 지도에 마커와 함께 위치를 보여줌
 
 
+  - 검색필터 : 사용자가 검색하기 편하도록 필터를 사용, Geolcation을 이용한 내위치 기반 거리순 정렬
+
+
+  - 로그인 세션 확인 : 인터셉터를 이용한 로그인 세션 확인
 
 ## 개발환경
   - 언어
@@ -77,34 +81,92 @@
 
 
 ## 기능구현
-  - 추천 장소 API
-  <!-- 업데이트 -->
-  <update id="insertData" parameterType="com.project.dto.RecoDTO">
 
-    MERGE INTO Recommend
-    USING DUAL ON (recoNum = #{recoNum})
-    WHEN MATCHED THEN
-    UPDATE SET
-    subject = #{subject},keyword = #{keyword},
-    title = #{title, jdbcType=VARCHAR}, introduce = #{introduce, jdbcType=VARCHAR},content = #{content, jdbcType=VARCHAR},
-    location = #{location, jdbcType=VARCHAR},
-    lat = #{lat, jdbcType=VARCHAR},lon = #{lon, jdbcType=VARCHAR}
-    WHEN NOT MATCHED THEN
-    INSERT
-    (recoNum,subject,keyword,title,
-    introduce,content,location,lat,lon)
-    VALUES
-    (#{recoNum},#{subject},#{keyword},
-    #{title, jdbcType=VARCHAR}, #{introduce, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},
-    #{location, jdbcType=VARCHAR},
-    #{lat, jdbcType=VARCHAR},#{lon, jdbcType=VARCHAR})
-  </update>
+  ### 추천 장소 api
+  1. 공공데이터에서 약 **7500**여개의 장소 정보를 **JasonParser를 이용하여 파싱한 후 DB에 저장.**
+  ![recommend count](https://user-images.githubusercontent.com/77277946/124158790-4e364200-dad5-11eb-98e4-cdc59f5cf3ec.png)
+  2. DB에서 불러와 정렬함.
+![image](https://user-images.githubusercontent.com/77277946/124162411-5c865d00-dad9-11eb-93e8-aafdfe4cca9d.png)
 
+  ### 카카오맵 api
+  1. DB에 저장되어 있는 위도와 경도를 DB에서 PK를 통해 불러와 위치를 띄움.
+![image](https://user-images.githubusercontent.com/77277946/124162457-6b6d0f80-dad9-11eb-92e9-782ec1ace3ac.png)
+  2. 카카오맵 아이콘을 눌러 카카오맵 길찾기 링크 구현
+    ![kakaoMap](https://user-images.githubusercontent.com/77277946/124160227-01ec0180-dad7-11eb-8051-0e6e0cf1e92b.png)
+![image](https://user-images.githubusercontent.com/77277946/124162491-7889fe80-dad9-11eb-9656-0a73a757bdf3.png)
+    
+  ### 검색필터
+  1. 오라클DB에는 **RADIANS** 함수가 없어 함수 생성후 위도,경도 기반 거리계산 함수생성 
+     
+            CREATE OR REPLACE FUNCTION RADIANS(nDegrees IN NUMBER) 
+            RETURN NUMBER DETERMINISTIC 
+            IS
+            BEGIN
+            RETURN nDegrees / 57.29577951308232087679815481410517033235;
+            END RADIANS;
+            /
+
+            create or replace function DISTNACE_WGS84( H_LAT in number, H_LNG in number, T_LAT in number, T_LNG in number)
+            return number deterministic
+            is
+            begin
+              return ( 6371.0 * acos(  
+                      cos( radians( H_LAT ) )*cos( radians( T_LAT /* 위도 */ ) )
+                      *cos( radians( T_LNG /* 경도 */ )-radians( H_LNG ) )
+                      +
+                      sin( radians( H_LAT ) )*sin( radians( T_LAT /* 위도 */ ) )        
+                     ));
+            end DISTNACE_WGS84;
+            /
+      
+  2. geolocation을 통해 불러온 내위치 위도 경도와 DB에 저장되어 있는 위도와 경도를 **DISTNACE_WGS84**함수에 넣어 거리순으로 정렬(주소창의 내 위도,경도는 개인정보를 위해 임의의 값으로 다시 입력했음)
+      ![image](https://user-images.githubusercontent.com/77277946/124162817-de768600-dad9-11eb-95a1-2eb9e5c6fa5d.png)
+
+
+  ### 로그인 세션확인
+  1. **인터셉터**를 통해 세션을 확인하여 로그인여부 확인과 DB에 저장된 메세지 확인
+
+    public class AuthInterceptor extends WebContentInterceptor {
+	
+	@Autowired
+	RoomDAO roomDao;
+	
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+		{
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		HttpSession session = request.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		if(info==null||info.equals(null)) {
+			try {
+				
+				PrintWriter out = response.getWriter();
+				out.print("<script>alert('로그인을 다시 해주십시오');"
+						+ "location.href='/meeting/login.action';</script>");
+				out.flush();
+				out.close();
+				
+				
+			} catch (IOException e) {
+				return false;
+			}
+			return false;
+		}
+		// 내메세지 가져오기
+		List<msgDTO> msgList = roomDao.getMsgList(info.getUserId());
+		session.setAttribute("msgList", msgList);
+		return true;
+	  }
+    }
+  
+  ![image](https://user-images.githubusercontent.com/77277946/124163872-04505a80-dadb-11eb-9f15-0d8def116851.png)
 ## Collaborator
 @DYKIM9866<br>
 
 @HyeonSOOAhn<br>
 추천목록, (도서관,운동시설,관광지)파싱 후 view단에 뿌리기, 데이터 상세페이지, 데이터 상세페이지 리뷰&평점, 카카오맵API를 이용한 추천장소 지도 띄우기, Geolocation api를 이용한 내위치 기반 거리순 정렬, 검색필터, 인터셉터를 이용한 로그인 세션확인 
+
 @kth0423<br>
 
 @stbhg5<br>
