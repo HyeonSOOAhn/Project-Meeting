@@ -166,6 +166,8 @@ public class TingController {
 		request.setAttribute("title", dto.getTitle());
 		request.setAttribute("introduce", dto.getIntroduce());
 		request.setAttribute("manager", dto.getManager());
+		request.setAttribute("storedFileName", dto.getStoredFileName());
+		
 		
 		request.setAttribute("roomNum", roomNum);
 		request.setAttribute("lists", lists);
