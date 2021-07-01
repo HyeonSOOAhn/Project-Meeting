@@ -113,22 +113,21 @@ public class RecoDBStudyParser {
 			
 			dto.setRecoNum(((pageNo-1)*100)+i);
 			dto.setSubject("study");
-			dto.setKeyword("library");
+			dto.setKeyword(((object.get("lbrrySe")).toString()).replace("\"", ""));
         	dto.setTitle(((object.get("lbrryNm")).toString()).replace("\"", ""));//도서관명 title 
         	dto.setIntroduce("시도명 : " + ((object.get("ctprvnNm")).toString()).replace("\"", "")//시도명 introduce
         	+ "<br/>시군구명 : " + ((object.get("signguNm")).toString()).replace("\"", "")//시군구명 introduce
-        	+ "<br/>도서관 유형 : " + ((object.get("lbrrySe")).toString()).replace("\"", ""));//도서관 유형 introduce
+        	+ "<br/>도서관전화번호 : " + ((object.get("phoneNumber")).toString()).replace("\"", ""));////도서관전화번호 content
         	dto.setContent("휴관일 : " + ((object.get("closeDay")).toString()).replace("\"", "")//휴관일 content
         	+ "<br/>평일운영시작시간 : " + ((object.get("weekdayOperOpenHhmm")).toString()).replace("\"", "")//평일운영시작시간 content
         	+ "<br/>평일운영종료시간 : " + ((object.get("weekdayOperColseHhmm")).toString()).replace("\"", "")//평일운영종료시간 content
         	+ "<br/>토요일운영시작시각 : " + ((object.get("satOperOperOpenHhmm")).toString()).replace("\"", "")//토요일운영시작시각 content
         	+ "<br/>토요일운영종료시각 : " + ((object.get("satOperCloseHhmm")).toString()).replace("\"", "")//토요일운영종료시각 content
         	+ "<br/>공휴일운영시작시각 : " + ((object.get("holidayOperOpenHhmm")).toString()).replace("\"", "")//공휴일운영시작시각 content
-        	+ "<br/>공휴일운영종료시각 : " + ((object.get("holidayCloseOpenHhmm")).toString()).replace("\"", "")//공휴일운영종료시각 content
-        	+ "<br/>도서관전화번호 : " + ((object.get("phoneNumber")).toString()).replace("\"", ""));////도서관전화번호 content
+        	+ "<br/>공휴일운영종료시각 : " + ((object.get("holidayCloseOpenHhmm")).toString()).replace("\"", ""));//공휴일운영종료시각 content
         	dto.setLocation("소재지도로명주소 : " + ((object.get("rdnmadr")).toString()).replace("\"", ""));//소재지도로명주소 location
-        	dto.setLat(((object.get("latitude")).toString()).replace("\"", ""));
-        	dto.setLon(((object.get("longitude")).toString()).replace("\"", ""));
+        	dto.setLat(((object.get("latitude")).toString()).replace("\"", "").replace("-",""));
+        	dto.setLon(((object.get("longitude")).toString()).replace("\"", "").replace("-",""));
         	
         	list.add(dto);
         	

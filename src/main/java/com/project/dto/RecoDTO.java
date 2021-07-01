@@ -11,7 +11,14 @@ public class RecoDTO {
 	private String location;
 	private String lat;
 	private String lon;
+	private double star;
 	
+	public double getStar() {
+		return star;
+	}
+	public void setStar(double star) {
+		this.star = star;
+	}
 	public int getRecoNum() {
 		return recoNum;
 	}
