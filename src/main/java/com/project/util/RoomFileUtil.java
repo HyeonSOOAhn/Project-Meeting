@@ -25,6 +25,42 @@ public class RoomFileUtil {
 	private static final String filePath = "C:\\upload\\"; // <img src='<spring:url value="/upload/${dto.storedFileName
 															// }"/>' width="300" height="300"/>
 
+	
+	//이미지 업로드
+		public Map<String, String> uploadRoomProfile(MultipartFile mf) {
+			
+			String originalFileName = null;
+			String originalFileExtension = null;
+			String storedFileName = null;
+			
+			File f = new File(filePath);
+	        if (!f.exists()) {
+	            f.mkdirs();
+	        }
+
+	        try {
+	        	System.out.println("=============================");
+	        	System.out.println(mf.getOriginalFilename());
+	        	System.out.println("=============================");
+
+	        	
+	        	originalFileName = mf.getOriginalFilename();
+				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+				storedFileName = getRandomString() + originalFileExtension;
+
+				f = new File(filePath + storedFileName);
+				mf.transferTo(f);
+				
+			} catch (Exception e) {
+				System.out.println(e.toString());
+			}
+	        Map<String, String> map = new HashMap<String, String>();
+	        map.put("storedFileName", storedFileName);
+	        map.put("originalFileName", originalFileName);
+	     
+			return map;
+		}
+	
 	// 파일 업로드
 	public List<Map<String, Object>> parseInsertFileInfo(RoomDTO dto, MultipartHttpServletRequest mpRequest)
 			throws Exception {
