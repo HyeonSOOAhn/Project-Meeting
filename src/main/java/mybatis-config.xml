@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
 	<!-- myBatis 영역 -->
 	<!-- Spring에서는 생략 -->
-	<!-- 다른 프레임워크 붙일 수 있다 - DB위치 적기 -->
+	<!-- 다른 프레임워크 붙일 수 있다 -  DB위치 적기 -->
 	<properties>
 		<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:TestDB"/>

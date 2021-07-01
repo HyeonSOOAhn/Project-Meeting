@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -46,12 +45,55 @@ h1 {
 	display: inline;
 }
 
-p {
-	font: italic bold 1em/1em Georgia, serif;
-	background-color: #C0C0C0;
-	color: #000000;
-	display: inline;
+.articleProfileContainer{
+	text-align: center;
+	vertical-align:middle;
+	margin-top: 20px;
+	height: 400px;
 }
+.articleProfileImgContainer{
+	text-align: center;
+	vertical-align:middle;
+	margin-top: 20px;
+	height: 400px;
+}
+
+.articleProfileImg{
+	border: 0.05rem solid #590BD9;
+	border-radius: 100%;
+	width: 300px;
+	height: 300px;
+}
+
+.articleProfileCategoryContainer{
+	text-align: left;
+}
+
+.articleProfileCategory{
+	margin: 10px;
+	font-size: 1.0rem;
+	font-weight: 600;
+}
+.articleTitle{
+	font-size: 2.0rem;
+	font-weight: 900;
+	color: #000000;
+}
+.articleTag{
+	font-size: 1rem;
+	font-weight: 700;
+	color:  #CBCDD4; 
+}
+.articleP{
+	margin: 0;
+}
+.articleFormGroup{
+	margin-bottom: 5px; 
+}
+
+
+
+
 </style>
 
 </head>
@@ -68,53 +110,43 @@ p {
 				<div class="card o-hidden border-0 shadow-lg my-5">
 
 					<!-- url('${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }'); -->
-					<div class="card-body p-0" align="left"
-						style="background-size: 920px 900px;background-image: url('<spring:url value="/upload/${dto.storedFileName }"/>');">
-
-						<br />
-						<br />
-						<br />
-						<br />
-						<br /> <br />
-						<br />
-						<br />
-						<br />
-						<br /> <br />
-						<br />
-						<br />
-						<br />
-						<br />
-
+					<div class="card-body p-0 articleBackground" align="left">
+					
+					
+					
+					<div class="articleProfileContainer" >
+						<div class="articleProfileCategoryContainer">
+							<p class="articleProfileCategory">카테고리 > ${dto.subject}</p>
+						</div>
+						<div class="articleProfileImgContainer">
+							<img class="articleProfileImg" src='<spring:url value="/upload/${dto.storedFileName }"/>'>
+						</div>
+					</div>
+					
+					<hr>
 
 						<div class="p-5">
 							<div>
-								<h2>${dto.subject}</h2>
-								<br /> <br />
-								<h1>${dto.title }</h1>
-								<br /> <br />
+								<p class="articleTitle">${dto.title }</p>
+							</div>
+							<div class="articleFormGroup">
+								<p class="articleP">방장 : ${dto.manager }</p>
+							</div>
+							<div class="articleFormGroup">
+								<div class="articleTag">태그</div>
+								<p class="articleP">${dto.keyword }</p>
 							</div>
 
-							<div class="form-group">
-								<p>${dto.keyword }</p>
-								<br />
+							<div class="articleFormGroup">
+								<p class="articleP">${dto.introduce }</p>
 							</div>
 
-							<div class="form-group">
-								<p>${dto.introduce }</p>
-								<br />
-							</div>
-
-							<div class="form-group">
-								<p>창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 :
+							<div class="articleFormGroup">
+								<p class="articleP">창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 :
 									${dto.currentP } / ${dto.totalP } 명</p>
-								<br />
 							</div>
 
-							<div class="form-group">
-
-								<p>방장 : ${dto.manager }</p>
-								<br />
-							</div>
+							
 
 							<div class="form-group">
 								<!-- 마이룸 테이블의 member 가져오기 : dto.manager || dto.member -->
