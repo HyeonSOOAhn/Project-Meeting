@@ -32,27 +32,18 @@ String cp = request.getContextPath();
 
 
 <style type="text/css">
+h2 {
+	font: italic bold 3em/1em Georgia, serif;
+	color: #4D71DB;
+	display: inline;
+}
 
-	h2 {
-		font: italic bold 3em/1em Georgia, serif;
-		color: #4D71DB;
-		display: inline;
-	}
-	
-	h1 {
-		font: italic bold 3em/1em Georgia, serif;
-		background-color: #C0C0C0;
-		color: #000000;
-		display: inline;
-	}
-	
-	p {
-		font: italic bold 1em/1em Georgia, serif;
-		background-color: #C0C0C0;
-		color: #000000;
-		display: inline;
-	}
-	
+h1 {
+	font: italic bold 3em/1em Georgia, serif;
+	background-color: #C0C0C0;
+	color: #000000;
+	display: inline;
+}
 .card-css{
 	background-color: #C7D4D4;
 }
@@ -158,6 +149,7 @@ String cp = request.getContextPath();
 	text-decoration: none;
 }
 
+
 </style>
 
 </head>
@@ -195,45 +187,54 @@ String cp = request.getContextPath();
 								<a class="articleProfileChangeA" href="#" onclick="roomProfileImgChange();">프로필 변경</a>
 								<div style="display: none;"><input name="roomProfile" type="file"/></div>
 							</div>
+							<div style="display: none;"><input name="fileProfile" type="file"/></div>
 						</c:if>
-
-							<div class="form-group">
-								<p>${dto.keyword }</p>
-								<br />
-							</div>
-
-							<div class="form-group">
-								<p>${dto.introduce }</p>
-								<br />
-							</div>
-
-							<div class="form-group">
-								<p>창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 :
-									${dto.currentP } / ${dto.totalP } 명</p>
-								<br />
-							</div>
-
-							<div class="form-group">
-
-								<p>방장 : ${dto.manager }</p>
-								<br />
-							</div>
-
-							<div class="form-group">
-								<!-- 마이룸 테이블의 member 가져오기 : dto.manager || dto.member -->
-								<c:if test="${sessionScope.userInfo.userId != dto.manager}">
-									<a data-toggle="modal" href="#proposeRoom" 
-										data-roomnum="${dto.roomNum }" data-title = "${dto.title}"
-										class="btn btn-primary btn-user btn-block btn-propose"> 방 참여 신청하기 </a>
-
-								</c:if>
-								<!-- 마이룸 테이블의 member 가져오기 : dto.manager && dto.member -->
-
-								<c:if test="${sessionScope.userInfo.userId == dto.manager}">
-									<a href="<%=cp%>/tmain.action?roomNum=${dto.roomNum }" class="btn btn-primary btn-user btn-block"> 방
-										참가하기 </a>
-								</c:if>
-							</div>
+					</div>
+					
+					<hr style="margin: 0;">
+						<div class="articleBottomContainer">
+							<div class="p-5 articleBottom" >
+								<div>
+									<p class="articleTitle">${dto.title }</p>
+									
+								</div>
+								<div class="articleFormGroup">
+									<div class="articleTag">태그</div>
+									<p class="articleP">${dto.keyword }</p>
+								</div>
+								
+								
+								<div class="articleFormGroup">
+									<p class="articleP">방장 : ${dto.manager }</p>
+								</div>
+								
+	
+								<div class="articleFormGroup">
+									<p class="articleP">${dto.introduce }</p>
+								</div>
+	
+								<div class="articleFormGroup">
+									<p class="articleP">창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 :
+										${dto.currentP } / ${dto.totalP } 명</p>
+								</div>
+	
+								
+	
+								<div class="form-group">
+									<!-- 마이룸 테이블의 member 가져오기 : dto.manager || dto.member -->
+									<c:if test="${sessionScope.userInfo.userId != dto.manager}">
+										<a data-toggle="modal" href="#proposeRoom" 
+											data-roomnum="${dto.roomNum }" data-title = "${dto.title}"
+											class="btn btn-primary btn-user btn-propose btn-size"> 방 참여 신청하기 </a>
+	
+									</c:if>
+									<!-- 마이룸 테이블의 member 가져오기 : dto.manager && dto.member -->
+									<c:if test="${sessionScope.userInfo.userId == dto.manager}">
+										<a href="<%=cp%>/tmain.action?roomNum=${dto.roomNum }" class="btn btn-primary btn-user btn-block">
+										방 참가하기</a>
+									</c:if>
+								</div>
+								</div>
 
 							<hr>
 							<div class="text-center">
