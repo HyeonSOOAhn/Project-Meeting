@@ -229,10 +229,9 @@ h1 {
 	
 									</c:if>
 									<!-- 마이룸 테이블의 member 가져오기 : dto.manager && dto.member -->
-	
 									<c:if test="${sessionScope.userInfo.userId == dto.manager}">
-										<a href="#" class="btn btn-primary btn-user btn-size"> 방
-											참가하기 </a>
+										<a href="<%=cp%>/tmain.action?roomNum=${dto.roomNum }" class="btn btn-primary btn-user btn-block">
+										방 참가하기</a>
 									</c:if>
 								</div>
 								</div>

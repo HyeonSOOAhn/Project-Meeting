@@ -34,5 +34,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="com/project/mybatis/roomMapper.xml"/>
 		<mapper resource="com/project/mybatis/recoMapper.xml"/>
 		<mapper resource="com/project/mybatis/RoomInfoMapper.xml"/>
+		<mapper resource="com/project/mybatis/tingMapper.xml"/>
+		<mapper resource="com/project/mybatis/tingCommentMapper.xml"/>
 	</mappers>
 </configuration>

@@ -296,7 +296,8 @@
 									<input type="file" name="roomProfileFile" id="input_file" class="chooseFile"/>
 								</div>
 						
-								<input type="hidden" name="manager"value="${sessionScope.userInfo.userId }" />
+								<input type="hidden" name="manager" value="${sessionScope.userInfo.userId }"/>
+
 								<input type="button" class="btn btn-primary btn-user btn-block"
 									value="생 성 하 기" onclick="sendIt();" />
 
