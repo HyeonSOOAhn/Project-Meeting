@@ -113,6 +113,11 @@
 								
 								<input type="hidden" name="roomNum" value="${roomNum}"/>
 								<input type="hidden" name="tingNum" value="${dto.tingNum}"/>
+								
+								<input type="hidden" name="pageNum" value="${pageNum}"/>
+								<input type="hidden" name="params" value="${params}"/>
+								<input type="hidden" name="searchKey" value="${searchKey}"/>
+								<input type="hidden" name="searchValue" value="${searchValue}"/>
 
 								<input type="button" class="btn btn-primary btn-user btn-block" value="수 정 하 기" onclick="sendIt();"/>
 

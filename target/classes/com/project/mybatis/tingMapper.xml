@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="tingDataCount" resultType="int" parameterType="hashMap">
 		select nvl(count(*),0) from ting
-		where ${searchKey} like '%' || #{searchValue} || '%'
+		where ${searchKey} like '%' || #{searchValue} || '%' and roomNum = #{roomNum}
 	</select>
 	
 	<select id="getTingLists" resultType="com.project.dto.TingDTO" parameterType="map">
@@ -23,26 +23,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select rownum rnum, data.* from (
 		select tingNum,roomNum,userId,name,email,ustoredFileName,title,content,
 		to_char(created,'YYYY-MM-DD') created
-		from ting where ${searchKey} like '%' || #{searchValue} || '%'
+		from ting where ${searchKey} like '%' || #{searchValue} || '%' and roomNum = #{roomNum}
 		order by tingNum desc) data)
 		<![CDATA[
 		where rnum >= #{start} and rnum <= #{end}
 		]]>
 	</select>
 	
-	<select id="tingReadData" resultType="com.project.dto.TingDTO" parameterType="int">
+	<select id="tingReadData" resultType="com.project.dto.TingDTO" parameterType="map">
 		select tingNum,roomNum,userId,name,email,ustoredFileName,title,content,
 		to_char(created,'YYYY-MM-DD') created
-		from ting where tingNum = #{tingNum}
+		from ting where tingNum = #{tingNum} and roomNum = #{roomNum}
 	</select>
 	
 	<update id="updateTingData" parameterType="com.project.dto.TingDTO">
 		update ting set title = #{title},content = #{content}
-		where tingNum = #{tingNum}
+		where tingNum = #{tingNum} and roomNum = #{roomNum}
 	</update>
 	
-	<delete id="deleteTingData" parameterType="int">
-		delete ting where tingNum = #{tingNum}
+	<delete id="deleteTingData" parameterType="map">
+		delete ting where tingNum = #{tingNum} and roomNum = #{roomNum}
 	</delete>
 
 </mapper>

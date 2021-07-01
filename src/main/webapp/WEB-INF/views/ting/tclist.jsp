@@ -25,8 +25,10 @@
 		<div>${dto.created }</div>
 		
 		<c:if test="${dto.tcuserId == sessionScope.userInfo.userId}">
-			<div><a href="javascript:deletePage('${dto.commentNum }','${pageNum }')">삭제</a></div>
+			<div><a href="javascript:deletePage('${dto.tingNum }','${dto.commentNum }','${pageNum }')">삭제</a></div>
 		</c:if>
+		
+		<input type="hidden" name="tingNum" value="${dto.tingNum }"/>
 		
 	</div>
 	</c:forEach>

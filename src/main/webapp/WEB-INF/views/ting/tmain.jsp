@@ -40,10 +40,10 @@
 		
 		$(function() {
 			
-			listPage(1);
+			listPage(tingNum,1);
 			
 		});
-		
+		 
 		$(function() {
 			
 			$("#sendButton").click(function() {
@@ -51,11 +51,25 @@
 				var params = "comments=" + $("#comments").val() + "&tingNum=" + $("#tingNum").val()
 				+ "&tcuserId=" + $("#tcuserId").val() + "&tcname=" + $("#tcname").val();
 				
+				/* {
+						comments : $("#comments").val(),
+						tingNum : $("#tingNum").val(),
+						tcuserId :  $("#tcuserId").val(),
+						tcname : $("#tcname").val()
+				}; */
+					
+				//	"comments=" + $("#comments").val() + "&tingNum=" + $("#tingNum").val()
+				//+ "&tcuserId=" + $("#tcuserId").val() + "&tcname=" + $("#tcname").val();
+				
+				//var comment = "?tingNum=" + ${tingNum}
+				
 				$.ajax({
 					
 					type:"POST",
-					url:"<%=cp%>/comment.action?tingNum=" + ${tingNum},
+					url:"<%=cp%>/comment.action",
 					data:params,
+					//dataType:"json",
+					//async:true,
 					success:function(args) {
 						
 						$("#listData").html(args); //넘어온 데이터
@@ -96,13 +110,13 @@
 			
 		}
 		
-		function listPage(page) {
+		function listPage(tingNum,page) {
 			
-			var url = "<%=cp%>/tclist.action?tingNum=" + ${tingNum};
+			var url = "<%=cp%>/tclist.action";
 			
 			//전형적인 비동기방식
 			//결과처리와 그에대한 함수도 같이 가지고 있다.
-			$.post(url,{pageNum:page},function(args) {
+			$.post(url,{tingNum:tingNum,pageNum:page},function(args) {
 				$("#listData").html(args);
 			});
 			
@@ -110,11 +124,11 @@
 			
 		}
 		
-		function deletePage(commentNum,page) {
+		function deletePage(tingNum,commentNum,page) {
 			
-			var url = "<%=cp%>/tcdeleted.action?tingNum=" + ${tingNum};
+			var url = "<%=cp%>/tcdeleted.action";
 			
-			$.post(url,{commentNum:commentNum,pageNum:page},function(args) {
+			$.post(url,{tingNum:tingNum,commentNum:commentNum,pageNum:page},function(args) {
 				$("#listData").html(args);
 			});
 			
@@ -509,18 +523,23 @@
 													<p style="background-color: #FFFFFF;">${dto.content }</p><br/><br/>
 													
 													작성일 : ${dto.created }<br/>
-													
-													<div align="center">
+													<%-- 
+													<div class="row" align="center">
 														<c:if test="${dto.userId == sessionScope.userInfo.userId}">
-															<input type="button" class="btn btn-primary btn-user btn-block"
-																value="수정" style="width: 10%; display: inline;"
+														<div class="col-sm-2">
+															<input type="button" class=" btn btn-primary btn-user btn-block"
+																value="수정" style="width: 80%; "
 																onclick="javascript:location.href='<%=cp%>/tupdated.action?roomNum=${roomNum }&tingNum=${dto.tingNum }&${params }';"/>
+														</div>
+														 
+														<div class="col-sm-2">
 															<input type="button" class="btn btn-primary btn-user btn-block"
-																value="삭제" style="width: 10%; display: inline;"
+																value="삭제" style="width: 80%; "
 																onclick="javascript:location.href='<%=cp%>/deleted.action?roomNum=${roomNum }&tingNum=${dto.tingNum }&${params }';"/>
+														</div> 
 														</c:if>
 													</div>
-													
+													 --%>
 												</div>
 											</div>
 											
@@ -546,7 +565,27 @@
                             				
                             			</div>
                             		</c:forEach>
+                            		<%-- 
+                            		<hr>
+										
+										<span id="listData" style="display: none"></span>
+										
+									<hr>
                             		
+                            		<div>
+										<div class="form-group">
+											<input name="comments" type="text"
+												class="form-control form-control-user" id="comments" style="width: 73%; display: inline;"
+												placeholder="Ting 참여여부 입력 (참여합니다,참여,조인!,나도!,...)"/>
+											<input type="hidden" name="tingNum" id="tingNum" value="${dto.tingNum}"/>
+											<input type="hidden" name="tcuserId" id="tcuserId" value="${userId}"/>
+											<input type="hidden" name="tcname" id="tcname" value="${name}"/>
+											
+											<input type="button" class="btn btn-primary btn-user btn-block"
+												value="Ting 참여하기" id="sendButton" style="width: 25%; display: inline;"/>
+										</div>
+									</div>
+                            		 --%>
                             		<div class="dataTables_paginate paging_simple_numbers"
 										id="dataTable_paginate" align="center">
 			

@@ -93,7 +93,7 @@ public class TingController {
 		RoomDTO dto = new RoomDTO();
 		dto = dao3.getReadData(roomNum);
 		
-		dto.setIntroduce(dto.getIntroduce().replaceAll("\n","<br/>"));
+		//dto.setIntroduce(dto.getIntroduce().replaceAll("\n","<br/>"));
 		
 		//로그인 확인
 		HttpSession session = request.getSession();
@@ -130,9 +130,9 @@ public class TingController {
 			}
 		}
 		
-		int dataCount = dao.tingDataCount(searchKey, searchValue);
+		int dataCount = dao.tingDataCount(searchKey, searchValue, roomNum);
 		
-		int numPerPage = 5;
+		int numPerPage = 4;
 		int totalPage = pageUtil.getPageCount(numPerPage, dataCount);
 		
 		if(currentPage>totalPage) {
@@ -142,7 +142,7 @@ public class TingController {
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
 		
-		List<TingDTO> lists = dao.getTingLists(start, end, searchKey, searchValue);
+		List<TingDTO> lists = dao.getTingLists(start, end, roomNum, searchKey, searchValue);
 		
 		//param 사용자 정의
 		String param = "";
@@ -153,7 +153,7 @@ public class TingController {
 		}
 		
 		//url 사용자 정의
-		String listUrl = cp + "/tmain.action?roomNum" + roomNum;
+		String listUrl = cp + "/tmain.action?roomNum=" + roomNum;
 		
 		if(!param.equals("")) {
 			listUrl += "&" + param;
@@ -215,7 +215,7 @@ public class TingController {
 			searchValue = ""; 
 		}
 		
-		TingDTO dto = dao.tingReadData(tingNum);
+		TingDTO dto = dao.tingReadData(tingNum,roomNum);
 		
 		if(dto==null) {
 			return "redirect:/tmain.action";
@@ -247,20 +247,16 @@ public class TingController {
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
 		
-		System.out.println(dto.getContent());
-		System.out.println(dto.getTitle());
-		System.out.println(dto.getTingNum());
-		
 		dao.updateTingData(dto);
-		/*
-		String param = "&pageNum=" + pageNum;
 		
-		if(!searchValue.equals("")) {
-			param += "&searchKey=" + searchKey;
-			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
-		}
-		*/
-		return "redirect:/tmain.action?roomNum=" + roomNum; //+ param
+		System.out.println(pageNum);
+		/*
+		 * String param = "&pageNum=" + pageNum;
+		 * 
+		 * if(!searchValue.equals("")) { param += "&searchKey=" + searchKey; param +=
+		 * "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8"); }
+		 */
+		return "redirect:/tmain.action?roomNum=" + roomNum; // + param
 		
 	}
 	
@@ -273,7 +269,7 @@ public class TingController {
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
 		
-		dao.deleteTingData(tingNum);
+		dao.deleteTingData(tingNum,roomNum);
 		
 		String param = "&pageNum=" + pageNum;
 		

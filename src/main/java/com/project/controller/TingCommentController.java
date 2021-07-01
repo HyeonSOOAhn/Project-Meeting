@@ -67,7 +67,7 @@ public class TingCommentController {
 		
 		String cp = request.getContextPath();
 		
-		int tingNum = Integer.parseInt(request.getParameter("tingNum"));
+		//int tingNum = Integer.parseInt(request.getParameter("tingNum"));
 		String pageNum = request.getParameter("pageNum");
 		
 		int currentPage = 1;
@@ -105,7 +105,7 @@ public class TingCommentController {
 		
 		String pageIndexList = pageUtil.pageIndexList(currentPage, totalPage);
 		
-		request.setAttribute("tingNum", tingNum);
+		//request.setAttribute("tingNum", tingNum);
 		request.setAttribute("lists", lists);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);

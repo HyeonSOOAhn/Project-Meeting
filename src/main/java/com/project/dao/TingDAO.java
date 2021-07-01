@@ -25,13 +25,14 @@ public class TingDAO {
 		
 	}
 	
-	public int tingDataCount(String searchKey,String searchValue) {
+	public int tingDataCount(String searchKey,String searchValue,int roomNum) {
 		
 		int totalDataCount = 0;
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("searchKey", searchKey);
 		params.put("searchValue", searchValue);
+		params.put("roomNum", roomNum);
 		
 		totalDataCount = sessionTemplate.selectOne("com.tingMapper.tingDataCount", params);
 		
@@ -39,11 +40,12 @@ public class TingDAO {
 		
 	}
 	
-	public List<TingDTO> getTingLists(int start,int end,String searchKey,String searchValue) {
+	public List<TingDTO> getTingLists(int start,int end,int roomNum,String searchKey,String searchValue) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("start", start);
 		params.put("end", end);
+		params.put("roomNum", roomNum);
 		params.put("searchKey", searchKey);
 		params.put("searchValue", searchValue);
 		
@@ -53,9 +55,13 @@ public class TingDAO {
 		
 	}
 	
-	public TingDTO tingReadData (int tingNum) {
+	public TingDTO tingReadData (int tingNum,int roomNum) {
 		
-		TingDTO dto = sessionTemplate.selectOne("com.tingMapper.tingReadData", tingNum);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("tingNum", tingNum);
+		params.put("roomNum", roomNum);
+		
+		TingDTO dto = sessionTemplate.selectOne("com.tingMapper.tingReadData", params);
 		
 		return dto;
 		
@@ -67,9 +73,13 @@ public class TingDAO {
 		
 	}
 	
-	public void deleteTingData(int tingNum) {
+	public void deleteTingData(int tingNum,int roomNum) {
 		
-		sessionTemplate.delete("com.tingMapper.deleteTingData", tingNum);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("tingNum", tingNum);
+		params.put("roomNum", roomNum);
+		
+		sessionTemplate.delete("com.tingMapper.deleteTingData", params);
 		
 	}
 
