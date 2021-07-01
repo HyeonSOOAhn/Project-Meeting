@@ -1,5 +1,5 @@
 # Project-Meeting
-![logo](https://user-images.githubusercontent.com/77277946/124152008-17106280-dace-11eb-99fa-2fb8c6ed6132.png){: width="100" height="100"}
+<img src="https://user-images.githubusercontent.com/77277946/124152008-17106280-dace-11eb-99fa-2fb8c6ed6132.png" width="width 300" height="height 150">
 
 자바 스프링프레임워크를 이용한 미팅 웹서비스 개발
 "공통된 관심사를 기반으로한 모임 서비스"
