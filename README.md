@@ -83,7 +83,7 @@
 ## 기능구현
 
   ### 추천 장소 api
-  1. 공공데이터에서 약 **7500**여개의 장소 정보를 **JasonParser를 이용하여 파싱한 후 DB에 저장**.
+  1. 공공데이터에서 약 **7500**여개의 장소 정보를 **JasonParser를 이용하여 파싱한 후 DB에 저장**.<br/>
 ![recommend count](https://user-images.githubusercontent.com/77277946/124158790-4e364200-dad5-11eb-98e4-cdc59f5cf3ec.png)
   2. DB에서 불러와 정렬함.
 ![image](https://user-images.githubusercontent.com/77277946/124162411-5c865d00-dad9-11eb-93e8-aafdfe4cca9d.png)
