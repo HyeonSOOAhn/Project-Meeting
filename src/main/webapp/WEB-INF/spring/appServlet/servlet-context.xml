@@ -65,11 +65,35 @@
 		<beans:property name="configLocation" value="classpath:/mybatis-config.xml"/>
 	</beans:bean>
 	
-	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<beans:bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1522:orcl"/>
 		<beans:property name="username" value="suzi"/>
 		<beans:property name="password" value="a123"/>
 	</beans:bean>
+	
+	<!-- log4j -->
+	<beans:bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource"> 
+	    <beans:constructor-arg ref="dataSourceSpied" /> 
+	    <beans:property name="logFormatter"> 
+	        <beans:bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter"> 
+	            <beans:property name="loggingType" value="MULTI_LINE" /> 
+	            <beans:property name="sqlPrefix" value="SQL : "/> 
+	        </beans:bean> 
+	    </beans:property> 
+	</beans:bean>
+
+	<!-- 인터셉터 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/register*.*"/>
+			<exclude-mapping path="/log*.*"/>
+			<exclude-mapping path="/forgot*.*"/>
+			<exclude-mapping path="/send*.*"/>
+			<exclude-mapping path="/reset*.*"/>
+			<beans:bean class="com.project.util.AuthInterceptor"/>
+		</interceptor>
+	</interceptors>
 
 </beans:beans>

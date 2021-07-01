@@ -101,11 +101,10 @@ public class RecoDBTravelParser {
     			
     			dto.setRecoNum(((pageNo-1)*100)+RecoDBStudyParser.totalCount+i);
     			dto.setSubject("travel");
-    			dto.setKeyword("travel");
+    			dto.setKeyword(((object.get("trrsrtSe")).toString()).replace("\"", ""));
     			dto.setTitle(((object.get("trrsrtNm")).toString()).replace("\"", ""));//관광지명 title 
             	dto.setIntroduce("관광지소개<br/>" + ((object.get("trrsrtIntrcn")).toString()).replace("\"", "")//시도명 introduce
-            	+ "<br/>관리기관전화번호 : " + ((object.get("phoneNumber")).toString()).replace("\"", "")//시군구명 introduce
-            	+ "<br/>관광지 유형 : " + ((object.get("trrsrtSe")).toString()).replace("\"", ""));//도서관 유형 introduce
+            	+ "<br/>관리기관전화번호 : " + ((object.get("phoneNumber")).toString()).replace("\"", ""));//시군구명 introduce
             	dto.setContent("공공편익시설정보 : " + ((object.get("cnvnncFclty")).toString()).replace("\"", "")//휴관일 content
             	+ "<br/>숙박시설정보 : " + ((object.get("stayngInfo")).toString()).replace("\"", "")//평일운영시작시간 content
             	+ "<br/>운동및오락시설정보 : " + ((object.get("mvmAmsmtFclty")).toString()).replace("\"", "")//평일운영종료시간 content
@@ -115,8 +114,8 @@ public class RecoDBTravelParser {
             	+ "<br/>수용인원수 : " + ((object.get("aceptncCo")).toString()).replace("\"", "")//공휴일운영종료시각 content
             	+ "<br/>주차가능수 : " + ((object.get("prkplceCo")).toString()).replace("\"", ""));////도서관전화번호 content
             	dto.setLocation("소재지도로명주소 : " + ((object.get("rdnmadr")).toString()).replace("\"", ""));//소재지도로명주소 location
-            	dto.setLat(((object.get("latitude")).toString()).replace("\"", ""));
-            	dto.setLon(((object.get("longitude")).toString()).replace("\"", ""));
+            	dto.setLat(((object.get("latitude")).toString()).replace("\"", "").replace("-",""));
+            	dto.setLon(((object.get("longitude")).toString()).replace("\"", "").replace("-",""));
             	
             	list.add(dto);
             	
