@@ -5,11 +5,6 @@
 	padding:0px;
 }
 
-body {	
-	font-size: 9pt;
-	font-family:굴림;
-}
-
 a {
 	cursor: hand;
 	color: #000000;
@@ -52,7 +47,6 @@ a {
 }
 
 #cal_content dd {
-	font-size:12pt;
 	margin:1px;
 }
 
