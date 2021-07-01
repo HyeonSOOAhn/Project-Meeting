@@ -288,6 +288,8 @@ public class RoomController {
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
+		String memberUserId = dao.readMember(roomNum);
+		
 		//라인수
 		int lineSu = dto.getIntroduce().split("\n").length;
 		
@@ -303,6 +305,8 @@ public class RoomController {
 		request.setAttribute("params", param);
 		request.setAttribute("lineSu", lineSu);
 		request.setAttribute("pageNum", pageNum);
+		
+		request.setAttribute("memberUserId", memberUserId);
 		
 		return "room/article";
 		

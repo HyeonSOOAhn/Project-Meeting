@@ -277,6 +277,14 @@ public class RoomDAO {
 			sessionTemplate.update("com.roomMapper.changeRequestReject", map);
 
 		}
+		
+		public String readMember(int roomNum) {
+			
+			String userId = sessionTemplate.selectOne("com.roomMapper.readMember", roomNum);
+			
+			return userId;
+			
+		}
 
 }
 
