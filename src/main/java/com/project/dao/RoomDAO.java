@@ -11,7 +11,7 @@ import com.project.dto.msgDTO;
 
 public class RoomDAO {
 
-private SqlSessionTemplate sessionTemplate;
+	private SqlSessionTemplate sessionTemplate;
 	
 	//의존성 주입
 	public void setSessionTemplate(SqlSessionTemplate sessionTemplate) {
@@ -22,9 +22,9 @@ private SqlSessionTemplate sessionTemplate;
 	
 	//전체 방 --------------------------------------------------------------
 	//입력
-	public void insertData(Map<String,Object> map) {
+	public void insertData(RoomDTO dto) {
 		
-		sessionTemplate.insert("com.roomMapper.insertData", map);
+		sessionTemplate.insert("com.roomMapper.insertData", dto);
 		
 	}
 	

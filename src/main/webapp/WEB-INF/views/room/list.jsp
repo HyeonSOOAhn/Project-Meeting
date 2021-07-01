@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -35,7 +34,7 @@
 <link href="vendor/datatables/dataTables.bootstrap4.min.css"
 	rel="stylesheet">
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 		function sendIt() {
 			
@@ -181,7 +180,7 @@ div.right {
 							<h6 class="m-0 font-weight-bold text-primary"
 								style="display: inline;">전체 방</h6>
 
-							<br /> <br />
+							<br/><br/>
 
 							<div>
 								<form action="" name="searchForm" method="post">
@@ -199,26 +198,23 @@ div.right {
 								</form>
 								<br />
 							</div>
-
-							<c:forEach var="dto" items="${lists }">
-								<div class="card-header py-3 card shadow mb-4">
-									<div class="ok">
-										<div class="left">
-											<u>${dto.subject }</u><br />
-											<h2>
-												<a href="${articleUrl }&roomNum=${dto.roomNum}">${dto.title }</a>
-											</h2>
-											<br /> ${dto.keyword }<br /> 창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자
-											: ${dto.currentP } / ${dto.totalP } 명
-										</div>
-										<div class="right">
+                            
+                            <c:forEach var="dto" items="${lists }">
+                            <div class="card-header py-3 card shadow mb-4">
+                            	<div class="ok">
+									<div class="left">
+										<u>${dto.subject }</u><br/>
+										<h2><a href="${articleUrl }&roomNum=${dto.roomNum}">${dto.title }</a></h2><br/>
+										${dto.keyword }<br/>
+										창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 : ${dto.currentP } / ${dto.totalP } 명
+									</div>
+									<div class="right">
 											<%-- <img src="${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }" width="200" height="200"/> --%>
-											<img
-												src='<spring:url value="/upload/${dto.storedFileName }"/>'
-												width="200" height="200" />
-										</div>
+											<img src='<spring:url value="/upload/${dto.storedFileName }"/>' width="200" height="200"/>
+
 									</div>
 								</div>
+							</div>
 							</c:forEach>
 						</div>
 
@@ -264,12 +260,9 @@ div.right {
 	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> <i
-		class="fas fa-angle-up"></i>
+	<a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fas fa-angle-up"></i>
 	</a>
-
-
-
 
 
 	<!-- Bootstrap core JavaScript-->
