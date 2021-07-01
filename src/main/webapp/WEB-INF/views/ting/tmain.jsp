@@ -213,7 +213,7 @@
 
                             <div class="col-lg-10 mb-4">
 									<button class="card bg-primary text-white shadow"
-										onclick="javascript:location.href='<%=cp%>/.action'" style="border-color: #4D71DB;">
+										onclick="javascript:location.href='<%=cp%>/rroom.action?roomNum=${roomNum}&mode1=notice'" style="border-color: #4D71DB;">
 										<div class="card-body" align="left">
 											공 지 사 항
 											<div class="text-white-50 small">방장님이 올려주시는 공지사항을 잘 확인하여
@@ -224,7 +224,7 @@
                             
                             <div class="col-lg-10 mb-4">
 									<button class="card bg-primary text-white shadow"
-										onclick="javascript:location.href='<%=cp%>/.action'" style="border-color: #4D71DB;">
+										onclick="javascript:location.href='<%=cp%>/rroom.action?roomNum=${roomNum}&mode1=vote'" style="border-color: #4D71DB;">
 										<div class="card-body" align="left">
 											투 표 하 기
 											<div class="text-white-50 small">두구두구 어떤 투표가 올라왔는지 확인해볼까요?
@@ -235,7 +235,7 @@
                             
                             <div class="col-lg-10 mb-4">
 									<button class="card bg-primary text-white shadow"
-										onclick="javascript:location.href='<%=cp%>/.action'" style="border-color: #4D71DB;">
+										onclick="javascript:location.href='<%=cp%>/rroom.action?roomNum=${roomNum}&mode1=schedule'" style="border-color: #4D71DB;">
 										<div class="card-body" align="left">
 											달 력 보 기
 											<div class="text-white-50 small">가장 중요한 일정을 정하기 위해 달력을 보면서

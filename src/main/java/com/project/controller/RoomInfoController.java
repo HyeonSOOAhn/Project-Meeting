@@ -201,7 +201,7 @@ public class RoomInfoController {
 		mav.setViewName("roomInfo/created");
 		
 		String mode2 = request.getParameter("mode2");
-		System.out.println("created mode2 : " + mode2);
+		
 		if(mode2 != null && !mode2.equals("")) {
 			
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
@@ -219,7 +219,7 @@ public class RoomInfoController {
 	public ModelAndView notice(HttpServletRequest request) throws Exception {
 		
 		String mode2 = request.getParameter("mode2");
-		System.out.println("notice mode2 : " + mode2);
+
 		RoomInfoDTO dto = new RoomInfoDTO();
 		
 		ModelAndView mav = new ModelAndView();
@@ -228,9 +228,9 @@ public class RoomInfoController {
 		if(mode2 != null && !mode2.equals("")) {
 			
 			int boardNum = Integer.parseInt(request.getParameter("boardNum"));
-			System.out.println(boardNum);
+			
 			dto = dao.getBoardData(boardNum);
-			System.out.println(dto);
+			
 			mav.addObject("mode2", mode2);
 		}
 		
@@ -264,7 +264,7 @@ public class RoomInfoController {
 		String mode = dto.getMode1();
 		String mode2 = request.getParameter("mode2");
 		
-		System.out.println("ok mode2 : " + mode2);
+
 		
 		if(mode2 != "" && !mode2.equals("")) {
 			
