@@ -190,6 +190,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into roomMember(userId,roomNum,position)
 		values(#{userId},roomNum_seq.currval,'방장')
 	</insert>
-	
+	<select id="readMember" resultType="String" parameterType="int">
+		select userId from roomMember where roomNum = #{roomNum}
+	</select>
 
 </mapper>
