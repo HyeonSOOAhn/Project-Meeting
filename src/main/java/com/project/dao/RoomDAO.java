@@ -22,9 +22,9 @@ private SqlSessionTemplate sessionTemplate;
 	
 	//전체 방 --------------------------------------------------------------
 	//입력
-	public void insertData(Map<String,Object> map) {
+	public void insertData(RoomDTO dto) {
 		
-		sessionTemplate.insert("com.roomMapper.insertData", map);
+		sessionTemplate.insert("com.roomMapper.insertData", dto);
 		
 	}
 	

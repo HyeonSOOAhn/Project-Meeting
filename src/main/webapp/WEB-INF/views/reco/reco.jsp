@@ -141,7 +141,7 @@
 										</a>
 									</div>
 									<div class="card-body" align="center">
-											${dto.keyword}<br />
+											유형 : ${dto.keyword}<br />
 											${dto.introduce}<br />
 											${dto.location}
 										
@@ -158,7 +158,7 @@
 			<!-- Pagenation -->
 					<div class="container">
 			<div class="row">
-				<div class="col">
+				<div class="col" align="center">
 					<ul class="pagination justify-content-center">
 					<c:set var="startNum" value="${pageNum-(pageNum-1)%5 }"/>
 					<c:set var="lastNum" value="${maxNum }"/>

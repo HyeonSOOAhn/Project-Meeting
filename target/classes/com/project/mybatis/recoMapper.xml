@@ -35,7 +35,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							#{lat},#{lon}) distance,
 							(select round(avg(a.star),3)
 									 from recocomment a 
-									 where a.recoNum = b.recoNum) star 
+									 where a.recoNum = b.recoNum) star,
+							(select popularity
+									from popular d
+									where d.recoNum= b.recoNum) papularity
 				 	 from recommend b
 				 	 <choose>
 				 	 	<when test="sort=='distance'">
@@ -45,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				 	 		order by star desc nulls last) c
 				 	 	</when>
 				 	 	<when test="sort='papularity'">
-				 	 		order by papularity desc) c
+				 	 		order by papularity desc nulls last) c
 				 	 	</when>
 				 	 </choose>
 			 where 
@@ -108,6 +111,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	order by star desc
 </select>
 
+<!-- 인기증가테이블 -->
+<update id="increasePop" parameterType="int">
+	merge into popular
+	USING DUAL ON (recoNum = #{recoNum})
+	WHEN MATCHED THEN
+	UPDATE SET
+	popularity = popularity+1
+	WHEN NOT MATCHED THEN
+	INSERT
+	(recoNum,popularity)
+	values
+	(#{recoNum},1)
+</update>
 
 
 </mapper>

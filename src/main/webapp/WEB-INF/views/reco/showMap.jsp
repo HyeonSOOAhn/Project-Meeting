@@ -81,14 +81,25 @@
                                 <div id="map" style="width:500px;height:500px;" class="col-sm-5"></div>
                        
 						<div class="col-sm-7" align="center">
-						${list.keyword}<br/>
+						유형 : ${list.keyword}<br/>
 						${list.introduce}<br/>
 						${list.content }<br/>
 						${list.location }&nbsp;&nbsp;
 						<span><a href="javascript:openWindowPop('https://map.kakao.com/link/to/${list.title },${list.lat },${list.lon}', '갈찾기');">
 						<img alt="kakao_map" src="img/map.png"></a></span>
 						<br/>
-			           <button onclick="createRoom" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
+						<c:choose>
+							<c:when test="${list.subject eq 'study'}">
+								<button onclick="location.href = 'created.action?subject=공부&recoNum=${list.recoNum}'" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
+							</c:when>
+							<c:when test="${list.subject eq 'travel'}">
+								<button onclick="location.href = 'created.action?subject=여행&recoNum=${list.recoNum}'" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
+							</c:when>
+							<c:when test="${list.subject eq 'sports'}">
+								<button onclick="location.href = 'created.action?subject=운동&recoNum=${list.recoNum}'" type="button" class="btn btn-primary" style="width: 120px; height: 40px;">방만들기</button>
+							</c:when>
+						</c:choose>
+						
 						<br/>
 						<br/>
 						<!--  -->
@@ -226,6 +237,9 @@
 	
 	<!-- recoComment -->
 	<script src="js/recoComment.js"></script>
+	
+	<!-- 카카오맵링크 -->
+	<script src="js/kakao_map.js"></script>
 	
 </body>
 </html>

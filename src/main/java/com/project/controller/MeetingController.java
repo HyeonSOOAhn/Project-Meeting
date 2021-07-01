@@ -271,6 +271,7 @@ public class MeetingController {
 		
 		//파일 올리기
 		Map<String, String> map = userFileUtil.changeProfile(mpRequest);
+		
 		UserDTO dto = dao.getUserInfo(info.getUserId());
 		
 		if(dto.getUstoredFileName() != "basic.png" && !dto.getUstoredFileName().equals("basic.png")) {

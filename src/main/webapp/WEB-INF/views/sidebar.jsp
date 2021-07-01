@@ -92,9 +92,9 @@
                 <div id="collapseTwo2" class="collapse" aria-expanded="true" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded" >
                         <h6 class="collapse-header"><a class="small" href="<%=cp%>/index.action">추천장소</a></h6>
-                        <a class="collapse-item" href="reco?subject=study">스터디</a>
                         <a class="collapse-item" href="reco?subject=travel">여행</a>
-                        <a class="collapse-item" href="reco?subject=sports">운동</a> 
+                        <a class="collapse-item" href="reco?subject=sports">운동</a>
+                        <a class="collapse-item" href="reco?subject=study">공부</a> 
                     </div>
                 </div>
             </li>
