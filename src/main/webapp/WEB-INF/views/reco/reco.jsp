@@ -50,7 +50,9 @@
             <div id="content">
             
             	<!-- TOP BAR -->
-            	<jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
+            	
+            	<jsp:include page="/WEB-INF/views/header.jsp" ></jsp:include>
+            	
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 
