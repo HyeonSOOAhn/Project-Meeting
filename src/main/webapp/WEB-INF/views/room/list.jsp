@@ -76,6 +76,17 @@ div.right {
 	color: #C65146;
 }
 
+.listTopP h1{
+	font-weight: 700;
+}
+.listTopP p{
+	font-size: 1rem; 
+	font-weight: 650;
+}
+.make-room{
+
+}
+
 </style>
 
 </head>
@@ -104,22 +115,21 @@ div.right {
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 
-					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
 						<c:choose>
 							<c:when test="${empty subject }">
-								<div>
-									<h1 class="h3 mb-2 text-gray-800">
-										<b>전체 방 목록</b>
+								<div class="listTopP">
+									<h1 class="mb-2 text-gray-800" ">
+										전체 방 목록
 									</h1>
-									<p class="mb-4">여러분들이 참여하실 수 있는 모든 방 목록입니다.</p>
+									<p class="mb-4" ">여러분들이 참여하실 수 있는 모든 방 목록입니다.</p>
 								</div>
 
 							</c:when>
 							<c:when test="${subject eq '여행'}">
 								<div>
-									<h1 class="h3 mb-2 text-gray-800">
-										<b>여행 방 목록</b>
+									<h1 class="mb-2 text-gray-800">
+										여행 방 목록
 									</h1>
 									<p class="mb-4">여행 떠나실 준비 되셨나요? 마음이 맞는 사람들과 행복한 동행의 시작.</p>
 								</div>
@@ -128,8 +138,8 @@ div.right {
 							</c:when>
 							<c:when test="${subject eq '맛집'}">
 								<div>
-									<h1 class="h3 mb-2 text-gray-800">
-										<b>맛집 방 목록</b>
+									<h1 class="mb-2 text-gray-800">
+										맛집 방 목록
 									</h1>
 									<p class="mb-4">이제 혼밥은 그만. 음식 취향이 같은 친구들과 함께 즐겨요!</p>
 								</div>
@@ -138,8 +148,8 @@ div.right {
 							</c:when>
 							<c:when test="${subject eq '운동'}">
 								<div>
-									<h1 class="h3 mb-2 text-gray-800">
-										<b>운동 방 목록</b>
+									<h1 class="mb-2 text-gray-800">
+										운동 방 목록
 									</h1>
 									<p class="mb-4">여러가지 운동을 다양한 사람들과 함께 즐겨봐요!</p>
 								</div>
@@ -148,8 +158,8 @@ div.right {
 							</c:when>
 							<c:when test="${subject eq '공부'}">
 								<div>
-									<h1 class="h3 mb-2 text-gray-800">
-										<b>공부 방 목록</b>
+									<h1 class=" mb-2 text-gray-800">
+										공부 방 목록
 									</h1>
 									<p class="mb-4">공부도 하고 지식도 나누고 미래도 함께 준비해요!</p>
 								</div>
@@ -165,8 +175,8 @@ div.right {
 								</div>
 							</c:when>
 							<c:otherwise>
-								<a href="<%=cp%>/created.action?subject=${subject}"
-									class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+								<a href="<%=cp%>/created.action?subject=${subject}" style="width: 150px; height: 50px; font-size:1rem; font-weight:600; padding: 13px;"
+									class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm "><i
 									class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
 							
 							</c:otherwise>
@@ -177,16 +187,16 @@ div.right {
 					<div class="card shadow mb-4">
 
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary"
-								style="display: inline;">전체 방</h6>
+							<h3 class="m-0 font-weight-bold text-primary"
+								style="display: inline; ">${subject} List</h3>
 
-							<br/><br/>
+						
 
 							<div>
 								<form action="" name="searchForm" method="post">
 									<select name="searchKey"
 										class="custom-select custom-select-sm form-control form-control-sm"
-										style="width: 10%; display: inline;">
+										style="width: 10%; display: inline; margin: 20px 0;">
 										<option value="subject">방 카테고리</option>
 										<option value="title">방 이름</option>
 										<option value="keyword">키워드</option>
@@ -203,7 +213,7 @@ div.right {
                             <div class="card-header py-3 card shadow mb-4">
                             	<div class="ok">
 									<div class="left">
-										<u>${dto.subject }</u><br/>
+										<p>${dto.subject }</p>
 										<h2><a href="${articleUrl }&roomNum=${dto.roomNum}">${dto.title }</a></h2><br/>
 										${dto.keyword }<br/>
 										창설일 : ${dto.created }&nbsp;&nbsp;&nbsp;&nbsp;참가자 : ${dto.currentP } / ${dto.totalP } 명

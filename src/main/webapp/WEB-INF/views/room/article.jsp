@@ -143,10 +143,12 @@ h1 {
 .backWholeList{
 	color: #000;
 	font-size: 9px;
+	font-size: 1rem;
 }
 .backWholeList:hover{
 	color: #263959;
 	text-decoration: none;
+	font-size: 1rem;
 }
 
 
