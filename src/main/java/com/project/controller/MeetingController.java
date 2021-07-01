@@ -26,6 +26,7 @@ import com.project.dto.RoomDTO;
 import com.project.dto.UserDTO;
 import com.project.dto.UserInfo;
 import com.project.dto.msgDTO;
+import com.project.dto.noticeDTO;
 import com.project.util.RoomFileUtil;
 import com.project.util.UserFileUtil;
 
@@ -60,9 +61,13 @@ public class MeetingController {
 
 			return mav;
 		}
+		
+		List<noticeDTO> noticeList = roomDao.getNoticeList(info.getUserId()); 
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("main");
+		
+		mav.addObject("noticeList", noticeList);
 
 		return mav;
 

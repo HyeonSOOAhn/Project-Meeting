@@ -15,8 +15,7 @@
 <body>
 
 	<!-- Topbar -->
-	<nav
-		class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+	<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 	<!-- Sidebar Toggle (Topbar) -->
 	<form class="form-inline">
@@ -25,11 +24,51 @@
 			<i class="fa fa-bars"></i>
 		</button>
 	</form>
-
-
+	
+	
 
 	<!-- Topbar Navbar -->
 	<ul class="navbar-nav ml-auto">
+	
+<!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">${noticeList.size() }</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                <c:choose>
+                                	<c:when test="${empty noticeList}">
+                                		<a class="dropdown-item d-flex align-items-center" href="#">
+	                                	
+	                                    <div>
+	                                        <span class="font-weight-bold">지난 7일간의 알림이 없습니다.</span>
+	                                    </div>
+	                                </a>
+                                	</c:when>
+                                	<c:otherwise>
+		                                <c:forEach var="noticeDTO" items="${noticeList}">
+			                                <a class="dropdown-item d-flex align-items-center" href="#">
+			                                	
+			                                    <div>
+			                                        <div class="small text-gray-500">${noticeDTO.created }</div>
+			                                        <span class="font-weight-bold">${noticeDTO.noticeMsg }</span>
+			                                    </div>
+			                                </a>
+		                                
+		                                </c:forEach>
+	                                </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </li>	
+	
 
 		<!-- Nav Item - Messages -->
 		<li class="nav-item dropdown no-arrow mx-1"><a
@@ -58,7 +97,8 @@
 						<c:when test="${msgDTO.status== 0 }">
 							<a class="dropdown-item d-flex align-items-center msg-confirm"
 								data-toggle="modal" href="#requestMsgModal"
-								data-msgnum="${msgDTO.msgNum}" data-sender="${msgDTO.sender}" data-roomnum = "${msgDTO.roomNum}"
+								data-msgnum="${msgDTO.msgNum}" data-sender="${msgDTO.sender}"  data-recipient="${msgDTO.recipient}"
+								data-roomnum = "${msgDTO.roomNum}"
 								data-msg="${msgDTO.msg}" data-introduce="${msgDTO.introduce}">
 								<div class="dropdown-list-image mr-3">
 									<img class="rounded-circle" src="img/undraw_profile_1.svg"
@@ -136,11 +176,13 @@
 	<!-- Modal Message -->
 	<script type="text/javascript">
 		var sender = "";
+		var recipient = "";
     	var msgNum = "";
     	var roomNum = "";
     	$(document).on("click",".msg-confirm",function(){
     		msgNum = $(this).data('msgnum');
     		sender = $(this).data("sender");
+    		recipient = $(this).data("recipient");
     		roomNum = $(this).data("roomnum");
     		var msg = $(this).data('msg'); //지정해준 값 가져오기
     		var introduce = $(this).data('introduce');
@@ -151,7 +193,7 @@
     	
     	function requestAccept() {
     		
-    		var sendData = "msgNum=" + msgNum + "&sender=" + sender + "&roomNum=" + roomNum;
+    		var sendData = "msgNum=" + msgNum + "&sender=" + sender +"&recipient=" + recipient + "&roomNum=" + roomNum;
     		$.ajax({
     			type:'POST',
     			url:"modalAccept.action",
@@ -163,7 +205,7 @@
 		}
     	function requestReject(){
     		
-    		var sendData = "msgNum=" + msgNum;
+    		var sendData = "msgNum=" + msgNum + "&sender=" + sender +"&recipient=" + recipient + "&roomNum=" + roomNum;
     		
     		$.ajax({
     			url: "modalReject.action",

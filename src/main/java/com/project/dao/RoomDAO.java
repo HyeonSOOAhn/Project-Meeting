@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.project.dto.RoomDTO;
 import com.project.dto.msgDTO;
+import com.project.dto.noticeDTO;
 
 public class RoomDAO {
 
@@ -222,6 +223,7 @@ public class RoomDAO {
 		return lists;
 			
 	}
+	
 	// 메세지
 		public void insertMsg(msgDTO dto) {
 
@@ -278,12 +280,36 @@ public class RoomDAO {
 
 		}
 		
-		public String readMember(int roomNum) {
+		public int readMember(int roomNum,String userId) {
 			
-			String userId = sessionTemplate.selectOne("com.roomMapper.readMember", roomNum);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("roomNum", roomNum);
+			map.put("userId", userId);
 			
-			return userId;
+			int success = sessionTemplate.selectOne("com.roomMapper.readMember", map);
 			
+			return success;
+			
+		}
+		
+		//알림
+		public void insertNotice(String sender,String recipient,String msg) {
+			
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("sender", recipient);
+			map.put("recipient", sender);
+			map.put("noticeMsg", msg);
+			
+			sessionTemplate.insert("com.roomMapper.insertNotice",map);
+		}
+		
+		public List<noticeDTO> getNoticeList(String recipient){
+			
+		
+			List<noticeDTO> lists = sessionTemplate.selectList("com.roomMapper.getNoticeList", recipient);
+
+			return lists;
+	
 		}
 
 }

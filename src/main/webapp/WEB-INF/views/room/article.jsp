@@ -225,15 +225,15 @@ h1 {
 	
 								<div class="form-group">
 									<!-- 마이룸 테이블의 member 가져오기 : dto.manager || dto.member -->
-									<c:if test="${sessionScope.userInfo.userId != dto.manager || sessionScope.userInfo.userId != memberUserId}">
+									<c:if test="${memberUser == 0}">
 										<a data-toggle="modal" href="#proposeRoom" 
 											data-roomnum="${dto.roomNum }" data-title = "${dto.title}"
 											class="btn btn-primary btn-user btn-propose btn-size"> 방 참여 신청하기 </a>
 	
 									</c:if>
 									<!-- 마이룸 테이블의 member 가져오기 : dto.manager && dto.member -->
-									<c:if test="${sessionScope.userInfo.userId == dto.manager || sessionScope.userInfo.userId == memberUserId}">
-										<a href="<%=cp%>/tmain.action?roomNum=${dto.roomNum }" class="btn btn-primary btn-user btn-block">
+									<c:if test="${memberUser != 0}">
+										<a href="<%=cp%>/tmain.action?roomNum=${dto.roomNum }" class="btn btn-primary btn-user btn-block btn-size">
 										방 참가하기</a>
 									</c:if>
 								</div>
