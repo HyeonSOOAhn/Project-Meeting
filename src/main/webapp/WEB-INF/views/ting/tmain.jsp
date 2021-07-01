@@ -50,19 +50,6 @@
 	font-style: normal;
 }
 
-h3 {
-	font: italic bold 1em/1em Georgia, serif;
-	color: #4D71DB;
-	display: inline;
-}
-
-h2 {
-	font: italic bold 1em/1em Georgia, serif;
-	background-color: #C0C0C0;
-	color: #4D71DB;
-	display: inline;
-}
-
 .tmainTop {
 	min-width: 0;
 	word-wrap: break-word;
@@ -101,6 +88,13 @@ h2 {
 	width: 100%;
 	height: 100%;
 	background-color: #e6e8eb;
+}
+.tingLink{
+	color: #000;
+}
+.tingLink:hover {
+	text-decoration: none;
+	color: #000;
 }
 </style>
 
@@ -144,8 +138,8 @@ h2 {
 										<div class="row" align="center">
 											<div class="col-sm-2" style="padding: 0; margin-left: 10px;">
 												<a class="btn btn-primary btn-block"
-													onclick="javascript:location.href='<%=cp%>/deleted.action?roomNum=${roomNum }';"
-													style="width: 100%; display: inline; background-color: #1e509c;">삭제</a>
+													onclick="javascript:location.href='<%=cp%>/updated.action?roomNum=${roomNum }';"
+													style="width: 100%; display: inline; background-color: #1e509c;">수정</a>
 											</div>
 											<div class="col-sm-2" style="padding: 0">
 												<a class="btn btn-danger btn-block"
@@ -213,17 +207,19 @@ h2 {
                             			<div class="card-header py-3 card shadow mb-4">
                             				
                             				<div>
-												<div>
-													<img src='<spring:url value="/image/${dto.ustoredFileName }"/>' width="50" height="50" style="border-radius: 50%;"/>
-													&nbsp;&nbsp;<u>${dto.userId }</u>&nbsp;&nbsp;/&nbsp;&nbsp;<u>${dto.name }</u><br/><br/>
-													
-													<a href="${tarticleUrl }&roomNum=${dto.roomNum }&tingNum=${dto.tingNum}">
-													<h3>${dto.title }</h3><br/><br/>
-													<p style="background-color: #F8F9FC;">${dto.content }</p><br/><br/>
-													</a>
-													
-													작성일 : ${dto.created }<br/>
-												</div>
+                            					<a class="tingLink" href="${tarticleUrl }&roomNum=${dto.roomNum }&tingNum=${dto.tingNum}">
+                            					
+													<div>
+														<img src='<spring:url value="/image/${dto.ustoredFileName }"/>'  width="50" height="50" 
+														style=" margin-right:10px; border-radius: 50%; display: inline-block;"/>
+														<h3 style="margin-top:8px; display: inline-block; font-family: 'Y_Spotlight'">${dto.title }</h3>
+														<sup>${dto.name}(${dto.userId})</sup>
+														<div style="padding: 10px; margin:20px 10px; background-color: #edf1f7; border-radius: 10px;">
+															<p>${dto.content }</p>
+														</div>
+														${dto.created }
+													</div>
+												</a>
 											</div>
                             				
                             			</div>
