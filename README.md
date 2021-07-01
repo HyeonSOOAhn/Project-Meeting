@@ -20,6 +20,8 @@
 
   - [기능구현](#기능구현)
 
+
+
 ## 프로젝트 목표
   - 공통된 관심사를 기반으로 모임 서비스를 제공
 
@@ -66,8 +68,13 @@
   - 커뮤니티
     * Github
 
+
+
 ## DATABASE
 ![ERD](https://user-images.githubusercontent.com/77277946/124152011-1972bc80-dace-11eb-84c0-b5ec6e570a96.png)
+
+
+
 
 ## 기능구현
 
