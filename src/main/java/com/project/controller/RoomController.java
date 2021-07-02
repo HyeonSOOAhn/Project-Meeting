@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.dao.RecoDAO;
 import com.project.dao.RegisterDAO;
 import com.project.dao.RoomDAO;
+import com.project.dto.RecoDTO;
 import com.project.dto.RoomDTO;
 import com.project.dto.UserDTO;
 import com.project.dto.UserInfo;
@@ -34,6 +37,10 @@ public class RoomController {
 	@Autowired
 	@Qualifier("roomDAO")
 	RoomDAO dao;
+	
+	@Autowired
+	@Qualifier("recoDAO")
+	RecoDAO recodao;
 	
 	@Autowired
 	RegisterDAO regiDao;
@@ -61,7 +68,9 @@ public class RoomController {
 	//전체 방 --------------------------------------------------------------
 	//방 만들기
 	@RequestMapping(value = "/created.action")
-	public ModelAndView created(HttpServletRequest request) throws Exception {
+	public ModelAndView created(HttpServletRequest request,
+								@RequestParam(value = "recoNum", required = false, defaultValue = "99999") int recoNum)
+								throws Exception {
 		
 		//http://localhost:8080/meeting/created.action
 		
@@ -85,6 +94,17 @@ public class RoomController {
 			mav.addObject("subject", subject);
 		}
 		
+		if(recoNum!=99999) {
+			RecoDTO list = recodao.getReadData(recoNum);
+			recodao.increasePop(recoNum);
+			list.setKeyword("#"+list.getKeyword());
+			if(list.getContent()!=null) {
+			list.setContent(list.getContent().replace("<br/>", "\r\n"));}
+			list.setIntroduce(list.getIntroduce().replace("<br/>", "\r\n"));
+			mav.addObject("list",list);
+			
+		}
+		
 		return mav;
 		
 	}
@@ -92,19 +112,17 @@ public class RoomController {
 	@RequestMapping(value = "/created_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String created_ok(RoomDTO dto,MultipartHttpServletRequest mpRequest) throws Exception {
 		
-		//dao.insertData(dto);
+		HttpSession session = mpRequest.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
 		
-		List<Map<String, Object>> lists = roomFileUtil.parseInsertFileInfo(dto, mpRequest);
+		//파일 올리기
+		MultipartFile mf = mpRequest.getFile("roomProfileFile");
+		Map<String, String> map = roomFileUtil.uploadRoomProfile(mf);
 		
-		int size = lists.size();
-		
-		for(int i=0;i<size;i++) {
-			dao.insertData(lists.get(i));
-		}
-		
-		
-		dao.addManager(dto.getManager());
-		
+		dto.setStoredFileName(map.get("storedFileName"));
+		dto.setOriginalFileName(map.get("originalFileName"));
+		dao.insertData(dto);
+		dao.addManager(info.getUserId());
 		
 		return "redirect:/list.action";
 		
@@ -270,6 +288,8 @@ public class RoomController {
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
+		int memberUser = dao.readMember(roomNum,info.getUserId());
+		
 		//라인수
 		int lineSu = dto.getIntroduce().split("\n").length;
 		
@@ -286,6 +306,8 @@ public class RoomController {
 		request.setAttribute("lineSu", lineSu);
 		request.setAttribute("pageNum", pageNum);
 		
+		request.setAttribute("memberUser", memberUser);
+		
 		return "room/article";
 		
 	}
@@ -297,24 +319,8 @@ public class RoomController {
 	@RequestMapping(value = "/updated.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String updated(HttpServletRequest request) throws Exception {
 		
-		String cp = request.getContextPath();
-		
 		//javascript:location.href='<%=cp%>/updated.action?roomNum=${dto.roomNum }&${params }';
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
-		String pageNum = request.getParameter("pageNum");
-		String searchKey = request.getParameter("searchKey");
-		String searchValue = request.getParameter("searchValue");
-				
-		if(searchValue!=null) {
-				
-			if(request.getMethod().equalsIgnoreCase("get")) {
-				searchValue = URLDecoder.decode(searchValue, "UTF-8");
-			}
-					
-		}else {
-			searchKey = "subject"; 
-			searchValue = ""; 
-		}
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
@@ -322,46 +328,9 @@ public class RoomController {
 			return "redirect:/list.action";
 		}
 		
-		String param = "pageNum=" + pageNum;
-				
-		if(!searchValue.equals("")) {
-			param+= "&searchKey=" + searchKey;
-			param+= "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
-		}
-		
 		request.setAttribute("dto", dto);
-		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("params", param);
-		request.setAttribute("searchKey", searchKey);
-		request.setAttribute("searchValue", searchValue);
 		
 		return "room/updated";
-		
-	}
-	
-	@RequestMapping(value = "/updated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String updated_ok(RoomDTO dto,HttpServletRequest request,MultipartHttpServletRequest mpRequest) throws Exception {
-		
-		String pageNum = request.getParameter("pageNum");
-		String searchKey = request.getParameter("searchKey");
-		String searchValue = request.getParameter("searchValue");
-		
-		List<Map<String, Object>> lists = roomFileUtil.parseUpdateFileInfo(dto, mpRequest);
-		
-		int size = lists.size();
-		
-		for(int i=0;i<size;i++) {
-			dao.updateData(lists.get(i));
-		}
-		
-		String param = "pageNum=" + pageNum;
-		
-		if(!searchValue.equals("")) {
-			param += "&searchKey=" + searchKey;
-			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
-		}
-		
-		return "redirect:/list.action?" + param;
 		
 	}
 	
@@ -372,8 +341,6 @@ public class RoomController {
 		//javascript:location.href='<%=cp%>/deleted.action?roomNum=${dto.roomNum }&${params }';
 		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		String pageNum = request.getParameter("pageNum");
-		String searchKey = request.getParameter("searchKey");
-		String searchValue = request.getParameter("searchValue");
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
@@ -381,17 +348,10 @@ public class RoomController {
 		
 		dao.deleteData(roomNum);
 		
-		String param = "pageNum=" + pageNum;
-		
-		if(searchValue!=null) {
-			param += "&searchKey=" + searchKey;
-			param += "&searchValue=" + searchValue;
-		}
-		
-		return "redirect:/list.action?" + param;
+		return "redirect:/list.action?" + pageNum;
 		
 	}
-	
+
 	@RequestMapping(value = "/requestMsg.action", method = RequestMethod.POST)
 	public @ResponseBody String roomRequest(HttpServletRequest request, String roomNum,String introduce) throws Exception {
 
@@ -433,7 +393,7 @@ public class RoomController {
 	}
 
 	@RequestMapping(value = "/modalAccept.action", method = { RequestMethod.POST})
-	public @ResponseBody String modalAccept(HttpServletRequest request,String msgNum,String sender,String roomNum)
+	public @ResponseBody String modalAccept(HttpServletRequest request,String msgNum,String sender,String recipient,String roomNum)
 			throws Exception {
 		
 
@@ -441,16 +401,55 @@ public class RoomController {
 		dao.changeRequestAccept(Integer.parseInt(msgNum));
 		//멤버 추가
 		dao.addMember(sender, Integer.parseInt(roomNum));
-
+		
+		int number = Integer.parseInt(roomNum);
+		
+		RoomDTO dto = dao.getReadData(number);
+		
+		String msg = dto.getTitle() + "에 보낸 요청이 수락 되었습니다. 축하합니다! :-)";	
+		//수락 알림 보내기
+		dao.insertNotice(sender,recipient,msg);
+		
 		return "success";
 	}
 	
 	@RequestMapping(value = "/modalReject.action", method = { RequestMethod.POST})
-	public @ResponseBody String modalReject(HttpServletRequest request,String msgNum)
+	public @ResponseBody String modalReject(HttpServletRequest request,String msgNum,String sender,String recipient,String roomNum)
 			throws Exception {
 		// 메시지 상태 거절로 바꾸기
 		dao.changeRequestReject(Integer.parseInt(msgNum));
 		
+		int number = Integer.parseInt(roomNum);
+		
+		RoomDTO dto = dao.getReadData(number);
+		
+		String msg = dto.getTitle() + "에 보낸 요청이 거절 되었습니다. :-(";	
+		//거절 알림 보내기
+		dao.insertNotice(sender,recipient,msg);
+		
+		return "success";
+	}
+	@RequestMapping(value = "/alterationRoomProfileImg.action", method = { RequestMethod.POST })
+	public @ResponseBody String alterationProfileImg(MultipartHttpServletRequest mpRequest) 
+			throws Exception {
+		HttpSession session = mpRequest.getSession();
+		UserInfo info = (UserInfo) session.getAttribute("userInfo");
+		
+		//파일 올리기
+		MultipartFile mf = mpRequest.getFile("roomProfile");
+		Map<String, String> map = roomFileUtil.uploadRoomProfile(mf);
+		
+		String roomNum = mpRequest.getParameter("roomNum");
+		
+		RoomDTO dto = dao.getReadData(Integer.parseInt(roomNum));
+		
+		roomFileUtil.parseDeleteFileInfo(dto.getStoredFileName());
+		
+		map.put("roomNum", Integer.toString(dto.getRoomNum()));
+		
+		dao.updateProfileImg(map);
+		
+
 		return "success";
 	}
 	

@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select storedFileName from roomFile where roomNum = #{roomNum} and DEL_GB = 'N'
 	</select>
 	 -->
-	<insert id="insertData" parameterType="hashMap">
+	<insert id="insertData" parameterType="com.project.dto.RoomDTO">
 		insert into wholeRoom (roomNum,subject,title,keyword,introduce,created,
 		totalP,currentP,manager,originalFileName,storedFileName)
 		values (roomNum_SEQ.NEXTVAL,#{subject},#{title},#{keyword},#{introduce},sysdate,
@@ -69,6 +69,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update wholeRoom set title = #{title},keyword = #{keyword},
 		introduce = #{introduce},originalFileName = #{originalFileName},
 		storedFileName = #{storedFileName} where roomNum = #{roomNum}
+	</update>
+	
+	<update id="updateProfileImg" parameterType="map">
+		update wholeRoom set originalFileName = #{originalFileName},
+		storedFileName = #{storedFileName} where roomNum = #{roomNum}
+	
 	</update>
 	
 	<delete id="deleteData" parameterType="int">
@@ -184,6 +190,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into roomMember(userId,roomNum,position)
 		values(#{userId},roomNum_seq.currval,'방장')
 	</insert>
+	<select id="readMember" resultType="int" parameterType="map">
+		select count(*) from roomMember where roomNum = #{roomNum} and userId=#{userId}
+	</select>
+	
+	<!-- 알림 -->
+	<insert id="insertNotice" parameterType="map">
+		insert into notice(noticeNum,sender,recipient,noticeMsg,created)
+		values(noticeNum_SEQ.NEXTVAL,#{sender},#{recipient},#{noticeMsg},sysdate)
+	</insert>
+	<select id="getNoticeList" parameterType="String" resultType="com.project.dto.noticeDTO">
+		select noticeNum,sender,recipient,noticeMsg,created from notice 
+		<![CDATA[where recipient=#{recipient} and created<sysdate and created>sysdate-7]]>
+	</select>
 	
 
 </mapper>

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -29,9 +28,12 @@
 <link href="css/room.css" rel="stylesheet">
 
 <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 
 <script type="text/javascript" src="/meeting/resources/js/util.js"></script>
+<script type="text/javascript" src="/meeting/resources/js/created.js"></script>
+
 <script type="text/javascript">
     
 	function sendIt() {
@@ -92,24 +94,20 @@
 			f.introduce.focus();
 			return;
 		}
-		f.introduce.value = str;
+		f.introduce.value = str; 
+		
+		str = f.roomProfile.value;
+		if(str === '파일선택'){
+			alert("프로필 사진도 필수 요소 입니다.");	
+			return;
+		}
 		
 		
 		//가상경로
 		f.action = "<%=cp%>/created_ok.action";
-		f.submit();
+		f.submit(); 
 		
 	}
-	
-	//파일 버튼
-	$(function() {
-		
-		$('#btn').click(function (e) {
-			e.preventDefault();
-			$('#file').click();
-		});
-		
-	});
 	
 	function changeValue(obj) {
 		alert(obj.value);
@@ -137,29 +135,152 @@
     </script>
 
 <style type="text/css">
-#file {
-	display: none;
+.bg-article-travle-basic {
+	background-image: url("https://source.unsplash.com/featured/?travel");
+	background-size: cover;
+}
+
+.bg-article-study-basic {
+	background-image: url("https://source.unsplash.com/featured/?study");
+	background-size: cover;
+}
+
+.bg-article-restaurant-basic {
+	background-image:
+		url("https://source.unsplash.com/featured/?restaurant");
+	background-size: cover;
+}
+
+.bg-article-exercise-basic {
+	background-image:
+		url("https://source.unsplash.com/featured/?weight-training");
+	background-size: cover;
+}
+
+.bg-article-mountain-basic {
+	background-image:
+		url("https://source.unsplash.com/featured/?nature-mountain");
+	background-size: cover;
+}
+
+.max_width {
+	max-width: 700px;
+	text-align: center;
+}
+
+.card-body {
+	background-color: #F7F7F7;
+}
+
+.fileBox label {
+	display: inline-block;
+	padding: .5em .75em;
+	color: #fff;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #488FF7;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+}
+
+.fileBox input[type="file"] {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+.fileBox .upload-name {
+	display: inline-block;
+	padding: .5em .75em; /* label의 패딩값과 일치 */
+	font-size: inherit;
+	font-family: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #f5f5f5;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */
+	-moz-appearance: none;
+	appearance: none;
+}
+
+}
+.filebox .upload-display { /* 이미지가 표시될 지역 */
+	margin-bottom: 5px;
+}
+
+@media ( min-width : 768px) {
+	.filebox .upload-display {
+		display: inline-block;
+		margin-right: 5px;
+		margin-bottom: 0;
+	}
+}
+
+.filebox .upload-thumb-wrap { /* 추가될 이미지를 감싸는 요소 */
+	display: inline-block;
+	width: 54px;
+	padding: 2px;
+	vertical-align: middle;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: #fff;
+}
+
+.filebox .upload-display img { /* 추가될 이미지 */
+	display: block;
+	max-width: 100%;
+	width: 100% \9;
+	height: auto;
+}
+.backWholeList{
+	color: #000;
+	font-size: 9px;
+	font-size: 1rem;
+}
+.backWholeList:hover{
+	color: #263959;
+	text-decoration: none;
+	font-size: 1rem;
 }
 </style>
 
 </head>
 
+<c:choose>
+	<c:when test="${empty subject}"><body class="bg-article-mountain-basic"></c:when>
+	<c:when test="${subject eq '운동' }"><body class="bg-article-exercise-basic"></c:when>
+	<c:when test="${subject eq '여행' }"><body class="bg-article-travle-basic"></c:when>
+	<c:when test="${subject eq '맛집' }"><body class="bg-article-restaurant-basic"></c:when>
+	<c:when test="${subject eq '공부' }"><body class="bg-article-study-basic"></c:when>
+</c:choose>
 <body class="bg-gradient-primary">
 
-	<div class="container">
+	<div class="container max_width">
 
 		<div class="card o-hidden border-0 shadow-lg my-5">
 			<div class="card-body p-0">
 				<!-- Nested Row within Card Body -->
-				<div class="row">
-					<div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-					<div class="col-lg-7">
+				<div>
+					<!-- <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> -->
+					<div>
 						<div class="p-5">
 							<div class="text-center">
-								<h1 class="h4 text-gray-900 mb-4">
-									<b>방 만들기</b>
+								<h1 class=" text-gray-900 mb-4" style="font-weight: 700;">
+									방 만들기
 								</h1>
+								<p style="color: #D1421D">⁕모든 요소가 필수 요소입니다.</p>
 							</div>
+					
 							<form action="" name="myForm" class="user" method="post"
 								enctype="multipart/form-data">
 								<div class="form-group row">
@@ -181,9 +302,7 @@
 											<h4>${subject}</h4>
 											<input type="hidden" name="subject" value="${subject}">
 										</c:otherwise>
-										
 										</c:choose>
-
 									</div>
 									<div class="col-sm-6 mb-3 mb-sm-0">
 
@@ -206,33 +325,34 @@
                                     </div> -->
 								</div>
 								<div class="form-group">
-									<input name="title" type="text"
+									<input name="title" type="text" value="${list.title }"
 										class="form-control form-control-user" id="exampleInputEmail"
-										placeholder="방 이름">
+										placeholder="방 이름" style="border-radius: 6px;">
 								</div>
 								<div class="form-group">
-									<input name="keyword" type="text"
+									<input name="keyword" type="text" value="${list.keyword }"
 										class="form-control form-control-user" id="exampleInputEmail"
-										placeholder="#키워드">
+										placeholder="#키워드" style="border-radius: 6px;">
 								</div>
 								<div>
-									<textarea name="introduce" rows="12" cols="63"
-										placeholder="방을 소개해주세요." class="form-control"></textarea>
+									<textarea name="introduce" rows="12" cols="63" style="resize: none;"
+										placeholder=" 방을 소개해주세요!! ?&#13;&#10; 정성들여 글을 쓰면 신청자가 더 많아져요!" 
+										class="form-control"><c:if test="${!empty list }">${list.introduce }&#10;${list.content }&#10;${list.location }</c:if></textarea>
 								</div>
-								<br />
-
-								<div class="form-group">
-									<input type="file" name="file" id="file" value="방 프로필 이미지" />
-									<button type="button"
-										class="btn btn-primary btn-user btn-block" id="btn"
-										style="font-size: 0.8rem; border-radius: 10rem; padding: 0.75rem 1rem;">방
-										프로필 이미지</button>
+								<div class="form-group fileBox preview-image">
+						
+									<input class="upload-name" name="roomProfile" value="파일선택" disabled="disabled">
+									
+									<label for="input_file" style="font-size: 1rem;margin-top: 8px;border: 0;">배경화면 선택</label>
+									<input type="file" name="roomProfileFile" id="input_file" class="chooseFile"/>
 								</div>
+						
+								<input type="hidden" name="manager" value="${sessionScope.userInfo.userId }"/>
 
-								<input type="hidden" name="manager"
-									value="${sessionScope.userInfo.userId }" /> <input
-									type="button" class="btn btn-primary btn-user btn-block"
-									value="생 성 하 기" onclick="sendIt();" />
+								<input type="button" class="btn btn-primary btn-user btn-block"
+									value="생 성 하 기" onclick="sendIt();" 
+									style="border-radius: 6px; font-weight: 600; font-style:normal; font-size: 1rem;
+									background-color: #488FF7; border: 0 " />
 
 							</form>
 							<hr>
@@ -240,7 +360,7 @@
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div> -->
 							<div class="text-center">
-								<a class="small" href="<%=cp%>/list.action">전체 방 목록으로 돌아가기</a>
+								<a class="backWholeList" href="<%=cp%>/list.action">전체 방 목록으로 돌아가기</a>
 							</div>
 						</div>
 					</div>
@@ -249,6 +369,60 @@
 		</div>
 
 	</div>
+
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var fileUpload = $('.fileBox .chooseFile');
+			
+			fileUpload.on('change',function(){
+				if(window.FileReader){
+					var fileName = $(this)[0].files[0].name;
+				}else{
+					var fileName = $(this).val().split('/').pop().split('\\').pop();	
+				}
+				
+				$(this).siblings('.upload-name').val(fileName);
+				
+			});
+		});
+		
+		var imgTarget = $('.preview-image .upload-hidden');
+		
+		imgTarget.on('change',function(){
+			var parent = $(this).parent();
+			parent.children('.upload-display').remove();
+			
+			if(window.FileReader){
+				
+				if(!$(this)[0].files[0].type.match(/image\//))
+					return;
+
+				
+
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					var src = e.target.result;
+					parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
+				}
+				reader.readAsDataURL($(this)[0].files[0]);
+			}
+
+			else {
+				$(this)[0].select();
+				$(this)[0].blur();
+
+				var imgSrc = document.selection.createRange().text;
+				parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+
+			var img = $(this).siblings('.upload-display').find('img');
+			img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""
+										+ imgSrc + "\")";
+
+		}
+
+	});
+	</script>
 	
 
 	<!-- Bootstrap core JavaScript-->
@@ -256,8 +430,11 @@
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
+	
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
+	
+	
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
 

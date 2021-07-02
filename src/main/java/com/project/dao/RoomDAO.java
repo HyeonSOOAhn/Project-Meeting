@@ -8,10 +8,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.project.dto.RoomDTO;
 import com.project.dto.msgDTO;
+import com.project.dto.noticeDTO;
 
 public class RoomDAO {
 
-private SqlSessionTemplate sessionTemplate;
+	private SqlSessionTemplate sessionTemplate;
 	
 	//의존성 주입
 	public void setSessionTemplate(SqlSessionTemplate sessionTemplate) {
@@ -22,9 +23,13 @@ private SqlSessionTemplate sessionTemplate;
 	
 	//전체 방 --------------------------------------------------------------
 	//입력
-	public void insertData(Map<String,Object> map) {
+	public void insertData(RoomDTO dto) {
+		sessionTemplate.insert("com.roomMapper.insertData", dto);
+	}
+	
+	public void updateProfileImg(Map<String, String> map) {
 		
-		sessionTemplate.insert("com.roomMapper.insertData", map);
+		sessionTemplate.update("com.roomMapper.updateProfileImg",map);
 		
 	}
 	
@@ -218,6 +223,7 @@ private SqlSessionTemplate sessionTemplate;
 		return lists;
 			
 	}
+	
 	// 메세지
 		public void insertMsg(msgDTO dto) {
 
@@ -272,6 +278,38 @@ private SqlSessionTemplate sessionTemplate;
 
 			sessionTemplate.update("com.roomMapper.changeRequestReject", map);
 
+		}
+		
+		public int readMember(int roomNum,String userId) {
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("roomNum", roomNum);
+			map.put("userId", userId);
+			
+			int success = sessionTemplate.selectOne("com.roomMapper.readMember", map);
+			
+			return success;
+			
+		}
+		
+		//알림
+		public void insertNotice(String sender,String recipient,String msg) {
+			
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("sender", recipient);
+			map.put("recipient", sender);
+			map.put("noticeMsg", msg);
+			
+			sessionTemplate.insert("com.roomMapper.insertNotice",map);
+		}
+		
+		public List<noticeDTO> getNoticeList(String recipient){
+			
+		
+			List<noticeDTO> lists = sessionTemplate.selectList("com.roomMapper.getNoticeList", recipient);
+
+			return lists;
+	
 		}
 
 }

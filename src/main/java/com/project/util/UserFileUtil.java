@@ -22,8 +22,7 @@ import com.project.dto.UserDTO;
 public class UserFileUtil {
 
 	// 파일이 저장될 위치
-	private static final String filePath = "C:\\image\\"; // <img src='<spring:url value="/image/${dto.ustoredFileName
-															// }"/>' width="300" height="300"/>
+	private static final String filePath = "C:\\image\\"; //<img src='<spring:url value="/image/${dto.ustoredFileName}"/>' width="300" height="300"/>
 
 	//이미지 변경
 	public Map<String, String> changeProfile(MultipartHttpServletRequest mpRequest) {

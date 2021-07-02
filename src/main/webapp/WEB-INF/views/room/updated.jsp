@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -71,8 +70,7 @@ String cp = request.getContextPath();
 		
 		
 		//가상경로
-		f.action = "<%=cp%>
-	/updated_ok.action";
+		f.action = "<%=cp%>/updated_ok.action?roomNum=" + ${dto.roomNum };
 		f.submit();
 
 	}
@@ -92,9 +90,11 @@ String cp = request.getContextPath();
 </script>
 
 <style type="text/css">
-#file {
-	display: none;
-}
+	
+	#file {
+		display: none;
+	}
+	
 </style>
 
 </head>
@@ -150,11 +150,9 @@ String cp = request.getContextPath();
 										프로필 이미지</button>
 								</div>
 
-								<input type="hidden" name="manager" value="1"> <input
-									type="hidden" name="roomNum" value="${dto.roomNum }"> <input
-									type="hidden" name="pageNum" value="${pageNum }"> <input
-									type="hidden" name="searchKey" value="${searchKey }"> <input
-									type="hidden" name="searchValue" value="${searchValue }">
+								<input type="hidden" name="manager" value="1">
+								<input type="hidden" name="roomNum" value="${dto.roomNum }">
+								<input type="hidden" name="pageNum" value="${pageNum }">
 
 								<input type="button" class="btn btn-primary btn-user btn-block"
 									value="수 정 하 기" onclick="sendIt();">
@@ -162,8 +160,7 @@ String cp = request.getContextPath();
 							</form>
 							<hr>
 							<div class="text-center">
-								<a class="small" href="<%=cp%>/index.action">방 카테고리 목록으로
-									돌아가기</a>
+								<a class="small" href="<%=cp%>/tmain.action?roomNum=${dto.roomNum }">방으로 돌아가기</a>
 							</div>
 						</div>
 					</div>

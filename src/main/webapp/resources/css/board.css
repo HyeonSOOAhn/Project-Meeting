@@ -4,12 +4,12 @@
 	margin:0px;
 	padding:0px;
 }
-
+/* 
 body {	
 	font-size: 9pt;
 	font-family:굴림;
 }
-
+ */
 a {
 	cursor: hand;
 	color: #000000;
@@ -39,7 +39,7 @@ td {
 	line-height:16px;
 }
 
-.btn2 {   
+.btn2 {
 	color:#000000;
 	font: normal 9pt '굴림','trebuchet ms',helvetica,sans-serif;
 	background-color:#E4E4E4;
