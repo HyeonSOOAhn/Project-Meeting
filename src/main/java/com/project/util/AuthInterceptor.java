@@ -30,7 +30,7 @@ public class AuthInterceptor extends WebContentInterceptor {
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
 		if(info==null||info.equals(null)) {
 			System.out.println(1);
-			return false;
+			
 		}else {
 			List<noticeDTO> noticeList = roomDao.getNoticeList(info.getUserId()); 
 			session.setAttribute("noticeList", noticeList);

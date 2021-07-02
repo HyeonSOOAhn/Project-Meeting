@@ -91,9 +91,9 @@ public class RoomDAO {
 	}
 	
 	//수정
-	public void updateData (Map<String,Object> map) {
+	public void updateData (RoomDTO dto) {
 		
-		sessionTemplate.update("com.roomMapper.updateData", map);
+		sessionTemplate.update("com.roomMapper.updateData", dto);
 		
 	}
 	public void updateCurrentP(int roomNum) {
