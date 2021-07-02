@@ -84,15 +84,15 @@
 
 
   ### 로그인 & 회원가입
-  <img src="https://user-images.githubusercontent.com/58163747/124235774-a2cad300-db50-11eb-8261-2bae9a280127.GIF" width="150">
-  <img src="https://user-images.githubusercontent.com/58163747/124235823-b24a1c00-db50-11eb-961f-c2c5947a7197.GIF" width="150">
+  <img src="https://user-images.githubusercontent.com/58163747/124235774-a2cad300-db50-11eb-8261-2bae9a280127.GIF" width="450"> <img src="https://user-images.githubusercontent.com/58163747/124235823-b24a1c00-db50-11eb-961f-c2c5947a7197.GIF" width="450"> 
+  
   
   ### myPage
   ![myPage](https://user-images.githubusercontent.com/58163747/124236216-271d5600-db51-11eb-9dc1-d5ca0222fdec.GIF)
 
   ### 요청 주고 받기
-  <img src="https://user-images.githubusercontent.com/58163747/124237569-9a739780-db52-11eb-9b73-30531e87ba4a.GIF" width="150">
-  <img src="https://user-images.githubusercontent.com/58163747/124237598-a8291d00-db52-11eb-9257-26ef4e697442.GIF" width="150">
+  <img src="https://user-images.githubusercontent.com/58163747/124237569-9a739780-db52-11eb-9b73-30531e87ba4a.GIF" width="450">   <img src="https://user-images.githubusercontent.com/58163747/124237598-a8291d00-db52-11eb-9257-26ef4e697442.GIF" width="450">
+
   
   ### 모임 만들기
   ![makethRoom](https://user-images.githubusercontent.com/58163747/124237785-df97c980-db52-11eb-9477-1b23be6014d6.GIF)
