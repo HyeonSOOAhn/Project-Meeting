@@ -62,11 +62,10 @@ public class MeetingController {
 			return mav;
 		}
 		
-		 
+
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("main");
-		
 		
 
 		return mav;

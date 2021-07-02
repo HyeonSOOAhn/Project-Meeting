@@ -152,17 +152,21 @@
                             <div class="col-lg-3">
                  <div class="card mb-2">
 							<div class="card-header bg-light">
-							        <i class="fa fa-comment fa"></i> ${dto.userId }
+							        <i class="fa fa-comment fa"></i>
+							        ${dto.userId }
+							        
+							
 							        
 							</div>
+							
 							<div class="card-body">
 								<ul class="list-group list-group-flush">
 								    <li class="list-group-item">
 									
 									<div class="form-inline mb-2">
 										<label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
-										⭐ : ${dto.star }<br/>
-										${dto.content }
+											⭐ : ${dto.star }<br/>
+											${dto.content }
 									</div>
 										
 								    

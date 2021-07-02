@@ -199,7 +199,12 @@
     			url:"modalAccept.action",
     	        data: sendData,
     	        success:function(data){
-    	        	window.location.reload();
+    	        	if(data=='success'){
+    	        		window.location.reload();
+    	        	}else if(data=='fail'){
+    	        		alert("인원초과!");
+    	        	}
+    	        	
     	        }
     		});
 		}
