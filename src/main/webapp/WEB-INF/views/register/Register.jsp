@@ -31,10 +31,9 @@
 #file {
 	display: none;
 }
-
 </style>
 
-
+	
 </head>
 
 <body class="bg-gradient-primary">

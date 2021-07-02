@@ -237,7 +237,7 @@ h1 {
 										방 참가하기</a>
 									</c:if>
 								</div>
-								</div>
+							</div>
 
 							<hr>
 							<div class="text-center">
