@@ -82,6 +82,26 @@
 
 ## 기능구현
 
+
+  ### 로그인 & 회원가입
+  <img src="https://user-images.githubusercontent.com/58163747/124235774-a2cad300-db50-11eb-8261-2bae9a280127.GIF" width="150">
+  <img src="https://user-images.githubusercontent.com/58163747/124235823-b24a1c00-db50-11eb-961f-c2c5947a7197.GIF" width="150">
+  
+  ### myPage
+  ![myPage](https://user-images.githubusercontent.com/58163747/124236216-271d5600-db51-11eb-9dc1-d5ca0222fdec.GIF)
+
+  ### 요청 주고 받기
+  <img src="https://user-images.githubusercontent.com/58163747/124237569-9a739780-db52-11eb-9b73-30531e87ba4a.GIF" width="150">
+  <img src="https://user-images.githubusercontent.com/58163747/124237598-a8291d00-db52-11eb-9257-26ef4e697442.GIF" width="150">
+  
+  ### 모임 만들기
+  ![makethRoom](https://user-images.githubusercontent.com/58163747/124237785-df97c980-db52-11eb-9477-1b23be6014d6.GIF)
+
+  ### 방 내부
+   
+  
+  
+
   ### 추천 장소 api
   1. 공공데이터에서 약 **7500**여개의 장소 정보를 **JsonParser를 이용하여 파싱한 후 DB에 저장**.<br/>
 ![recommend count](https://user-images.githubusercontent.com/77277946/124158790-4e364200-dad5-11eb-98e4-cdc59f5cf3ec.png)
