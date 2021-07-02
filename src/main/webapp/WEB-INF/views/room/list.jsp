@@ -50,8 +50,6 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <style>
-
-
 @font-face {
     font-family: 'Y_Spotlight';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/Y_Spotlight.woff') format('woff');
@@ -136,10 +134,10 @@ div.right {
 						<c:choose>
 							<c:when test="${empty subject }">
 								<div class="listTopP">
-									<h1 class="mb-2 text-gray-800" ">
+									<h1 class="mb-2 text-gray-800">
 										전체 방 목록
 									</h1>
-									<p class="mb-4" ">여러분들이 참여하실 수 있는 모든 방 목록입니다.</p>
+									<p class="mb-4" >여러분들이 참여하실 수 있는 모든 방 목록입니다.</p>
 								</div>
 
 							</c:when>
@@ -272,11 +270,11 @@ div.right {
 
 			<!-- Footer -->
 			<footer class="sticky-footer bg-white">
-			<div class="container my-auto">
-				<div class="copyright text-center my-auto">
-					<span>Copyright &copy; Your Website 2020</span>
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Your Website 2020</span>
+					</div>
 				</div>
-			</div>
 			</footer>
 			<!-- End of Footer -->
 

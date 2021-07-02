@@ -62,12 +62,11 @@ public class MeetingController {
 			return mav;
 		}
 		
-		List<noticeDTO> noticeList = roomDao.getNoticeList(info.getUserId()); 
+		
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("main");
 		
-		mav.addObject("noticeList", noticeList);
 
 		return mav;
 
