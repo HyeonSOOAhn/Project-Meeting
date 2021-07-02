@@ -75,7 +75,7 @@
 
 
 ## DATABASE
-![ERD](https://user-images.githubusercontent.com/77277946/124152011-1972bc80-dace-11eb-84c0-b5ec6e570a96.png)
+![ERD](https://user-images.githubusercontent.com/77277946/124222723-41e5cf80-db3d-11eb-8db5-e43f9736aca9.png)
 
 
 
