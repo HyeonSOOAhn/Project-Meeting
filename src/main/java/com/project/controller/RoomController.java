@@ -333,6 +333,13 @@ public class RoomController {
 		return "room/updated";
 		
 	}
+	@RequestMapping(value = "/updated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String updated_ok(HttpServletRequest request, RoomDTO dto) throws Exception {
+		
+		dao.updateData(dto);
+		
+		return "redirect:tmain.action?roomNum="+dto.getRoomNum();
+	}
 	
 	//삭제
 	@RequestMapping(value = "/deleted.action", method = {RequestMethod.GET,RequestMethod.POST})
@@ -396,15 +403,23 @@ public class RoomController {
 	public @ResponseBody String modalAccept(HttpServletRequest request,String msgNum,String sender,String recipient,String roomNum)
 			throws Exception {
 		
+		int number = Integer.parseInt(roomNum);
+		
+		RoomDTO dto = dao.getReadData(number);
+		
+		if(dto.getCurrentP() >= dto.getTotalP()) {
+			
+			return "fail";
+		}
+		
 
 		// 메시지 상태 수락으로 바꾸기
 		dao.changeRequestAccept(Integer.parseInt(msgNum));
 		//멤버 추가
 		dao.addMember(sender, Integer.parseInt(roomNum));
 		
-		int number = Integer.parseInt(roomNum);
+		dao.updateCurrentP(number);
 		
-		RoomDTO dto = dao.getReadData(number);
 		
 		String msg = dto.getTitle() + "에 보낸 요청이 수락 되었습니다. 축하합니다! :-)";	
 		//수락 알림 보내기

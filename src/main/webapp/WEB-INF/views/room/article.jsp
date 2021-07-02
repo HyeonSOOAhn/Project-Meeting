@@ -226,6 +226,11 @@ h1 {
 								<div class="form-group">
 									<!-- 마이룸 테이블의 member 가져오기 : dto.manager || dto.member -->
 									<c:if test="${memberUser == 0}">
+										<c:choose>
+											<c:when test="${dto.currentP >= dto.totalP }">
+												<p style="font-size: 1.6rem; ">인원이 가득차서 신청이 불가능해요!</p>
+											</c:when>
+										</c:choose>
 										<a data-toggle="modal" href="#proposeRoom" 
 											data-roomnum="${dto.roomNum }" data-title = "${dto.title}"
 											class="btn btn-primary btn-user btn-propose btn-size"> 방 참여 신청하기 </a>
@@ -395,5 +400,5 @@ h1 {
 	<script src="js/sb-admin-2.min.js"></script>
 
 </body>
->>>>>>> branch 'develop' of https://github.com/DYKIM9866/Project-Meeting.git
+
 </html>

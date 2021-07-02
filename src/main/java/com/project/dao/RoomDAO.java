@@ -66,6 +66,7 @@ public class RoomDAO {
 		
 	}
 	
+	
 	//표시할 페이지 (rownum 범위) 데이터
 	public List<RoomDTO> getLists(int start,int end,String searchKey,String searchValue) {//페이징할 번호의 시작과 끝
 		
@@ -87,14 +88,17 @@ public class RoomDAO {
 		RoomDTO dto = sessionTemplate.selectOne("com.roomMapper.getReadData", roomNum);
 		
 		return dto;
-		
 	}
 	
 	//수정
-	public void updateData (Map<String,Object> map) {
+	public void updateData (RoomDTO dto) {
 		
-		sessionTemplate.update("com.roomMapper.updateData", map);
+		sessionTemplate.update("com.roomMapper.updateData", dto);
 		
+	}
+	public void updateCurrentP(int roomNum) {
+		
+		sessionTemplate.update("com.roomMapper.updateCurrentP",roomNum);
 	}
 	
 	//삭제

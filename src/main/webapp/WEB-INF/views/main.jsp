@@ -243,7 +243,7 @@
 									<div class="img1">
 										<div class="content1">
 											<h3 style="font-family: 'Y_Spotlight';" >혼자하는 공부가 지겹다면..</h3>
-											<h1 style="font-family: 'Y_Spotlight';">방팅에서 만나봐!</h1>
+											<h1 style="font-family: 'Y_Spotlight'; font-size: 4rem;">방팅에서 만나봐!</h1>
 										</div>
 										<div class="img-cover1"></div>
 									</div> 
@@ -258,7 +258,7 @@
 									<div class="img2">
 										<div class="content2">
 											<h3 style="font-family: 'Y_Spotlight';">혼자 먹는 밥 지겹다면..</h3>
-											<h1 style="font-family: 'Y_Spotlight';">방팅에서 만나봐!</h1>
+											<h1 style="font-family: 'Y_Spotlight'; font-size: 4rem;">방팅에서 만나봐!</h1>
 										</div>
 										<div class="img-cover2"></div>
 									</div> 
@@ -274,7 +274,7 @@
 										<div class="content3">
 											<h3 style="font-family: 'Y_Spotlight';">여기는 혼자가기 좀..</h3>
 											<h3 style="font-family: 'Y_Spotlight';">동행이 필요하다면</h3>
-											<h1 style="font-family: 'Y_Spotlight';">방팅에서 만나봐!</h1>
+											<h1 style="font-family: 'Y_Spotlight'; font-size: 4rem;">방팅에서 만나봐!</h1>
 										</div>
 										<div class="img-cover3"></div>
 									</div> 

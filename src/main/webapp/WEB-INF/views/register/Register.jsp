@@ -31,6 +31,55 @@
 #file {
 	display: none;
 }
+<<<<<<< HEAD
+=======
+
+@charset "UTF-8";
+
+.genderLabel{
+	color : #fff;
+	font-size: 15px;
+	font-weight: 600;
+	width: 50px; 
+	height: 100%; 
+	background-color: #4590FF;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 3px;
+}
+.genderLabel > span{
+	position:relative;
+	top: 30%
+	
+}
+
+input[id="man"]:checked + label{
+	box-shadow: 3px 3px black;
+	transition:all .4s;
+}
+input[id="woman"]:checked + label{
+	box-shadow: 3px 3px black;
+	transition:all .4s;
+}
+
+/*ERROR MESSAGE*/
+.errorMessage{
+	color: #D63727;
+	font-weight: 700;
+}
+.hide{
+	display: none;
+}
+.show{
+	display: block;
+	
+}
+
+
+
+
+
+>>>>>>> branch 'develop' of https://github.com/DYKIM9866/Project-Meeting.git
 </style>
 
 	
