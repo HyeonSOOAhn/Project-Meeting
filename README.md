@@ -57,7 +57,7 @@
 
   - 프레임워크
     * Spring4.3.0
-    * Jquery
+    * Jquery / Ajax
     * Bootstrap
 
 
@@ -69,8 +69,8 @@
     * STS 3.0
 
 
-  - 커뮤니티
-    * Github
+  - 형상관리도구
+    * Git / Github
 
 
 
