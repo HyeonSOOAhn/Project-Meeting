@@ -39,37 +39,64 @@
 		}
 		
 	</script>
-    
-    <style type="text/css">
-    
-    	h3 {
-    		font: italic bold 1em/1em Georgia, serif;
-			color: #4D71DB;
-			display: inline;
-    	}
 
-		h2 {
-			font: italic bold 1em/1em Georgia, serif;
-			background-color: #C0C0C0;
-			color: #4D71DB;
-			display: inline;
-		}
-		
-		h1 {
-			font: italic bold 3em/1em Georgia, serif;
-			background-color: #C0C0C0;
-			color: #000000;
-			display: inline;
-		}
-		
-		p {
-			font: italic bold 1em/1em Georgia, serif;
-			background-color: #C0C0C0;
-			color: #000000;
-			display: inline;
-		}
-	
-	</style>
+<style type="text/css">
+@font-face {
+	font-family: 'Y_Spotlight';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/Y_Spotlight.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.tmainTop {
+	min-width: 0;
+	word-wrap: break-word;
+	background-color: #fff;
+	background-clip: border-box;
+	border: 1px solid #e3e6f0;
+	border-radius: 0.35rem;
+	margin-bottom: 50px;
+}
+
+.tmainTopTitle {
+	font-family: 'Y_Spotlight';
+	font-size: 1.6rem;
+	padding: 10px;
+	color: #011c45;
+}
+
+.tmainTopManager {
+	font-size: 1.rem;
+	font-family: 'Y_Spotlight';
+	padding-left: 10px;
+	color: #011c45;
+}
+
+.tmainTomExplain {
+	margin: 28px;
+	padding: 10px;
+	background-color: #e6e8eb;
+	height: 75%;
+	border-radius: 10px;
+}
+
+.tmainTomExplain textarea {
+	border: 0;
+	resize: none;
+	width: 100%;
+	height: 100%;
+	background-color: #e6e8eb;
+}
+.tingLink{
+	color: #000;
+}
+.tingLink:hover {
+	text-decoration: none;
+	color: #000;
+}
+</style>
 
 </head>
 
@@ -94,42 +121,50 @@
 				
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="background-size: cover;background-image: url('<spring:url value="/upload/${storedFileName }"/>');">
+                <div class="container-fluid">
 
                     <!-- Page Heading -->
                     
-                    <div class="row p-5">
-                        
-                        <div class="col-lg-6">
-	                        <h2>${subject }</h2><br/><br/>
-							<h1><b>${title }</b></h1><br/><br/>
-						</div>
-						
-						<div class="col-lg-6">
-							<p>${introduce }</p><br/><br/>
-							<p>방장 : ${manager }</p><br/><br/>
-							
-							<c:if test="${manager == sessionScope.userInfo.userId}">
-							<div class="row" align="center">
-								<div class="col-sm-2">
-									<input type="button" value=" 방 수정 " class="btn btn-primary btn-user btn-block"
-										onclick="javascript:location.href='<%=cp%>/updated.action?roomNum=${roomNum }';"
-										style="width: 100%; display: inline;"/>
-									</div>
-								<div class="col-sm-2">
-									<input type="button" value=" 방 삭제 " class="btn btn-primary btn-user btn-block"
-										onclick="javascript:location.href='<%=cp%>/deleted.action?roomNum=${roomNum }';"
-										style="width: 100%; display: inline;"/>
+                    <div class="row tmainTop shadow">
+                    	<div class="col-sm-6 ">
+                    		<div class="row" style="padding: 10px; margin: 10px;">
+	                    		<div class="col-sm-4">
+									<img src='<spring:url value="/upload/${storedFileName}"/>' style="border-radius: 100%; width: 180px; height: 180px" />
+	                    		</div>
+	                    		<div class="col-sm-8">
+	                    			<h1 class="tmainTopTitle">${title }</h1>
+	                    			<p class="tmainTopManager">방장: ${manager}</p>
+									<c:if test="${manager == sessionScope.userInfo.userId}">
+										<div class="row" align="center">
+											<div class="col-sm-2" style="padding: 0; margin-left: 10px;">
+												<a class="btn btn-primary btn-block"
+													onclick="javascript:location.href='<%=cp%>/updated.action?roomNum=${roomNum }';"
+													style="width: 100%; display: inline; background-color: #1e509c;">수정</a>
+											</div>
+											<div class="col-sm-2" style="padding: 0">
+												<a class="btn btn-danger btn-block"
+													onclick="javascript:location.href='<%=cp%>/deleted.action?roomNum=${roomNum }';"
+													style="width: 100%; display: inline;">삭제</a>
+					
+											</div>
+										</div>
+									</c:if>
 								</div>
 							</div>
-							</c:if>
-						</div>
-						
+                    	</div>
+                    	<div class="col-sm-6">
+                    		<div class="tmainTomExplain">
+                    			<textarea readonly="readonly" >${introduce }</textarea>
+                    		</div>
+                    	</div>
+                    	
                     </div>
+                    
+                
 
                     <div class="row">
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-7">
 
                             <!-- Basic Card Example -->
                             <div class="card shadow mb-4">
@@ -150,14 +185,14 @@
 									
 										<select name="searchKey"
 											class="custom-select custom-select-sm form-control form-control-sm"
-											style="width: 18%; display: inline;">
+											style="width: 130px; display: inline;">
 											<option value="userId">작성자 아이디</option>
 											<option value="name">작성자 이름</option>
 											<option value="title">Ting 이름</option>
 										</select>
 										<input type="text" name="searchValue"
 											class="form-control form-control-sm"
-											style="width: 30%; display: inline;"/>
+											style="width: 250px; display: inline;"/>
 										<input type="button"
 											value=" 검 색 " class="btn btn-primary btn-user btn-block"
 											onclick="sendIt();" style="width: 10%; display: inline;"/>
@@ -172,17 +207,19 @@
                             			<div class="card-header py-3 card shadow mb-4">
                             				
                             				<div>
-												<div>
-													<img src='<spring:url value="/image/${dto.ustoredFileName }"/>' width="50" height="50" style="border-radius: 50%;"/>
-													&nbsp;&nbsp;<u>${dto.userId }</u>&nbsp;&nbsp;/&nbsp;&nbsp;<u>${dto.name }</u><br/><br/>
-													
-													<a href="${tarticleUrl }&roomNum=${dto.roomNum }&tingNum=${dto.tingNum}">
-													<h3>${dto.title }</h3><br/><br/>
-													<p style="background-color: #F8F9FC;">${dto.content }</p><br/><br/>
-													</a>
-													
-													작성일 : ${dto.created }<br/>
-												</div>
+                            					<a class="tingLink" href="${tarticleUrl }&roomNum=${dto.roomNum }&tingNum=${dto.tingNum}">
+                            					
+													<div>
+														<img src='<spring:url value="/image/${dto.ustoredFileName }"/>'  width="50" height="50" 
+														style=" margin-right:10px; border-radius: 50%; display: inline-block;"/>
+														<h3 style="margin-top:8px; display: inline-block; font-family: 'Y_Spotlight'">${dto.title }</h3>
+														<sup>${dto.name}(${dto.userId})</sup>
+														<div style="padding: 10px; margin:20px 10px; background-color: #edf1f7; border-radius: 10px;">
+															<p>${dto.content }</p>
+														</div>
+														${dto.created }
+													</div>
+												</a>
 											</div>
                             				
                             			</div>
@@ -209,7 +246,7 @@
 
                         </div>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
 
                             <div class="col-lg-10 mb-4">
 									<button class="card bg-primary text-white shadow"

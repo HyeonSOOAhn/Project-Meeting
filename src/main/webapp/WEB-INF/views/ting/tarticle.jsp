@@ -128,29 +128,26 @@
 		}
 		
 	</script>
-    
-    <style type="text/css">
 
-		h2 {
-			font: italic bold 1em/1em Georgia, serif;
-			color: #4D71DB;
-			display: inline;
-		}
-		
-		h1 {
-			font: italic bold 3em/1em Georgia, serif;
-			color: #000000;
-			display: inline;
-		}
-		
-		p {
-			font: italic bold 1em/1em Georgia, serif;
-			background-color: #C0C0C0;
-			color: #000000;
-			display: inline;
-		}
-	
-	</style>
+<style type="text/css">
+@font-face {
+	font-family: 'Y_Spotlight';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/Y_Spotlight.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+.backRoom{
+	color: #000;
+}
+.backRoom:hover {
+	color: #38465c;	
+	text-decoration: none;
+}
+
+
+</style>
 
 </head>
 
@@ -183,57 +180,62 @@
                             <div class="card shadow mb-4">
                             
                                 <div class="card-header py-3 d-sm-flex justify-content-between">
-                                	<div>
-                                    	<h6 class="m-0 font-weight-bold text-primary" style="font-size: 25px;"><b>${dto.title }</b></h6>
-                                    </div>
+	                                <div>
+										<img src='<spring:url value="/image/${dto.ustoredFileName }"/>'
+											width="80" height="80"
+											style="margin-right: 10px; border-radius: 50%; display: inline-block;" />
+										
+		                                    <h1 class="" style="font-family:'Y_Spotlight'; display: inline-block;">${dto.title }</h1>
+		                                    <sup>${dto.name}(${dto.userId})</sup>
+	                                 </div>   
                                 </div>
                                 
                                 <div class="card-body">
                                 
                             			<div class="card-header py-3 card shadow mb-4">
+                            			
                             				
                             				<div>
-												<div>
-													<img src='<spring:url value="/image/${dto.ustoredFileName }"/>' width="100" height="100"/>
-													&nbsp;&nbsp;<h1>${dto.userId }&nbsp;&nbsp;/&nbsp;&nbsp;${dto.name }</h1><br/><br/>
-													
-													<h2>${dto.title }</h2><br/><br/>
-													<p style="background-color: #FFFFFF;">${dto.content }</p><br/><br/>
-													
-													일시 : ${dto.when}<br/>
-													
-													장소 : ${dto.place}<br/>
-													
-													추천인원 : ${dto.inwon}<br/>
-													
-													작성일 : ${dto.created }<br/><br/>
-													
-													
-													<div class="row" align="center">
-														<c:if test="${dto.userId == sessionScope.userInfo.userId}">
-														<div class="col-sm-2">
-															<input type="button" class=" btn btn-primary btn-user btn-block"
-																value="수정" style="width: 80%; "
-																onclick="javascript:location.href='<%=cp%>/tupdated.action?roomNum=${roomNum }&tingNum=${dto.tingNum }&${params }';"/>
-														</div>
-														 
-														<div class="col-sm-2">
-															<input type="button" class="btn btn-primary btn-user btn-block"
-																value="삭제" style="width: 80%; "
-																onclick="javascript:location.href='<%=cp%>/tdeleted.action?roomNum=${roomNum }&tingNum=${dto.tingNum }&${params }';"/>
-														</div> 
-														</c:if>
-													</div>
-													
-												</div>
+										<div>
+											
+											<div
+												style="padding: 10px; margin: 20px 10px; background-color: #edf1f7; border-radius: 10px;">
+												<p style="margin-bottom: 30px;color: #000; font-size: 1.4rem;">${dto.content }</p>
+												<hr>
+												<p style="font-size: 1.6rem;">모임 정보</p>
+												<p>일시 : ${dto.when}</p>
+												<p>장소 : ${dto.place}</p>
+												<p> 추천인원 : ${dto.inwon}</p> 
+												<p>작성일 : ${dto.created }</p>
 											</div>
 											
 											<hr>
-												
-												<span id="listData" style="display: none"></span>
-												
-											<hr>
+
 											
+
+
+											<div class="row" align="center">
+												<c:if test="${dto.userId == sessionScope.userInfo.userId}">
+													<div class="col-sm-1">
+														<input type="button"
+															class=" btn btn-primary btn-user btn-block" value="수정"
+															style="width: 100%; background-color: #1e509c;"
+															onclick="javascript:location.href='<%=cp%>/tupdated.action?roomNum=${roomNum }&tingNum=${dto.tingNum }&${params }';" />
+													</div>
+
+													<div class="col-sm-1">
+														<input type="button"
+															class="btn btn-danger btn-user btn-block" value="삭제"
+															style="width: 100%;"
+															onclick="javascript:location.href='<%=cp%>/tdeleted.action?roomNum=${roomNum }&tingNum=${dto.tingNum }&${params }';" />
+													</div>
+												</c:if>
+											</div>
+
+										</div>
+									</div>
+											<hr>
+												<span id="listData" style="display: none"></span>
 											<div>
 												<div class="form-group">
 													<input name="comments" type="text"
@@ -244,14 +246,14 @@
 													<input type="hidden" name="tcname" id="tcname" value="${name}"/>
 													
 													<input type="button" class="btn btn-primary btn-user btn-block"
-														value="Ting 참여하기" id="sendButton" style="width: 25%; display: inline;"/>
+														value="Ting 참여" id="sendButton" style="width: 20%; display: inline;"/>
 												</div>
 											</div>
                             				
                             			</div>
 
                             		<div class="text-center">
-										<h2><a href="<%=cp%>/tmain.action?roomNum=${roomNum }&${params }">방으로 돌아가기</a></h2>
+										<h4><a class="backRoom" href="<%=cp%>/tmain.action?roomNum=${roomNum }&${params }">방으로 돌아가기</a></h4>
 									</div>
                                     
                                 </div>

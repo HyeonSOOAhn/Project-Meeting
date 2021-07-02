@@ -83,8 +83,8 @@
 ## 기능구현
 
   ### 추천 장소 api
-  1. 공공데이터에서 약 **7500**여개의 장소 정보를 **JasonParser를 이용하여 파싱한 후 DB에 저장.**
-  ![recommend count](https://user-images.githubusercontent.com/77277946/124158790-4e364200-dad5-11eb-98e4-cdc59f5cf3ec.png)
+  1. 공공데이터에서 약 **7500**여개의 장소 정보를 **JasonParser를 이용하여 파싱한 후 DB에 저장**.<br/>
+![recommend count](https://user-images.githubusercontent.com/77277946/124158790-4e364200-dad5-11eb-98e4-cdc59f5cf3ec.png)
   2. DB에서 불러와 정렬함.
 ![image](https://user-images.githubusercontent.com/77277946/124162411-5c865d00-dad9-11eb-93e8-aafdfe4cca9d.png)
 
@@ -163,13 +163,15 @@
   ![image](https://user-images.githubusercontent.com/77277946/124163872-04505a80-dadb-11eb-9f15-0d8def116851.png)
 ## Collaborator
 @DYKIM9866<br>
+로그인 회원가입,myPage 구현, 프로필 관련 구현, 메세지 전달 구현, 알림 구현, 전체적인 front-end
 
 @HyeonSOOAhn<br>
 추천목록, (도서관,운동시설,관광지)파싱 후 view단에 뿌리기, 데이터 상세페이지, 데이터 상세페이지 리뷰&평점, 카카오맵API를 이용한 추천장소 지도 띄우기, Geolocation api를 이용한 내위치 기반 거리순 정렬, 검색필터, 인터셉터를 이용한 로그인 세션확인 
 
 @kth0423<br>
+각 방 별 게시물 생성, 수정, 삭제 / 게시물 분류별 검색 
 
 @stbhg5<br>
-방 생성, 목록, 수정, 삭제 구현,  내정보 구현, 방 내부 팅 생성, 목록 구현, 아작스를 이용한 팅 댓글 구현
+방 생성, 목록, 수정, 삭제 구현,  내정보 구현, 방 내부 팅 생성, 목록 구현, Ajax를 이용한 팅 댓글 구현
 
 

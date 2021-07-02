@@ -190,8 +190,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into roomMember(userId,roomNum,position)
 		values(#{userId},roomNum_seq.currval,'방장')
 	</insert>
-	<select id="readMember" resultType="String" parameterType="int">
-		select userId from roomMember where roomNum = #{roomNum}
+	<select id="readMember" resultType="int" parameterType="map">
+		select count(*) from roomMember where roomNum = #{roomNum} and userId=#{userId}
 	</select>
+	
+	<!-- 알림 -->
+	<insert id="insertNotice" parameterType="map">
+		insert into notice(noticeNum,sender,recipient,noticeMsg,created)
+		values(noticeNum_SEQ.NEXTVAL,#{sender},#{recipient},#{noticeMsg},sysdate)
+	</insert>
+	<select id="getNoticeList" parameterType="String" resultType="com.project.dto.noticeDTO">
+		select noticeNum,sender,recipient,noticeMsg,created from notice 
+		<![CDATA[where recipient=#{recipient} and created<sysdate and created>sysdate-7]]>
+	</select>
+	
 
 </mapper>

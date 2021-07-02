@@ -288,7 +288,7 @@ public class RoomController {
 		
 		RoomDTO dto = dao.getReadData(roomNum);
 		
-		String memberUserId = dao.readMember(roomNum);
+		int memberUser = dao.readMember(roomNum,info.getUserId());
 		
 		//라인수
 		int lineSu = dto.getIntroduce().split("\n").length;
@@ -306,7 +306,7 @@ public class RoomController {
 		request.setAttribute("lineSu", lineSu);
 		request.setAttribute("pageNum", pageNum);
 		
-		request.setAttribute("memberUserId", memberUserId);
+		request.setAttribute("memberUser", memberUser);
 		
 		return "room/article";
 		
@@ -393,7 +393,7 @@ public class RoomController {
 	}
 
 	@RequestMapping(value = "/modalAccept.action", method = { RequestMethod.POST})
-	public @ResponseBody String modalAccept(HttpServletRequest request,String msgNum,String sender,String roomNum)
+	public @ResponseBody String modalAccept(HttpServletRequest request,String msgNum,String sender,String recipient,String roomNum)
 			throws Exception {
 		
 
@@ -401,15 +401,31 @@ public class RoomController {
 		dao.changeRequestAccept(Integer.parseInt(msgNum));
 		//멤버 추가
 		dao.addMember(sender, Integer.parseInt(roomNum));
-
+		
+		int number = Integer.parseInt(roomNum);
+		
+		RoomDTO dto = dao.getReadData(number);
+		
+		String msg = dto.getTitle() + "에 보낸 요청이 수락 되었습니다. 축하합니다! :-)";	
+		//수락 알림 보내기
+		dao.insertNotice(sender,recipient,msg);
+		
 		return "success";
 	}
 	
 	@RequestMapping(value = "/modalReject.action", method = { RequestMethod.POST})
-	public @ResponseBody String modalReject(HttpServletRequest request,String msgNum)
+	public @ResponseBody String modalReject(HttpServletRequest request,String msgNum,String sender,String recipient,String roomNum)
 			throws Exception {
 		// 메시지 상태 거절로 바꾸기
 		dao.changeRequestReject(Integer.parseInt(msgNum));
+		
+		int number = Integer.parseInt(roomNum);
+		
+		RoomDTO dto = dao.getReadData(number);
+		
+		String msg = dto.getTitle() + "에 보낸 요청이 거절 되었습니다. :-(";	
+		//거절 알림 보내기
+		dao.insertNotice(sender,recipient,msg);
 		
 		return "success";
 	}

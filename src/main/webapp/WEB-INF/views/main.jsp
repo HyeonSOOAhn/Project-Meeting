@@ -32,6 +32,179 @@
 <link href="vendor/datatables/dataTables.bootstrap4.min.css"
 	rel="stylesheet">
 
+
+<style type="text/css">
+
+@font-face {
+    font-family: 'Y_Spotlight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/Y_Spotlight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.main-first input[id*="slide"] {
+	display: none;
+}
+
+.main-first .slidewrap {
+	max-width: 1440px;
+	margin: 0; auto;
+	overflow: hidden;
+}
+
+.main-first .slidelist {
+	white-space: nowrap;
+	font-size: 0;
+}
+
+.main-first .slidelist>li {
+	display: inline-block;
+	vertical-align: middle;
+	width: 100%;
+	transition: all .5s;
+}
+
+.main-first .slidelist>li>a {
+	display: block;
+	position: relative;
+}
+
+.main-first .slidelist>li>a img {
+	width: 100%;
+}
+
+.hwasal {
+	max-width: 45px;
+	max-height: 45px;
+	border-radius: 4px;
+}
+
+.main-first .slidelist label {
+	position: absolute;
+	z-index: 10;
+	top: 50%;
+	transform: translateY(-50%);
+	padding: 50px;
+	cursor: pointer;
+}
+
+.main-first .slidelist .left {
+	left: 30px;
+	background: url('/study/myProtein/image/slide-left.png') center center/100%
+		no-repeat
+}
+
+.main-first .slidelist .right {
+	right: 30px;
+	background: url('/study/myProtein/image/slide-right.png') center center/100%
+		no-repeat
+}
+
+.main-first input[id="slide01"]:checked ~ .slidewrap .slidelist>li {
+	transform: translateX(0%);
+}
+
+.main-first input[id="slide02"]:checked ~ .slidewrap .slidelist>li {
+	transform: translateX(-100%);
+}
+
+.main-first input[id="slide03"]:checked ~ .slidewrap .slidelist>li {
+	transform: translateX(-200%);
+}
+
+.carouselImg {
+	width: 100%;
+	height: 80%;
+}
+
+.img1 {
+	position: relative;
+	background-image: url(img/study.jpg);
+	height: 100vh;
+	background-size: cover;
+}
+.img1:hover .img-cover1{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 1;
+}
+.img1:hover .content1{
+	display: block;
+}
+
+.img1 .content1 {
+	display:none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 5rem;
+	color: white;
+	z-index: 2;
+	text-align: center;
+}
+.img2 {
+	position: relative;
+	background-image: url(img/restaurant.jpg);
+	height: 100vh;
+	background-size: cover;
+}
+
+.img2:hover .img-cover2{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 1;
+}
+.img2:hover .content2{
+	display: block;
+}
+
+.img2 .content2 {
+	display:none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 5rem;
+	color: white;
+	z-index: 2;
+	text-align: center;
+}
+.img3 {
+	position: relative;
+	background-image: url(img/travel.jpg);
+	height: 100vh;
+	background-size: cover;
+}
+
+.img3:hover .img-cover3{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 1;
+}
+.img3:hover .content3{
+	display: block;
+}
+
+.img3 .content3 {
+	display:none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 5rem;
+	color: white;
+	z-index: 2;
+	text-align: center;
+}
+</style>
+
 </head>
 
 <body id="page-top">
@@ -40,7 +213,7 @@
     <div id="wrapper">
     <!-- SIDE BAR -->
     <jsp:include page="/WEB-INF/views/sidebar.jsp"></jsp:include>
-
+	
 
 
         <!-- Content Wrapper -->
@@ -52,89 +225,72 @@
             	<!-- TOP BAR -->
             	<jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
 
-
+				
                 
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                	-------------------------------------------------------------------<br>
-                
-                	메인페이지
-	<a href="<%=cp%>/index.action">방 카테고리</a>
-	<form action="logout.action" method="post">
-		<input type="submit" value="로그아웃"> <a href="list.action">방리스트</a>
-	</form>
-	-------------------------------------------------------------------<br>
-
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    	<div>
-                    		<h1 class="h3 mb-2 text-gray-800">전체 방 목록</h1>
-                    		<p class="mb-4">여러분들이 참여하실 수 있는 모든 방 목록입니다.</p>
-                    	</div>
-                    	<c:if test="${!empty sessionScope.userInfo.userId }">
-	                    	<a href="<%=cp%>/created.action" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-	                                class="fas fa-download fa-sm text-white-50"></i> 방 만들기</a>
-                        </c:if>
-                        <c:if test="${empty sessionScope.userInfo.userId }">
-	                        <p style="font-style: oblique;font-weight: bold;font-size: 15px;color: #4D71DB;">로그인을 하셔야 방 만들기가 가능합니다.</p>
-                        </c:if>
-                    </div>
-
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                    
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary" style="display: inline;">전체 방</h6>
-	               
-                            <br/><br/>
-                            
-                            <div>
-								<form action="" name="searchForm" method="post">
-									<select name="searchKey" class="custom-select custom-select-sm form-control form-control-sm" style="width: 10%;display: inline;">
-										<option value="subject">방 카테고리</option>
-										<option value="title">방 이름</option>
-										<option value="keyword">키워드</option>
-									</select>
-									<input type="text" name="searchValue" class="form-control form-control-sm" style="width: 20%;display: inline;"/>
-									<input type="button" value=" 검 색 " class="btn btn-primary btn-user btn-block" onclick="sendIt()" style="width: 10%;display: inline;"/>
-								</form>
-								<br/>
-							</div>
-                            
-                            <c:forEach var="dto" items="${lists }">
-                            <div class="card-header py-3 card shadow mb-4">
-                            	<div class="ok">
-									<div class="left">
-										<u>${dto.subject }</u><br/>
-										<h2><a href="${articleUrl }&roomNum=${dto.roomNum}">${dto.title }</a></h2><br/>
-										${dto.keyword }<br/>
-										창설일 : ${dto.created }&nbsp;&nbsp;참가자 : ${dto.totalP } / ${dto.currentP } 명
-									</div>
-									<div class="right"><img src="${pageContext.request.contextPath}/resources/upload/${dto.storedFileName }" width="200" height="200"/></div>
-								</div>
-                            </div>
-                           </c:forEach>
-                        </div>
-                        
-                        <!-- <h1 class="h3 mb-2 text-gray-800" align="center"></h1> -->
-                        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate" align="center">
-                        	
-                        	<ul class="pagination">
-	                        
-								<c:if test="${dataCount!=0 }">
-									${pageIndexList }
-								</c:if>
-								<c:if test="${dataCount==0 }">
-									등록된 게시물이 없습니다.
-								</c:if>
-							
+                	<div class="main-first" style="width: 100% ; height: 70%">
+	                	<input type="radio" name="slide" id="slide01" checked>
+						<input type="radio" name="slide" id="slide02">
+						<input type="radio" name="slide" id="slide03">
+						<div class="slidewrap">
+							<ul class="slidelist">
+								<li>
+									<label for="slide03" class="left">
+										<img class="hwasal" src="img/slide-left.png">
+									</label> 
+									<div class="img1">
+										<div class="content1">
+											<h3 style="font-family: 'Y_Spotlight';" >혼자하는 공부가 지겹다면..</h3>
+											<h1 style="font-family: 'Y_Spotlight';">방팅에서 만나봐!</h1>
+										</div>
+										<div class="img-cover1"></div>
+									</div> 
+									<label for="slide02" class="right">
+										<img class="hwasal"src="img/slide-right.png">
+									</label>
+								</li>
+								<li>
+									<label for="slide01" class="left">
+										<img class="hwasal" src="img/slide-left.png">
+									</label> 
+									<div class="img2">
+										<div class="content2">
+											<h3 style="font-family: 'Y_Spotlight';">혼자 먹는 밥 지겹다면..</h3>
+											<h1 style="font-family: 'Y_Spotlight';">방팅에서 만나봐!</h1>
+										</div>
+										<div class="img-cover2"></div>
+									</div> 
+									<label for="slide03" class="right">
+										<img class="hwasal" src="img/slide-right.png">
+									</label>
+								</li>
+								<li>
+									<label for="slide02" class="left">
+										<img class="hwasal"src="img/slide-left.png">
+									</label>
+									<div class="img3">
+										<div class="content3">
+											<h3 style="font-family: 'Y_Spotlight';">여기는 혼자가기 좀..</h3>
+											<h3 style="font-family: 'Y_Spotlight';">동행이 필요하다면</h3>
+											<h1 style="font-family: 'Y_Spotlight';">방팅에서 만나봐!</h1>
+										</div>
+										<div class="img-cover3"></div>
+									</div> 
+									<label for="slide01" class="right">
+										<img class="hwasal" src="img/slide-right.png">
+									</label>
+								</li>
 							</ul>
-							
 						</div>
-                        
-                    </div>
+					</div>
+					
 
-                </div>
+
+
+
+				</div>
                 <!-- /.container-fluid -->
 
             </div>
