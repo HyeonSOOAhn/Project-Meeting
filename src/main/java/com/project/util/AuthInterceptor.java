@@ -29,7 +29,16 @@ public class AuthInterceptor extends WebContentInterceptor {
 		HttpSession session = request.getSession();
 		UserInfo info = (UserInfo) session.getAttribute("userInfo");
 		if(info==null||info.equals(null)) {
-			System.out.println(1);
+			
+			try {
+				PrintWriter out = response.getWriter();
+				out.write("<script>alert('로그인을 해주세요!'); location.href='login.action';</script>");		 
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				return false;
+			}    
+			return false;
 			
 		}else {
 			List<noticeDTO> noticeList = roomDao.getNoticeList(info.getUserId()); 

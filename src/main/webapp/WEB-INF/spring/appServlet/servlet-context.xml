@@ -91,6 +91,17 @@
 	    </beans:property> 
 	</beans:bean>
 
-	
+	<!-- 인터셉터 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/register*.*"/>
+			<exclude-mapping path="/log*.*"/>
+			<exclude-mapping path="/forgot*.*"/>
+			<exclude-mapping path="/send*.*"/>
+			<exclude-mapping path="/reset*.*"/>
+			<beans:bean class="com.project.util.AuthInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>
