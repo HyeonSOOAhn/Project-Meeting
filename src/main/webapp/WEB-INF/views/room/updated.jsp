@@ -142,6 +142,7 @@ String cp = request.getContextPath();
 								</div>
 								<br />
 
+								<!-- 
 								<div class="form-group">
 									<input type="file" name="file" id="file" value="방 프로필 이미지" />
 									<button type="button"
@@ -149,6 +150,7 @@ String cp = request.getContextPath();
 										style="font-size: 0.8rem; border-radius: 10rem; padding: 0.75rem 1rem;">방
 										프로필 이미지</button>
 								</div>
+								 -->
 
 								<input type="hidden" name="manager" value="1">
 								<input type="hidden" name="roomNum" value="${dto.roomNum }">

@@ -57,7 +57,7 @@
 
   - 프레임워크
     * Spring4.3.0
-    * Jquery
+    * Jquery / Ajax
     * Bootstrap
 
 
@@ -69,21 +69,41 @@
     * STS 3.0
 
 
-  - 커뮤니티
-    * Github
+  - 형상관리도구
+    * Git / Github
 
 
 
 ## DATABASE
-![ERD](https://user-images.githubusercontent.com/77277946/124152011-1972bc80-dace-11eb-84c0-b5ec6e570a96.png)
+![ERD](https://user-images.githubusercontent.com/77277946/124222816-6c378d00-db3d-11eb-83d1-0a19569ae231.png)
 
 
 
 
 ## 기능구현
 
+
+  ### 로그인 & 회원가입
+  <img src="https://user-images.githubusercontent.com/58163747/124235774-a2cad300-db50-11eb-8261-2bae9a280127.GIF" width="450"> <img src="https://user-images.githubusercontent.com/58163747/124235823-b24a1c00-db50-11eb-961f-c2c5947a7197.GIF" width="450"> 
+  
+  
+  ### myPage
+  ![myPage](https://user-images.githubusercontent.com/58163747/124236216-271d5600-db51-11eb-9dc1-d5ca0222fdec.GIF)
+
+  ### 요청 주고 받기
+  <img src="https://user-images.githubusercontent.com/58163747/124237569-9a739780-db52-11eb-9b73-30531e87ba4a.GIF" width="450">   <img src="https://user-images.githubusercontent.com/58163747/124237598-a8291d00-db52-11eb-9257-26ef4e697442.GIF" width="450">
+
+  
+  ### 모임 만들기
+  ![makethRoom](https://user-images.githubusercontent.com/58163747/124237785-df97c980-db52-11eb-9477-1b23be6014d6.GIF)
+
+  ### 방 내부
+   
+  
+  
+
   ### 추천 장소 api
-  1. 공공데이터에서 약 **7500**여개의 장소 정보를 **JasonParser를 이용하여 파싱한 후 DB에 저장**.<br/>
+  1. 공공데이터에서 약 **7500**여개의 장소 정보를 **JsonParser를 이용하여 파싱한 후 DB에 저장**.<br/>
 ![recommend count](https://user-images.githubusercontent.com/77277946/124158790-4e364200-dad5-11eb-98e4-cdc59f5cf3ec.png)
   2. DB에서 불러와 정렬함.
 ![image](https://user-images.githubusercontent.com/77277946/124162411-5c865d00-dad9-11eb-93e8-aafdfe4cca9d.png)

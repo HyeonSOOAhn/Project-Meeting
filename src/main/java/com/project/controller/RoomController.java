@@ -333,6 +333,13 @@ public class RoomController {
 		return "room/updated";
 		
 	}
+	@RequestMapping(value = "/updated_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String updated_ok(HttpServletRequest request, RoomDTO dto) throws Exception {
+		
+		dao.updateData(dto);
+		
+		return "redirect:tmain.action?roomNum="+dto.getRoomNum();
+	}
 	
 	//삭제
 	@RequestMapping(value = "/deleted.action", method = {RequestMethod.GET,RequestMethod.POST})

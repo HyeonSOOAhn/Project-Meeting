@@ -40,6 +40,7 @@ public class AuthInterceptor extends WebContentInterceptor {
 				return false;
 			}    
 			return false;
+			
 		}else {
 
 			// 알람가져오기

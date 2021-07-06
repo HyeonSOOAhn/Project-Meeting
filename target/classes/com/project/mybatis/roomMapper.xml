@@ -65,10 +65,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from wholeRoom where manager = #{manager}
 	</select>
 	
-	<update id="updateData" parameterType="hashMap">
+	<update id="updateData" parameterType="com.project.dto.RoomDTO">
 		update wholeRoom set title = #{title},keyword = #{keyword},
-		introduce = #{introduce},originalFileName = #{originalFileName},
-		storedFileName = #{storedFileName} where roomNum = #{roomNum}
+		introduce = #{introduce} where roomNum = #{roomNum}
 	</update>
 	<update id="updateCurrentP" parameterType="int">
 		update wholeRoom set currentP = currentP+1 where roomNum = #{roomNum}

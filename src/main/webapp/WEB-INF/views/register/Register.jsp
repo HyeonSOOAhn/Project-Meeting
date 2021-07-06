@@ -31,6 +31,8 @@
 #file {
 	display: none;
 }
+<<<<<<< HEAD
+=======
 
 @charset "UTF-8";
 
@@ -77,9 +79,10 @@ input[id="woman"]:checked + label{
 
 
 
+>>>>>>> branch 'develop' of https://github.com/DYKIM9866/Project-Meeting.git
 </style>
 
-
+	
 </head>
 
 <body class="bg-gradient-primary">
