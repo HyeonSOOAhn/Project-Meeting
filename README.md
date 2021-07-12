@@ -77,7 +77,7 @@
 ## 기능구현
   
   ### 팅
-  ![makethRoom](https://user-images.githubusercontent.com/58163747/124237785-df97c980-db52-11eb-9477-1b23be6014d6.GIF)  
+  ![Hnet-image (1)](https://user-images.githubusercontent.com/77277946/125328413-3e451a80-e37f-11eb-95b7-8bea58318667.gif) 
 
   ### 추천 장소 api
   1. 공공데이터에서 약 **7500**여개의 장소 정보를 **JsonParser를 이용하여 파싱한 후 DB에 저장**.<br/>
