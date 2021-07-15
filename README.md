@@ -40,6 +40,7 @@
 
   - [검색필터](#검색필터) : 사용자가 검색하기 편하도록 필터를 사용, Geolcation을 이용한 내위치 기반 거리순 정렬, 오라클 함수 생성하여 사용.
 
+
   - [팅](#팅) :  만남을 주선하고 싶은 사람이 팅을통해 만남에 대한 소개와 만남일시,장소,추천인원을 정하고 참여하고 싶은사람이 댓글을 통해 참여하는 방식.
 
 ## 개발환경
@@ -82,7 +83,30 @@
   ### 추천 장소 api
   1. 공공데이터에서 약 **7500**여개의 장소 정보를 **JsonParser를 이용하여 파싱한 후 DB에 저장**.<br/>
 ![recommend count](https://user-images.githubusercontent.com/77277946/124158790-4e364200-dad5-11eb-98e4-cdc59f5cf3ec.png)
-  2. DB에서 불러와 정렬함.
+  2. 오라클 Merge Into를 이용하여 존재하는 부분은 Update, 존재하지 않는 부분이라면 insert가능 하도록 구현
+
+   ![자료업데이트](https://user-images.githubusercontent.com/77277946/125816145-86d084a1-9b03-4031-987a-ac64670d9a88.jpg)
+          
+          MERGE INTO Recommend
+          USING DUAL ON (recoNum = #{recoNum})
+          WHEN MATCHED THEN
+          UPDATE SET
+          subject = #{subject},keyword = #{keyword},
+          title = #{title, jdbcType=VARCHAR}, introduce = #{introduce, jdbcType=VARCHAR},content = #{content, jdbcType=VARCHAR},
+          location = #{location, jdbcType=VARCHAR},
+          lat = #{lat, jdbcType=VARCHAR},lon = #{lon, jdbcType=VARCHAR}
+          WHEN NOT MATCHED THEN
+          INSERT
+          (recoNum,subject,keyword,title,
+          introduce,content,location,lat,lon)
+          VALUES
+          (#{recoNum},#{subject},#{keyword},
+          #{title, jdbcType=VARCHAR}, #{introduce, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},
+          #{location, jdbcType=VARCHAR},
+          #{lat, jdbcType=VARCHAR},#{lon, jdbcType=VARCHAR})
+          
+
+  3. DB에서 불러와 정렬함.
 ![image](https://user-images.githubusercontent.com/77277946/124162411-5c865d00-dad9-11eb-93e8-aafdfe4cca9d.png)
 
   ### 카카오맵 api
